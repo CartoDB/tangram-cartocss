@@ -1,0 +1,18 @@
+cache: false
+language: node_js
+node_js:
+  - "6.9.0"
+
+install:
+  - npm install
+
+before_script:
+  - npm install -g grunt-cli
+
+script:
+  - npm run test-ci
+
+notifications:
+  email:
+    on_success: never
+    on_failure: change

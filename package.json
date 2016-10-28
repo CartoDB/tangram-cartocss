@@ -1,0 +1,79 @@
+{
+  "name": "Cartoyaml",
+  "version": "0.0.1",
+  "description": "Transform carto configuration into yaml config.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cartodb/cartoyaml.git"
+  },
+  "main": "dist/cartoyaml.min.js",
+  "homepage": "https://github.com/cartodb/cartoyaml",
+  "keywords": [
+    "maps",
+    "graphics",
+    "rendering",
+    "visualization",
+    "WebGL",
+    "OpenStreetMap",
+    "cartocss",
+    "carto",
+    "yaml"
+  ],
+  "scripts": {
+    "start": "npm run watch",
+    "test": "npm run lint && npm run build-test && npm run test-local",
+    "test-ci": "npm run lint && npm run build-test && npm run test-remote",
+    "test-remote": "./node_modules/karma/bin/karma start --browsers SL_Firefox --single-run",
+    "test-local": "./node_modules/karma/bin/karma start --browsers Chrome --single-run",
+    "karma-start": "./node_modules/karma/bin/karma start --browsers Chrome --no-watch",
+    "karma-run": "./node_modules/karma/bin/karma run --browsers Chrome",
+    "lint": "$(npm bin)/jshint src/ && jshint test/",
+    "build": "npm run build-bundle -- -o dist/cartoyaml.debug.js && npm run build-minify",
+    "build-test": "npm run build-bundle -- -o dist/cartoyaml.test.js",
+    "build-debug": "npm run build-bundle -- -o dist/cartoyaml.debug.js",
+    "build-bundle": "$(npm bin)/browserify src/module.js -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s Cartoyaml -p browserify-derequire --debug",
+    "build-minify": "$(npm bin)/uglifyjs dist/cartoyaml.debug.js -c warnings=false -m -o dist/cartoyaml.min.js && npm run build-size",
+    "build-size": "gzip dist/cartoyaml.min.js -c | wc -c | awk '{kb=$1/1024; print kb}' OFMT='%.0fk minified+gzipped'",
+    "watch": "$(npm bin)/budo src/module.js:dist/cartoyaml.debug.js --port 8000 --cors --live -- -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s Cartoyaml"
+  },
+  "author": {
+    "name": "Carto",
+    "email": "support@carto.com"
+  },
+  "contributors": [
+    {
+      "name": "Francisco López"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "babel-runtime": "6.11.6",
+    "vue": "^2.0.3",
+    "yamljs": "^0.2.8"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-runtime": "6.12.0",
+    "babel-preset-es2015": "6.13.2",
+    "babelify": "7.3.0",
+    "brfs": "^1.4.3",
+    "browserify": "13.0.1",
+    "browserify-derequire": "0.9.4",
+    "budo": "8.2.1",
+    "chai": "1.9.2",
+    "chai-as-promised": "4.1.1",
+    "glob": "4.0.6",
+    "jshint": "jshint/jshint#3a8efa979dbb157bfb5c10b5826603a55a33b9ad",
+    "karma": "0.12.23",
+    "karma-browserify": "5.1.0",
+    "karma-chrome-launcher": "0.1.4",
+    "karma-mocha": "0.1.9",
+    "karma-mocha-reporter": "1.0.0",
+    "karma-sauce-launcher": "tangrams/karma-sauce-launcher#firefox-profiles",
+    "karma-sinon": "1.0.4",
+    "mocha": "1.21.4",
+    "sinon": "1.10.3",
+    "tangram": "tangrams/tangram#master",
+    "uglify-js": "2.4.14",
+    "yargs": "1.3.2"
+  }
+}
