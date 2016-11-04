@@ -1,20 +1,24 @@
-# CartoYaml
+# Cartogram
 
-Transform cartocss + vizjson + jsonp carto config to Tangram Yaml configuration.
+## API
 
-Getting Started
+### *Cartoyaml* object
+
+#### .carto2Draw
 
 ```
-me$ cd cartoyaml
-me$ npm install
-me$ npm start
-or
-me$ yarn
-me$ yarn start
+/**
+ * Transform a cartocss into a Tangram draw layer config object.
+ * @param  {String} cartocss   string with cartocsm
+ * @return {Object}            return a draw object with the style functions
+ */
+var cartocss = '#layer { polygon-fill: '#DF038A';}';
+
+var draw = Cartoyaml.carto2draw(cartocss);
+
+draw = {
+  polygons: {
+    color: 'function () { var toRet = null;  toRet = "#DF038A";  return toRet;}'
+  }
+};
 ```
-
-Go to the address showed in the command line.
-
-You can try maps from carto, just copy the url of the embed map in the input an press load!
-
-Try your map!
