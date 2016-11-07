@@ -1,5 +1,5 @@
-import cartoyaml from './cartoyaml';
+import Cartogram from './cartogram';
 
 module.exports = {
-  fromCarto: cartoyaml.fromCarto
+  carto2Draw: Cartogram.getDrawFromCSS
 };

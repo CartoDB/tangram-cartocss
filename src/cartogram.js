@@ -130,7 +130,6 @@ const parseCSS = function parseCSS( cartocss, type, feature ) {
       content = extractContentBlocks( layer, type, fn );
 
   return content ? 'function () { var toRet = null; ' + content + ' return toRet;}' : '';
-
 };
 
 const getDrawFromCSS = function getDrawFromCSS( css ) {
