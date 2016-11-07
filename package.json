@@ -1,13 +1,13 @@
 {
-  "name": "Cartogram",
+  "name": "tangram-cartocss",
   "version": "0.1.0",
-  "description": "Transform cartocss into draw cartogram object.",
+  "description": "Transform cartocss into a draw tangram object.",
   "repository": {
     "type": "git",
-    "url": "git://github.com/cartodb/cartogram.git"
+    "url": "git://github.com/cartodb/tangram-cartocss.git"
   },
-  "main": "dist/cartogram.min.js",
-  "homepage": "https://github.com/cartodb/cartogram",
+  "main": "dist/tangram-cartocss.min.js",
+  "homepage": "https://github.com/cartodb/tangram-cartocss",
   "keywords": [
     "maps",
     "graphics",
@@ -28,13 +28,13 @@
     "karma-start": "./node_modules/karma/bin/karma start --browsers Chrome --no-watch",
     "karma-run": "./node_modules/karma/bin/karma run --browsers Chrome",
     "lint": "$(npm bin)/jshint src/ && jshint test/",
-    "build": "npm run build-bundle -- -o dist/cartogram.debug.js && npm run build-minify",
-    "build-test": "npm run build-bundle -- -o dist/cartogram.test.js",
-    "build-debug": "npm run build-bundle -- -o dist/cartogram.debug.js",
-    "build-bundle": "$(npm bin)/browserify src/module.js -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s Cartogram -p browserify-derequire --debug",
-    "build-minify": "$(npm bin)/uglifyjs dist/cartogram.debug.js -c warnings=false -m -o dist/cartogram.min.js && npm run build-size",
-    "build-size": "gzip dist/cartogram.min.js -c | wc -c | awk '{kb=$1/1024; print kb}' OFMT='%.0fk minified+gzipped'",
-    "watch": "$(npm bin)/budo src/module.js:dist/cartogram.debug.js --port 8000 --cors --live -- -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s Cartogram"
+    "build": "npm run build-bundle -- -o dist/tangram-cartocss.debug.js && npm run build-minify",
+    "build-test": "npm run build-bundle -- -o dist/tangram-cartocss.test.js",
+    "build-debug": "npm run build-bundle -- -o dist/tangram-cartocss.debug.js",
+    "build-bundle": "$(npm bin)/browserify src/module.js -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s CCSS -p browserify-derequire --debug",
+    "build-minify": "$(npm bin)/uglifyjs dist/tangram-cartocss.debug.js -c warnings=false -m -o dist/tangram-cartocss.min.js && npm run build-size",
+    "build-size": "gzip dist/tangram-cartocss.min.js -c | wc -c | awk '{kb=$1/1024; print kb}' OFMT='%.0fk minified+gzipped'",
+    "watch": "$(npm bin)/budo src/module.js:dist/tangram-cartocss.debug.js --port 8000 --cors --live -- -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s CCSS"
   },
   "author": {
     "name": "Carto",
