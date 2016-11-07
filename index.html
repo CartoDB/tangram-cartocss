@@ -10,8 +10,18 @@
   </head>
   <body>
     <div class="menu">
-      <input type="text" name="url" value="https://miguelginer.carto.com/builder/984ae55e-42b3-11e6-94c4-0ef24382571b/embed">
-      <button id="send" type="button" name="name" value="SEND">SEND</button>
+      <textarea type="text" name="url" value="https://miguelginer.carto.com/builder/984ae55e-42b3-11e6-94c4-0ef24382571b/embed">
+#layer {
+  polygon-fill: orange;
+  [height<20] {
+    polygon-fill: #05f;
+  }
+  [height>=20] {
+    polygon-fill: #f50;
+  }
+}
+      </textarea>
+      <button id="send" type="button" name="name" value="SEND">APPLY</button>
     </div>
     <div id="map"></div>
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>

@@ -1,11 +1,11 @@
-# Cartogram
+# Tangram-cartocss
 
 ## Installation & usage
 
 ```bash
-me$ npm i cartogram
+me$ npm i tangram-cartocss
 // or
-me$ yarn add cartogram
+me$ yarn add tangram-cartocss
 ```
 
 ```javascript
@@ -13,7 +13,7 @@ import Cartogram from 'cartogram';
 ```
 ## API
 
-### *Cartogram* object
+### *CCSS* object
 
 #### `.carto2Draw`
 
@@ -25,7 +25,7 @@ import Cartogram from 'cartogram';
  */
 var cartocss = '#layer { polygon-fill: '#DF038A';}';
 
-var draw = Cartogram.carto2draw(cartocss);
+var draw = CCSS.carto2draw(cartocss);
 
 draw == {
   polygons: {

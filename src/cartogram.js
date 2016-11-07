@@ -31,7 +31,7 @@ const searchEndBlock = function searchEndBlock( cartocss, pass = 0 ) {
 
 const extractCondition = function extractCondition( cartocss ) {
     let cond = cartocss.match( COND_REGEX ),
-        values = COND_VALUES_REGEX.exec( cond[ 0 ] );
+        values = /\[\s*(\w*)\s*([=<>])\s*(?:'|")*([\d\.]*|\w*|[A-zÁ-á '\-]*)(?:'|")*\s*\]/g.exec( cond[ 0 ] );
 
 
     if ( values && values.length > 1 ) {
