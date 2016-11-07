@@ -1,5 +1,6 @@
 # Tangram-cartocss
-
+![Uniform style](/demos/images/uniform.png)
+![Conditional Style](/demos/images/conditionals.png)
 ## Installation & usage
 
 ```bash
