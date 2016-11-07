@@ -25,7 +25,7 @@ import Cartogram from 'cartogram';
  */
 var cartocss = '#layer { polygon-fill: '#DF038A';}';
 
-var draw = Cartoyaml.carto2draw(cartocss);
+var draw = Cartogram.carto2draw(cartocss);
 
 draw == {
   polygons: {
