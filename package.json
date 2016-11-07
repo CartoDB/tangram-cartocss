@@ -1,13 +1,13 @@
 {
-  "name": "Cartoyaml",
-  "version": "0.0.1",
-  "description": "Transform carto configuration into yaml config.",
+  "name": "Cartogram",
+  "version": "0.1.0",
+  "description": "Transform cartocss into draw cartogram object.",
   "repository": {
     "type": "git",
-    "url": "git://github.com/cartodb/cartoyaml.git"
+    "url": "git://github.com/cartodb/cartogram.git"
   },
-  "main": "dist/cartoyaml.min.js",
-  "homepage": "https://github.com/cartodb/cartoyaml",
+  "main": "dist/cartogram.min.js",
+  "homepage": "https://github.com/cartodb/cartogram",
   "keywords": [
     "maps",
     "graphics",
@@ -28,13 +28,13 @@
     "karma-start": "./node_modules/karma/bin/karma start --browsers Chrome --no-watch",
     "karma-run": "./node_modules/karma/bin/karma run --browsers Chrome",
     "lint": "$(npm bin)/jshint src/ && jshint test/",
-    "build": "npm run build-bundle -- -o dist/cartoyaml.debug.js && npm run build-minify",
-    "build-test": "npm run build-bundle -- -o dist/cartoyaml.test.js",
-    "build-debug": "npm run build-bundle -- -o dist/cartoyaml.debug.js",
-    "build-bundle": "$(npm bin)/browserify src/module.js -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s Cartoyaml -p browserify-derequire --debug",
-    "build-minify": "$(npm bin)/uglifyjs dist/cartoyaml.debug.js -c warnings=false -m -o dist/cartoyaml.min.js && npm run build-size",
-    "build-size": "gzip dist/cartoyaml.min.js -c | wc -c | awk '{kb=$1/1024; print kb}' OFMT='%.0fk minified+gzipped'",
-    "watch": "$(npm bin)/budo src/module.js:dist/cartoyaml.debug.js --port 8000 --cors --live -- -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s Cartoyaml"
+    "build": "npm run build-bundle -- -o dist/cartogram.debug.js && npm run build-minify",
+    "build-test": "npm run build-bundle -- -o dist/cartogram.test.js",
+    "build-debug": "npm run build-bundle -- -o dist/cartogram.debug.js",
+    "build-bundle": "$(npm bin)/browserify src/module.js -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s Cartogram -p browserify-derequire --debug",
+    "build-minify": "$(npm bin)/uglifyjs dist/cartogram.debug.js -c warnings=false -m -o dist/cartogram.min.js && npm run build-size",
+    "build-size": "gzip dist/cartogram.min.js -c | wc -c | awk '{kb=$1/1024; print kb}' OFMT='%.0fk minified+gzipped'",
+    "watch": "$(npm bin)/budo src/module.js:dist/cartogram.debug.js --port 8000 --cors --live -- -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s Cartogram"
   },
   "author": {
     "name": "Carto",
