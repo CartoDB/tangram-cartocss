@@ -52,7 +52,7 @@ const getSymbolizers = function (layer) {
 					color: getAttributeFeature(sym, 'fill', layer),
 					size: getAttributeFeature(sym, 'size', layer),
 					width: getAttributeFeature(sym, 'width', layer)
-				};
+			};
   }
 
   return draw;
@@ -70,10 +70,10 @@ const extractFeatures = function (ccss) {
   }
 
   return draws;
-	};
+};
 
 var C2Y;
 
 export default C2Y = {
   extractFeatures
-	};
+};
