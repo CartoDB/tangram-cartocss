@@ -1,5 +1,5 @@
-# Tangram-cartocss
-![build](https://travis-ci.org/CartoDB/tangram-carto.svg?branch=api-def-carto)
+# Tangram-cartocss ![build](https://travis-ci.org/CartoDB/tangram-carto.svg?branch=api-def-carto)
+
 ![Uniform style](/demos/images/uniform.png)
 ![Conditional Style](/demos/images/conditionals.png)
 ## Installation & usage
@@ -11,7 +11,7 @@ me$ yarn add tangram-cartocss
 ```
 
 ```javascript
-import Cartogram from 'cartogram';
+import CCSS from 'tangram-cartocss';
 ```
 ## API
 
