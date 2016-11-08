@@ -37,7 +37,7 @@ body {
   border-top: solid #3d3;
 }
 
-input, button {
+input, button, textarea {
   margin: 10px auto;
   background-color: transparent;
   border: none;
@@ -46,6 +46,13 @@ input, button {
   font-size: 18px;
   width: 90%;
   display: inherit;
+}
+
+textarea {
+  width: 90%;
+  height: 400px;
+  color: white;
+  /*background-color: rgba(40, 43, 40, 0.8);*/
 }
 
 button[type=button] {

@@ -1,12 +1,9 @@
 .gitattributes
 
-# jshint config
-.jshintrc
-
 # build & test artifacts
 node_modules
-dist/tangram.test.js
-dist/tangram.test-worker.js
+dist/tangram-cartocss.test.js
+dist/tangram-cartocss.test-worker.js
 
 # a make target for npm install
 .npm

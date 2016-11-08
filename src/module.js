@@ -1,5 +1,5 @@
-import cartoyaml from './cartoyaml';
+import CCSS from './carto';
 
 module.exports = {
-  fromCarto: cartoyaml.fromCarto
-};
+  carto2Draw: CCSS.extractFeatures,
+	};
