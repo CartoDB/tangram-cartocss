@@ -13,12 +13,15 @@ module.exports = function (config) {
                 'webgl.disable': false,
                 'webgl.msaa-force': true
 															}
-											}
+											},
+        Chrome_travis_ci: {
+          base: 'Chrome',
+          flags: ['--no-sandbox']
+									}
 							};
 
     var browserList = Object.keys(customLaunchers);
     browserList.push('Chrome');
-    browserList.push('ChromeCanary');
 
     config.set({
         basePath: '',
