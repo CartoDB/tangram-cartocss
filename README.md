@@ -1,4 +1,5 @@
 # Tangram-cartocss
+![build](https://travis-ci.org/CartoDB/tangram-carto.svg?branch=api-def-carto)
 ![Uniform style](/demos/images/uniform.png)
 ![Conditional Style](/demos/images/conditionals.png)
 ## Installation & usage
