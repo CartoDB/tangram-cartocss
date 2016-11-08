@@ -1,13 +1,11 @@
-cache: true
+cache: false
 language: node_js
 node_js:
   - "6.9.0"
-
 install:
   - npm install
 script:
   - npm run test
-
 notifications:
   email:
     on_success: never
