@@ -1,8 +1,5 @@
 .gitattributes
 
-# jshint config
-.jshintrc
-
 # build & test artifacts
 node_modules
 dist/tangram-cartocss.test.js
