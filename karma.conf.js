@@ -18,6 +18,7 @@ module.exports = function (config) {
 
     var browserList = Object.keys(customLaunchers);
     browserList.push('Chrome');
+    browserList.push('ChromeCanary');
 
     config.set({
         basePath: '',
@@ -41,7 +42,7 @@ module.exports = function (config) {
         browserify: {
             debug: true,
             transform: [['babelify', { presets: ['es2015'], plugins: ['transform-runtime'] }], 'brfs']
-        },
+											},
 
         plugins: [
             'karma-mocha',
