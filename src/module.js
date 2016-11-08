@@ -1,5 +1,5 @@
-import Cartogram from './cartogram';
+import CCSS from './carto';
 
 module.exports = {
-  carto2Draw: Cartogram.getDrawFromCSS
+  carto2Draw: CCSS.extractFeatures,
 };

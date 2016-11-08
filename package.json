@@ -42,13 +42,14 @@
   },
   "contributors": [
     {
-      "name": "Francisco López"
+      "name": "Francisco López",
+      "email": "donflopez@gmail.com"
     }
   ],
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "6.11.6",
-    "vue": "^2.0.3"
+    "carto": "CartoDB/carto#master"
   },
   "devDependencies": {
     "babel-plugin-transform-runtime": "6.12.0",
