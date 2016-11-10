@@ -6,6 +6,18 @@ const SYMBOLYZERS = {
   line: 'lines'
 	};
 
+const TYPES = {
+  polygon: {
+    color: 'fill'
+  },
+  line: {
+    color: 'color'
+  },
+  marker: {
+    color: 'color'
+  }
+};
+
 const CCSS = new Carto.RendererJS();
 
 const translateSymName = function (symName) {
@@ -30,6 +42,18 @@ const makeTangramCond = function (cond) {
     .replace(/data\[/g, 'feature[');
 	};
 
+const stringFunction = function (fn, def, ...args) {
+  if (!fn) return function () {return def;};
+
+  fn = `return (${fn}());`;
+
+  return new Function(...args, fn);
+};
+
+const getPropertyName = function (prop, type) {
+  return TYPES[prop][type];
+}
+
 const getAttributeFeature = function (sym, feature, ly) {
   let attr = ly[getAttributeName(sym, feature)];
   if (!attr) return '';
@@ -49,9 +73,9 @@ const getSymbolizers = function (layer) {
   for (var i = 0; i < layer.symbolizers.length; i++) {
 			let sym = layer.symbolizers[i];
 			draw[translateSymName(sym)] = {
-					color: getAttributeFeature(sym, 'fill', layer),
+					color: getAttributeFeature(sym, getPropertyName(sym, 'color'), layer),
 					size: getAttributeFeature(sym, 'size', layer),
-					width: getAttributeFeature(sym, 'width', layer)
+					width: stringFunction(getAttributeFeature(sym, 'width', layer), '', 'feature', '$zoom')({}, 10)
 			};
   }
 
