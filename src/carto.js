@@ -4,7 +4,7 @@ const SYMBOLYZERS = {
   marker: 'points',
   polygon: 'polygons',
   line: 'lines'
-	};
+};
 
 const TYPES = {
   polygon: {
@@ -22,11 +22,11 @@ const CCSS = new Carto.RendererJS();
 
 const translateSymName = function (symName) {
   return SYMBOLYZERS[symName];
-	};
+};
 
 const getAttributeName = function (sym, feature) {
   return sym + '-' + feature;
-	};
+};
 
 const addFunction = function (innerCode) {
   return `function () {
@@ -34,13 +34,13 @@ const addFunction = function (innerCode) {
     ${innerCode}
     return _value;
   }`;
-	};
+};
 
 const makeTangramCond = function (cond) {
   return cond
     .replace(/ctx.zoom/g, '$zoom')
     .replace(/data\[/g, 'feature[');
-	};
+};
 
 const stringFunction = function (fn, def, ...args) {
   if (!fn) return function () {return def;};
@@ -52,7 +52,7 @@ const stringFunction = function (fn, def, ...args) {
 
 const getPropertyName = function (prop, type) {
   return TYPES[prop][type];
-}
+};
 
 const getAttributeFeature = function (sym, feature, ly) {
   let attr = ly[getAttributeName(sym, feature)];
@@ -66,7 +66,7 @@ const getAttributeFeature = function (sym, feature, ly) {
   }
 
   return addFunction(fnBody);
-	};
+};
 
 const getSymbolizers = function (layer) {
   let draw = {};
@@ -80,7 +80,7 @@ const getSymbolizers = function (layer) {
   }
 
   return draw;
-	};
+};
 
 const extractFeatures = function (ccss) {
   let layers = CCSS.render(ccss).getLayers(),
