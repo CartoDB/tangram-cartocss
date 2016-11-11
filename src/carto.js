@@ -75,7 +75,7 @@ const getSymbolizers = function (layer) {
 			draw[translateSymName(sym)] = {
 					color: getAttributeFeature(sym, getPropertyName(sym, 'color'), layer),
 					size: getAttributeFeature(sym, 'size', layer),
-					width: stringFunction(getAttributeFeature(sym, 'width', layer), '', 'feature', '$zoom')({}, 10)
+					width: stringFunction(getAttributeFeature(sym, 'width', layer), '', 'feature', '$zoom')({}, 10) + 'px'
 			};
   }
 
