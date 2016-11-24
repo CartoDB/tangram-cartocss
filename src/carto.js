@@ -49,14 +49,6 @@ const makeTangramCond = function (cond) {
     .replace(/data\[/g, 'feature[');
 };
 
-const stringFunction = function (fn, def, ...args) {
-  if (!fn) return function () {return def;};
-
-  fn = `return (${fn}());`;
-
-  return new Function(...args, fn);
-};
-
 const getPropertyName = function (prop, type) {
   return TYPES[prop][type];
 };
@@ -83,7 +75,7 @@ const getPx2Meters = function (fn) {
     return val / ($zoom * 0.0003);
   }
   `;
-}
+};
 
 const getAlphaColor = function (color, opacity) {
 
