@@ -1,12 +1,12 @@
 {
   "name": "tangram-cartocss",
-  "version": "0.2.5",
+  "version": "0.2.21",
   "description": "Transform cartocss into a draw tangram object.",
   "repository": {
     "type": "git",
     "url": "git://github.com/cartodb/tangram-cartocss.git"
   },
-  "main": "dist/tangram-cartocss.min.js",
+  "main": "dist/tangram-cartocss.debug.js",
   "homepage": "https://github.com/cartodb/tangram-cartocss",
   "keywords": [
     "maps",

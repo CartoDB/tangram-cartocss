@@ -75,6 +75,16 @@ const getAttributeFeature = function (sym, feature, ly) {
   return addFunction(fnBody);
 };
 
+const getPx2Meters = function (fn) {
+  return `
+  function () {
+    var val = (${fn}());
+
+    return val / ($zoom * 0.0003);
+  }
+  `;
+}
+
 const getAlphaColor = function (color, opacity) {
 
   if (color && opacity) {
@@ -144,7 +154,7 @@ const getSymbolizers = function (layer) {
 			draw[translateSymName(sym)] = {
 					color: getAlphaColor(getAttributeFeature(sym, getPropertyName(sym, 'color'), layer), getAttributeFeature(sym, getPropertyName(sym, 'opacity'), layer)),
 					size: getAttributeFeature(sym, 'size', layer),
-					width: stringFunction(getAttributeFeature(sym, 'width', layer), '', 'feature', '$zoom')({}, 10) + 'px'
+					width: getPx2Meters(getAttributeFeature(sym, 'width', layer))
 			};
   }
 
