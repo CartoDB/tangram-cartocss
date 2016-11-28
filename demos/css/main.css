@@ -1,7 +1,9 @@
-body {
+body, html {
+    font-family: 'Inconsolata', monospace;
     margin: 0px;
     border: 0px;
     padding: 0px;
+    color: white;
 }
 
 #map {
@@ -35,6 +37,43 @@ body {
   top: 10px;
   right: 10px;
   border-top: solid #3d3;
+}
+
+.dir {
+  padding: 10px;
+}
+
+.dir > h4.title {
+  margin: 0;
+}
+
+.dir > ul.layers {
+  color: #3e3;
+  padding: 0;
+}
+
+.dir > ul.layers > li {
+  margin-left: 10px;
+}
+
+.dir > ul.layers > li:hover {
+  color: #3e3;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+li.element.opened {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+li.element > .cartocss {
+  transition: height ease .7s;
+  display: none;
+  height: 0px;
+}
+
+li.element.opened > .cartocss {
+  display: block;
+  height: 400px;
 }
 
 input, button, textarea {

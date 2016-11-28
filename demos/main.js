@@ -1,3 +1,19 @@
+var app = new Vue({
+	el: '#gui',
+	data: {
+		layers: [
+			{
+				id: 'layer0',
+				opened: true
+			},
+			{
+				id: 'layer1',
+				opened: false
+			}
+		]
+	}
+});
+
 var map = L.map( 'map' );
 
 
