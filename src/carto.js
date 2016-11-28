@@ -13,11 +13,13 @@ const TYPES = {
   },
 
   line: {
-    color: 'color'
+    color: 'color',
+    opacity: 'opacity'
   },
 
   marker: {
-    color: 'color'
+    color: 'fill',
+    opacity: 'opacity'
   },
 
   'polygon-pattern': { // NOTE: this is wrong, check it!
@@ -72,7 +74,7 @@ const getPx2Meters = function (fn) {
   function () {
     var val = (${fn}());
 
-    return val / ($zoom * 0.0003);
+    return val * $meters_per_pixel;
   }
   `;
 };
@@ -143,6 +145,8 @@ const getSymbolizers = function (layer) {
   let draw = {};
   for (var i = 0; i < layer.symbolizers.length; i++) {
 			let sym = layer.symbolizers[i];
+      sym = sym === 'markers' ? 'marker' : sym;
+      if (!sym) continue;
 			draw[translateSymName(sym)] = {
 					color: getAlphaColor(getAttributeFeature(sym, getPropertyName(sym, 'color'), layer), getAttributeFeature(sym, getPropertyName(sym, 'opacity'), layer)),
 					size: getAttributeFeature(sym, 'size', layer),

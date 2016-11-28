@@ -12,14 +12,14 @@ TH.startTangram = function (map) {
 };
 
 TH.setLayerDraw = function (scene, layer) {
-  scene.config.layers[layer.name].draw = CCSS.carto2Draw(layer.cartocss);
+  scene.config.layers[layer.id].draw = CCSS.carto2Draw(layer.cartocss);
   scene.updateConfig();
 };
 
 TH.addLayer = function (scene, layer) {
-  scene.config.layers[layer.name] = {
+  scene.config.layers[layer.id] = {
     data: {
-      layer: 'layer0',
+      layer: layer.id,
       source: 'CartoDB'
     }
   };

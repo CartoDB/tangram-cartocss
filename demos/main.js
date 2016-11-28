@@ -19,8 +19,9 @@ var app = new Vue({
 	},
 
 	methods: {
-		send: function (layerId) {
-			console.log(layerId);
+		send: function (ly) {
+			TH.setLayerDraw(window.sceneLayer, ly);
+			window.sceneLayer.updateConfig();
 		},
 		loadVizJSON: function (uri) {
 			let vizUri = Carto.generateVizUri(uri),
@@ -38,7 +39,8 @@ var app = new Vue({
 							opened: false,
 							cartocss: '#layer {polygon-fill: #06c;}',
 							name: ly.options.layer_name
-						}
+						};
+
 						this.layers.push(layer);
 						TH.addLayer(window.sceneLayer, layer);
 						TH.setLayerDraw(window.sceneLayer, layer);
