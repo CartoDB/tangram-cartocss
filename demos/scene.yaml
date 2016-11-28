@@ -1,9 +1,5 @@
 global:
     language: en
-lights:
-    mainlight:
-        type: directional
-        direction: [0, -1, -.6]
 cameras:
     flat:
         type: flat
@@ -22,14 +18,3 @@ sources:
     CartoDB:
         type: MVT
         url: 'http://flo.localhost.lan:8181/api/v1/map/flo@9b11e2a3@0d2a9ce0f4b573ce0c1069a1a29715e2:1476801069301/mapnik/{z}/{x}/{y}.mvt'
-layers:
-    undefined:
-        data:
-            source: tiled
-            layer: http-layer1
-        draw:
-    state_county_merge:
-        data:
-            source: CartoDB
-            layer: layer0
-        draw:

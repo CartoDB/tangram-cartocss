@@ -12,13 +12,15 @@
   </head>
   <body>
     <div id="gui" class="menu">
+      <input type="text" name="url" v-model="uri"/>
+      <button type="button" class='send-url' v-on:click="loadVizJSON(uri)" value="GO">GO</button>
       <div class="dir">
         <h4 class="title">layers</h4>
         <ul class="layers">
-          <li v-for="layer in layers" v-on:click="opened != opened" class="element" v-bind:class="{ opened: layer.opened }" :key="layer.id">
-            {{ layer.id }}
+          <li v-for="layer in layers" v-on:click="layer.opened = !layer.opened" class="element" v-bind:class="{ opened: layer.opened }">
+            {{ layer.name }} <span v-bind:id="'save-' + layer.id" class="save" v-on:click.stop="send(layer.id)">save</span>
             <div class="options">
-              <textarea name="cartocss" id="layer.id" class="cartocss"></textarea>
+              <textarea v-on:click.stop name="cartocss" v-bind:id="'cartocss-' + layer.id" class="cartocss" v-model="layer.cartocss" ></textarea>
             </div>
           </li>
         </ul>
@@ -28,6 +30,6 @@
     <script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <script src="/node_modules/tangram/dist/tangram.debug.js" charset="utf-8"></script>
     <script src="dist/tangram-cartocss.debug.js" charset="utf-8"></script>
-    <script src="demos/main.js" charset="utf-8"></script>
+    <script src="dist/main.js" charset="utf-8"></script>
   </body>
 </html>
