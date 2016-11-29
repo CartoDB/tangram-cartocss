@@ -1,5 +1,6 @@
 import Carto from './lib/carto-helpers';
 import TH from './lib/tangram-helper';
+import Utils from './lib/utils';
 
 var map = L.map( 'map' );
 
@@ -24,24 +25,30 @@ var app = new Vue({
 			window.sceneLayer.updateConfig();
 		},
 		loadVizJSON: function (uri) {
-			let vizUri = Carto.generateVizUri(uri),
-					vizJSON = Carto.getVizJSON(vizUri);
+			let self = this;
+			return Utils.spawn(function*() {
 
-			vizJSON.then(viz => {
-				console.log(viz);
+				let vizUri = Carto.generateVizUri(uri),
+						viz = yield Carto.getVizJSON(vizUri),
+						jpUri = Carto.generateJSONPUri(viz),
+						jsonP = yield Carto.getJSONP(jpUri);
+
+				console.log(viz, jsonP);
 
 				TH.addSource(window.sceneLayer, Carto.generateSource(viz.datasource));
-
-				viz.layers.forEach(ly => {
+				let jpLayers = jsonP.metadata.layers;
+				viz.layers.reverse();
+				jpLayers.reverse();
+				viz.layers.forEach((ly, i) => {
 					if (ly.type === 'CartoDB') {
 						let layer = {
-							id: ly.id,
+							id: jpLayers[i].id,
 							opened: false,
-							cartocss: '#layer {polygon-fill: #06c;}',
+							cartocss: jpLayers[i].meta.cartocss,
 							name: ly.options.layer_name
 						};
 
-						this.layers.push(layer);
+						self.layers.push(layer);
 						TH.addLayer(window.sceneLayer, layer);
 						TH.setLayerDraw(window.sceneLayer, layer);
 					}
