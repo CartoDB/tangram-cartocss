@@ -147,10 +147,11 @@ const getSymbolizers = function (layer) {
 			let sym = layer.symbolizers[i];
       sym = sym === 'markers' ? 'marker' : sym;
       if (!sym) continue;
-			draw[translateSymName(sym)] = {
+			draw[translateSymName(sym) + '_blend'] = {
 					color: getAlphaColor(getAttributeFeature(sym, getPropertyName(sym, 'color'), layer), getAttributeFeature(sym, getPropertyName(sym, 'opacity'), layer)),
-					size: getAttributeFeature(sym, 'size', layer),
-					width: getPx2Meters(getAttributeFeature(sym, 'width', layer))
+					size: getAttributeFeature(sym, sym === 'marker' ? 'width' : 'size', layer),
+					width: getPx2Meters(getAttributeFeature(sym, 'width', layer)),
+          border: .2
 			};
   }
 

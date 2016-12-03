@@ -34,7 +34,8 @@
     "build-bundle": "$(npm bin)/browserify src/module.js -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s CCSS -p browserify-derequire --debug",
     "build-minify": "$(npm bin)/uglifyjs dist/tangram-cartocss.debug.js -c warnings=false -m -o dist/tangram-cartocss.min.js && npm run build-size",
     "build-size": "gzip dist/tangram-cartocss.min.js -c | wc -c | awk '{kb=$1/1024; print kb}' OFMT='%.0fk minified+gzipped'",
-    "watch": "$(npm bin)/budo src/module.js:dist/tangram-cartocss.debug.js demos/main.js:dist/main.js --port 8000 --cors --live -- -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s CCSS"
+    "watch": "$(npm bin)/budo src/module.js:dist/tangram-cartocss.debug.js demos/main.js:dist/main.js --port 8000 --cors --live -- -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s CCSS",
+    "build-demo": "$(npm bin)/browserify demos/main.js -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s main -p browserify-derequire --debug"
   },
   "author": {
     "name": "Carto",

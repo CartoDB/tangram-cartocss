@@ -10,11 +10,12 @@ fonts:
 styles:
   polygons_blend:
     base: polygons
-    blend: opaque
-sources:
-    tiled:
-        type: tile
-        url: 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png'
-    CartoDB:
-        type: MVT
-        url: 'http://flo.localhost.lan:8181/api/v1/map/flo@9b11e2a3@0d2a9ce0f4b573ce0c1069a1a29715e2:1476801069301/mapnik/{z}/{x}/{y}.mvt'
+    blend: inlay
+  lines_blend:
+    base: lines
+    blend: depthinlay
+  points_blend:
+    base: points
+    blend: depthinlay
+scene:
+  animated: false

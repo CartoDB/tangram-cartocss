@@ -29,6 +29,7 @@ TH.addSource = function (scene, url) {
   scene.config.sources['CartoDB'] = {
     id: 1,
     type: 'MVT',
+    rasters: ['normals'],
     url: url
   };
 }

@@ -4,7 +4,7 @@ import Utils from './lib/utils';
 
 var map = L.map( 'map' );
 
-L.tileLayer( 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+L.tileLayer( 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
     attribution: '<a href="http://carto.com">CARTO</a> © 2016',
     maxZoom: 18
 } ).addTo( map );
@@ -14,7 +14,7 @@ window.sceneLayer = TH.startTangram(map);
 var app = new Vue({
 	el: '#gui',
 	data: {
-		uri: 'http://flo.localhost.lan:3000/builder/0ee34530-b2f3-11e6-9bd5-f45c89cdaa2d/',
+		uri: 'https://eduardorodes.carto.com/builder/2c212118-b711-11e6-9e07-0ef7f98ade21/embed',
 		layers: [
 		]
 	},
@@ -37,8 +37,7 @@ var app = new Vue({
 
 				TH.addSource(window.sceneLayer, Carto.generateSource(viz.datasource));
 				let jpLayers = jsonP.metadata.layers;
-				viz.layers.reverse();
-				jpLayers.reverse();
+
 				viz.layers.forEach((ly, i) => {
 					if (ly.type === 'CartoDB') {
 						let layer = {
@@ -60,4 +59,4 @@ var app = new Vue({
 });
 
 
-map.setView( [ 40.7, -74.009 ], 8 );
+map.setView( [ 48.8, 2.349 ], 8 );
