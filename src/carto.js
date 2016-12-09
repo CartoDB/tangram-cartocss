@@ -151,8 +151,8 @@ const getSymbolizers = function (layer) {
 					color: getAlphaColor(getAttributeFeature(sym, getPropertyName(sym, 'color'), layer), getAttributeFeature(sym, getPropertyName(sym, 'opacity'), layer)),
 					size: getAttributeFeature(sym, sym === 'marker' ? 'width' : 'size', layer),
 					width: getPx2Meters(getAttributeFeature(sym, 'width', layer)),
-          border_color: 'white',
-          border_size: 2
+          border_color: getAlphaColor(getAttributeFeature(sym, 'line-color', layer), getAttributeFeature(sym, getPropertyName(sym, 'line-opacity'), layer)),
+          border_size: getAttributeFeature(sym, 'line-width', layer)
 			};
   }
 
