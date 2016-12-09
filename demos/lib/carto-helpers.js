@@ -31,7 +31,7 @@ Carto.getVizJSON = function (url) {
 Carto.generateJSONPUri = function (vizJSON) {
   let source = Carto.generateSource(vizJSON.datasource);
 
-  return source.substring(0, source.indexOf('mapnik')) + 'jsonp';
+  return source.substring(0, source.indexOf('mapnik')).replace(/-/g, '_') + 'jsonp?stat_tag=' + vizJSON.datasource.stat_tag;
 }
 
 Carto.getJSONP = function (url) {
@@ -53,6 +53,6 @@ Carto.generateSource = function (datasource) {
   let id = datasource.template_name || 'tpl_' + datasource.stat_tag;
   return datasource.maps_api_template.replace( '{user}', datasource.user_name ) +
                 '/api/v1/map/named/' +
-                id +
+                id.replace(/-/g, '_') +
                 '/mapnik/{z}/{x}/{y}.mvt';
 }

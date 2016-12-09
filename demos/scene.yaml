@@ -10,12 +10,13 @@ fonts:
 styles:
   polygons_blend:
     base: polygons
-    blend: inlay
+    blend: overlay
   lines_blend:
     base: lines
     blend: depthinlay
   points_blend:
     base: points
-    blend: depthinlay
+    blend: overlay
+    collide: false
 scene:
   animated: false

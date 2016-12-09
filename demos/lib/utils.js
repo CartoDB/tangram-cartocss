@@ -60,7 +60,7 @@ Utils.generateBlobFile = function( string ) {
 };
 
 Utils.jsonp = function( url, callback ) {
-    var callbackName = 'jsonp_callback_' + Math.round( 100000 * Math.random() );
+    var callbackName = '_cdbc_' + Math.round( 100000 * Math.random() );
     window[ callbackName ] = function( data ) {
         delete window[ callbackName ];
         document.body.removeChild( script );

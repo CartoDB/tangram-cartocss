@@ -2,9 +2,9 @@ import Carto from './lib/carto-helpers';
 import TH from './lib/tangram-helper';
 import Utils from './lib/utils';
 
-var map = L.map( 'map' );
+var map = window.L.map( 'map' );
 
-L.tileLayer( 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
+window.L.tileLayer( 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
     attribution: '<a href="http://carto.com">CARTO</a> © 2016',
     maxZoom: 18
 } ).addTo( map );
@@ -14,7 +14,7 @@ window.sceneLayer = TH.startTangram(map);
 var app = new Vue({
 	el: '#gui',
 	data: {
-		uri: 'https://eduardorodes.carto.com/builder/2c212118-b711-11e6-9e07-0ef7f98ade21/embed',
+		uri: 'https://flopez2.carto.com/builder/27a982d0-bdea-11e6-8daa-0e05a8b3e3d7/embed',
 		layers: [
 		]
 	},
@@ -59,4 +59,4 @@ var app = new Vue({
 });
 
 
-map.setView( [ 48.8, 2.349 ], 8 );
+map.setView( [40.18579800351785,-95.045989688719], 5 );
