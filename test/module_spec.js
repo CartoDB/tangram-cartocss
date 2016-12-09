@@ -29,7 +29,7 @@ describe('CCSS', () => {
 
       assert.notEqual(draw.polygons.color, '');
       assert.equal(draw.polygons.size, '');
-      assert.equal(draw.polygons.width, '');
+      assert.notEqual(draw.polygons.width, '');
 					});
 			});
 

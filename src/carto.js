@@ -8,13 +8,22 @@ const SYMBOLYZERS = {
 
 const TYPES = {
   polygon: {
-    color: 'fill'
+    color: 'fill',
+    opacity: 'opacity'
   },
+
   line: {
-    color: 'color'
+    color: 'color',
+    opacity: 'opacity'
   },
+
   marker: {
-    color: 'color'
+    color: 'fill',
+    opacity: 'opacity'
+  },
+
+  'polygon-pattern': { // NOTE: this is wrong, check it!
+    color: 'type'
   }
 };
 
@@ -42,14 +51,6 @@ const makeTangramCond = function (cond) {
     .replace(/data\[/g, 'feature[');
 };
 
-const stringFunction = function (fn, def, ...args) {
-  if (!fn) return function () {return def;};
-
-  fn = `return (${fn}());`;
-
-  return new Function(...args, fn);
-};
-
 const getPropertyName = function (prop, type) {
   return TYPES[prop][type];
 };
@@ -68,14 +69,90 @@ const getAttributeFeature = function (sym, feature, ly) {
   return addFunction(fnBody);
 };
 
+const getPx2Meters = function (fn) {
+  return `
+  function () {
+    var val = (${fn}());
+
+    return val * $meters_per_pixel;
+  }
+  `;
+};
+
+const getAlphaColor = function (color, opacity) {
+
+  if (color && opacity) {
+
+    var fn = `
+    function () {
+      var isHex = function (c) {
+        return c.indexOf('#') >= 0;
+      };
+      var isRGB = function (c) {
+        return c.indexOf('rgb') >= 0;
+      };
+      var isRGBA = function (c) {
+        return c.indexOf('rgba') >= 0;
+      };
+      var toSix = function (c) {
+        if (c.length === 7) {
+          return c;
+        }
+        else {
+          var r = c[1],
+              g = c[2],
+              b = c[3];
+
+          return '#' + r + r + g + g + b + b;
+        }
+      };
+      var hex2int = function (hex) {
+        return parseInt('0x' + hex);
+      };
+      var toRGB = function (c) {
+        var r = hex2int(c.substr(1, 2)) + ', ',
+            g = hex2int(c.substr(3, 2)) + ', ',
+            b = hex2int(c.substr(5, 2));
+        return 'rgb(' + r + g + b + ')';
+      };
+      var toRGBA = function (rgb, alpha) {
+        return rgb.replace('rgb', 'rgba').replace(')', ', ' + alpha + ')');
+      };
+      var color = (${color}());
+      var opacity = (${opacity}()) || 1;
+
+      if (isRGBA(color)) {
+        return color;
+      }
+      else {
+        if (isHex(color)) {
+          return toRGBA(toRGB(toSix(color)), opacity);
+        }
+        else if (isRGB(color)){
+          return toRGBA(color);
+        }
+      }
+    }
+    `;
+
+    return fn;
+  }
+
+  return color;
+};
+
 const getSymbolizers = function (layer) {
   let draw = {};
   for (var i = 0; i < layer.symbolizers.length; i++) {
 			let sym = layer.symbolizers[i];
-			draw[translateSymName(sym)] = {
-					color: getAttributeFeature(sym, getPropertyName(sym, 'color'), layer),
-					size: getAttributeFeature(sym, 'size', layer),
-					width: stringFunction(getAttributeFeature(sym, 'width', layer), '', 'feature', '$zoom')({}, 10) + 'px'
+      sym = sym === 'markers' ? 'marker' : sym;
+      if (!sym) continue;
+			draw[translateSymName(sym) + '_blend'] = {
+					color: getAlphaColor(getAttributeFeature(sym, getPropertyName(sym, 'color'), layer), getAttributeFeature(sym, getPropertyName(sym, 'opacity'), layer)),
+					size: getAttributeFeature(sym, sym === 'marker' ? 'width' : 'size', layer),
+					width: getPx2Meters(getAttributeFeature(sym, 'width', layer)),
+          border_color: 'white',
+          border_size: 2
 			};
   }
 
