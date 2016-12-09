@@ -6,7 +6,7 @@ export default TH;
 
 TH.startTangram = function (map) {
   return Tangram.leafletLayer({
-    scene: '../demos/scene.yaml',
+    scene: 'demos/scene.yaml',
     logLevel: 'debug'
   }).addTo(map).scene;
 };
