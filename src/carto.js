@@ -1,4 +1,5 @@
 import Carto from 'carto';
+import MD5 from 'md5';
 
 const SYMBOLYZERS = {
   marker: 'points',
@@ -146,13 +147,15 @@ const getSymbolizers = function (layer) {
   for (var i = 0; i < layer.symbolizers.length; i++) {
 			let sym = layer.symbolizers[i];
       sym = sym === 'markers' ? 'marker' : sym;
-      if (!sym) continue;
+      if (!sym || !TYPES[sym]) continue;
+
 			draw[translateSymName(sym) + '_blend'] = {
 					color: getAlphaColor(getAttributeFeature(sym, getPropertyName(sym, 'color'), layer), getAttributeFeature(sym, getPropertyName(sym, 'opacity'), layer)),
 					size: getAttributeFeature(sym, sym === 'marker' ? 'width' : 'size', layer),
 					width: getPx2Meters(getAttributeFeature(sym, 'width', layer)),
           border_color: getAlphaColor(getAttributeFeature(sym, 'line-color', layer), getAttributeFeature(sym, getPropertyName(sym, 'line-opacity'), layer)),
-          border_size: getAttributeFeature(sym, 'line-width', layer)
+          border_size: getAttributeFeature(sym, 'line-width', layer),
+          texture: 'http://s3.amazonaws.com/com.cartodb.users-assets.production/production/mamataakella/assets/20160209190925heart-18-outline3.svg'//getAttributeFeature(sym, 'file', layer)
 			};
   }
 
