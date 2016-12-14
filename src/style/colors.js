@@ -86,4 +86,4 @@ Colors.getAlphaColor = function (color, opacity) {
 	}
 
 	return color;
-}
+};
