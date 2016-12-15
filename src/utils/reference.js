@@ -1,10 +1,13 @@
-import Ref from 'tangram-reference';
+import reference from 'tangram-reference';
+
+const Ref = reference.load('1.0.0');
 
 var TR = {};
 
 export default TR;
 
-const getProperty (type, prop) {
+const getProperty = function (type, prop) {
+	console.log(prop, Ref)
 	const obj = Ref.symbolizers[type];
 	return prop ? obj[prop] : obj;
 }

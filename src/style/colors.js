@@ -6,7 +6,7 @@ export default Colors;
 let C = Colors;
 
 Colors._isHex = Utils.functionString(
-		`function (c) {
+		`function isHex (c) {
 			return c.indexOf('#') >= 0;
 		}`
 	);
@@ -46,9 +46,9 @@ Colors.hexToInt = Utils.functionString(
 
 Colors.toRGB = Utils.functionString(
 		`function (c) {
-			var r = hex2int(c.substr(1, 2)) + ', ',
-				g = hex2int(c.substr(3, 2)) + ', ',
-				b = hex2int(c.substr(5, 2));
+			var r = ${C.hexToInt}(c.substr(1, 2)) + ', ',
+				g = ${C.hexToInt}(c.substr(3, 2)) + ', ',
+				b = ${C.hexToInt}(c.substr(5, 2));
 			
 			return 'rgb(' + r + g + b + ')';
 		}`
@@ -80,7 +80,7 @@ Colors.getAlphaColor = function (color, opacity) {
 	if (color && typeof opacity !== 'number') {
 		return Utils.functionString(
 				`function () {
-					return ${C.getAlphaColorFn}(${color}(), ${opacity}() || 1);
+					return ${C.getAlphaColorFn}(${color}(), ${opacity}() || 1.);
 				}`
 			);
 	}

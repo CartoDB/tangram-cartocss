@@ -17,7 +17,7 @@ import MD5 from 'md5';
 /*
 	INTERNAL DEPENDENCIES
  */
-import Utils form '../utils/utils';
+import Utils from '../utils/utils';
 import TR from '../utils/reference';
 import Colors from '../style/colors';
 
@@ -69,17 +69,17 @@ const getMarkerColors = function(c3ss) {
 const getColors = function(c3ss) {
 	const alpha = getMarkerAlphaRules(c3ss);
 	const colors = getMarkerColors(c3ss);
-	
+
 	let draw = {
 		color: Colors.getAlphaColor(
-				Utils.buildCCSSFn(color.js).toString(),
+				Utils.buildCCSSFn(colors.fill.js).toString(),
 				alpha.global || alpha.fill
 			)
 	};
 
 	if (colors.stroke) {
 		draw.border_color = Colors.getAlphaColor(
-			Utils.buildCCSSFn(stroke.js).toString(),
+			Utils.buildCCSSFn(colors.stroke.js).toString(),
 			alpha.global || alpha.stroke
 		);
 	}
@@ -118,11 +118,19 @@ const getCollide = function(c3ss) {
 	
 	if (collide) {
 		return {
-			collide: Utils.buildCCSSFn(collide.js, ['$zoom'])(10); // NOTE: I've put 10 as a default zoom parameter :)
+			collide: Utils.buildCCSSFn(collide.js, ['$zoom'])(10) // NOTE: I've put 10 as a default zoom parameter :)
 		};
 	}
 
 	return {};
+};
+
+const getTextureFile = function(c3ss) {
+	const texture = c3ss[PR.file.css];
+
+	if (texture) {
+		return Utils.buildCCSSFn(texture.js, ['$zoom'])(10);
+	}
 };
 
 /**
@@ -131,16 +139,17 @@ const getCollide = function(c3ss) {
  * @return {object}      return draw object with a non-dynamic texture.
  */
 const getTexture = function(c3ss) {
-	const texture = c3ss[PR['file'].css];
+	const texture = c3ss[PR.file.css];
 
 	if (texture) {
 		return {
-			texture: MD5(Utils.buildCCSSFn(texture.js, ['$zoom'])(10));
+			texture: MD5(getTextureFile(c3ss))
 		};
 	}
 
 	return {};
 };
+
 
 
 
@@ -159,25 +168,57 @@ export default Point;
  * @return {object}      object with the draw types and their properties
  */
 Point.getDraw = function(c3ss) {
-	let point = {};
+	var point = {};
 	
 	if (TR.checkSymbolizer(c3ss, 'markers')) {
+		point = {};
+
 		Object.assign(
 				point,
 				getColors(c3ss),
-				getWidth(c3ss),
+				getWidths(c3ss),
 				getCollide(c3ss)
 			);
 
 	}
 
-	return point;
+	return { points_blend: point };
 };
 
-Point.getStyle = function() {
+// TODO
+/**
+ * [getStyle description]
+ * @param  {[type]} c3ss  [description]
+ * @return {[type]}       [description]
+ */
+Point.getStyle = function(c3ss) {
+	let style = {
+		points_blend: {
+			base: 'points',
+			blend: 'overlay'
+		}
+	};
 
+	if (TR.checkSymbolizer(c3ss, 'markers')) {
+		style.points_blend = Object.assign(
+				style.points_blend,
+				getTexture(c3ss)
+			);
+	}
+
+	return style;
 };
 
-Point.getTextures = function() {
+Point.getTextures = function(c3ss) {
+	if (TR.checkSymbolizer(c3ss, 'markers')) {
+		let texture = getTextureFile(c3ss);
 
+		if (texture) {
+			var tex = {};
+
+			tex[MD5(texture)] = {url: texture};
+		}
+
+		return tex;
+	}
 };

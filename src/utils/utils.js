@@ -38,8 +38,12 @@ Utils.buildCCSSFn = function(js, attr) {
 	let fn = '';
 
 	for (var i = 0; i < js.length; i++) {
-		fn += transpile2tangram(js[i]);
+		fn += Utils.transpile2Tangram(js[i]);
 	}
 
 	return Utils.functionString(Utils.wrapCodeInFunction(fn, attr));
 }
+
+Utils.generateDefault = function(val) {
+	return Utils.wrapCodeInFunction(`return ${val};`);
+};
