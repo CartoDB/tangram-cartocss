@@ -12,7 +12,10 @@ TH.startTangram = function (map) {
 };
 
 TH.setLayerDraw = function (scene, layer) {
-  scene.config.layers[layer.id].draw = CCSS.carto2Draw(layer.cartocss);
+  let draw = CCSS.carto2Draw(layer.cartocss);
+  scene.config.layers[layer.id].draw = draw.draw;
+  scene.config.textures = draw.textures;
+  scene.config.styles = draw.styles;
   scene.updateConfig();
 };
 

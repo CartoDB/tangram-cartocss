@@ -18,6 +18,8 @@ import MD5 from 'md5';
 /*
 	INTERNAL DEPENDENCIES
  */
+
+import BH from './helpers';
 import Utils from '../utils/utils';
 import TR from '../utils/reference';
 import Colors from '../style/colors';
@@ -29,7 +31,7 @@ const PR = TR.getPolygon(); // Polygon reference
  */
 
 const getPolygonAlpha = function(c3ss) {
-	let alpha = c3ss[PR['fill-opacity'].css]; // NOTE: improve the way of getting this. (functional)
+	let alpha = c3ss[PR['fill-opacity'].css] || BH.defaultAlpha(PR, 'polygon');; // NOTE: improve the way of getting this. (functional)
 
 	if (alpha) {
 		return Utils.buildCCSSFn(alpha.js).toString();
@@ -37,10 +39,10 @@ const getPolygonAlpha = function(c3ss) {
 };
 
 const getPolygonColor = function(c3ss) {
-	return c3ss[PR.fill.css] || {js: Utils.generateDefault(PR.fill['default-value'])};
+	return c3ss[PR.fill.css] || BH.defaultColor(PR, 'polygon');
 };
 
-const getColors = function (c3ss) {
+const getColor = function (c3ss) {
 	const alpha = getPolygonAlpha(c3ss);
 	const color = getPolygonColor(c3ss);
 
@@ -67,7 +69,7 @@ Polygon.getDraw = function(c3ss) {
 	if (TR.checkSymbolizer(c3ss, 'polygon')) {
 		Object.assign(
 				polygon,
-				getColors(c3ss)
+				getColor(c3ss)
 			);
 
 	}

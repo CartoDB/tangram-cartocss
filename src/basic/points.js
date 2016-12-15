@@ -17,6 +17,8 @@ import MD5 from 'md5';
 /*
 	INTERNAL DEPENDENCIES
  */
+
+import BH from './helpers';
 import Utils from '../utils/utils';
 import TR from '../utils/reference';
 import Colors from '../style/colors';
@@ -56,7 +58,7 @@ const getMarkerAlphaRules = function(c3ss) {
  */
 const getMarkerColors = function(c3ss) {
 	return {
-		fill: c3ss[PR.fill.css],
+		fill: c3ss[PR.fill.css] || BH.defaultColor(PR, 'point'),
 		stroke: c3ss[PR.stroke.css]
 	};
 };
