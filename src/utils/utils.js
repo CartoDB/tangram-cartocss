@@ -15,8 +15,9 @@ Utils.wrapCodeInFunction = function(innerCode, attr = [' ']) {
 Utils.functionString = function(fn) {
 	let args = fn
 			.substring( fn.indexOf('(') + 1, fn.indexOf(')') )
-			.replace(/\s/g, '')
-			.split(',');
+			.replace(/\s/g, '');
+
+	args = args ? args.split(',') : [];
 
 	let body = fn.substring( fn.indexOf('{') + 1, fn.lastIndexOf('}'));
 	let func = new Function(...args, body);
@@ -45,5 +46,5 @@ Utils.buildCCSSFn = function(js, attr) {
 };
 
 Utils.generateDefault = function(val) {
-	return Utils.wrapCodeInFunction(`return ${val};`);
+	return `return ${val};`;
 };
