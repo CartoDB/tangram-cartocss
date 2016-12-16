@@ -88,19 +88,19 @@ describe('CCSS', () => {
 			assert.throws(color);
 		});
 
-		it('should return #ffa000 if height === 20', () => {
+		it('should return rgba(255, 160, 0, 1) if height === 20', () => {
 			let fn = Utils.eval(color);
 			let res = fn({ height: 20 }, 10);
 			assert.equal(res, 'rgba(255, 160, 0, 1)');
 		});
 
-		it('should return #bb55ff with height < 20', () => {
+		it('should return rgba(187, 85, 255, 1) with height < 20', () => {
 			let fn = Utils.eval(color);
 			let res = fn({ height: 10 }, 10);
 			assert.equal(res, 'rgba(187, 85, 255, 1)');
 		});
 
-		it('should return #ff5500 with height > 20', () => {
+		it('should return rgba(255, 85, 0, 1) with height > 20', () => {
 			let fn = Utils.eval(color);
 			let res = fn({ height: 22 }, 10);
 			assert.equal(res, 'rgba(255, 85, 0, 1)');
