@@ -1,5 +1,4 @@
 import Carto from 'carto';
-import MD5 from 'md5';
 import Points from './basic/points';
 import Polygons from './basic/polygons';
 import Lines from './basic/lines';

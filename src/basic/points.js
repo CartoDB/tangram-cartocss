@@ -214,9 +214,9 @@ Point.getStyle = function(c3ss) {
 Point.getTextures = function(c3ss) {
 	if (TR.checkSymbolizer(c3ss, 'markers')) {
 		let texture = getTextureFile(c3ss);
+		let tex = {};
 
 		if (texture) {
-			var tex = {};
 
 			tex[MD5(texture)] = {url: texture};
 		}

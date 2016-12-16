@@ -42,7 +42,7 @@ Utils.buildCCSSFn = function(js, attr) {
 	}
 
 	return Utils.functionString(Utils.wrapCodeInFunction(fn, attr));
-}
+};
 
 Utils.generateDefault = function(val) {
 	return Utils.wrapCodeInFunction(`return ${val};`);

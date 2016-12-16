@@ -7,10 +7,9 @@ var TR = {};
 export default TR;
 
 const getProperty = function (type, prop) {
-	console.log(prop, Ref)
 	const obj = Ref.symbolizers[type];
 	return prop ? obj[prop] : obj;
-}
+};
 
 TR.getPoint = function(prop) {
 	return getProperty('markers', prop);

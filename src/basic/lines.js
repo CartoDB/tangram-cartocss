@@ -13,7 +13,6 @@
 /*
 	EXTERNAL DEPENDENCIES
  */
-import MD5 from 'md5';
 
 /*
 	INTERNAL DEPENDENCIES
@@ -82,7 +81,7 @@ Line.getDraw = function(c3ss) {
 	return { lines_blend: line };
 };
 
-Line.getStyle = function(c3ss) {
+Line.getStyle = function() {
 	let style = {
 		lines_blend: {
 			base: 'lines',

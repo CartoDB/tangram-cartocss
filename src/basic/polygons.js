@@ -13,7 +13,7 @@
 /*
 	EXTERNAL DEPENDENCIES
  */
-import MD5 from 'md5';
+// import MD5 from 'md5'; // NOTE: used when we support textures.
 
 /*
 	INTERNAL DEPENDENCIES
@@ -31,7 +31,7 @@ const PR = TR.getPolygon(); // Polygon reference
  */
 
 const getPolygonAlpha = function(c3ss) {
-	let alpha = c3ss[PR['fill-opacity'].css] || BH.defaultAlpha(PR, 'polygon');; // NOTE: improve the way of getting this. (functional)
+	let alpha = c3ss[PR['fill-opacity'].css] || BH.defaultAlpha(PR, 'polygon'); // NOTE: improve the way of getting this. (functional)
 
 	if (alpha) {
 		return Utils.buildCCSSFn(alpha.js).toString();
@@ -78,7 +78,7 @@ Polygon.getDraw = function(c3ss) {
 };
 
 
-Polygon.getStyle = function(c3ss) {
+Polygon.getStyle = function() {
 	let style = {
 		polygons_blend: {
 			base: 'polygons',
