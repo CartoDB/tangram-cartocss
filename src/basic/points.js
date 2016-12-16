@@ -1,12 +1,12 @@
 /*
-	 ________  ________  ___  ________   _________   
-	|\   __  \|\   __  \|\  \|\   ___  \|\___   ___\ 
-	\ \  \|\  \ \  \|\  \ \  \ \  \\ \  \|___ \  \_| 
-	 \ \   ____\ \  \\\  \ \  \ \  \\ \  \   \ \  \  
-	  \ \  \___|\ \  \\\  \ \  \ \  \\ \  \   \ \  \ 
+	 ________  ________  ___  ________   _________
+	|\   __  \|\   __  \|\  \|\   ___  \|\___   ___\
+	\ \  \|\  \ \  \|\  \ \  \ \  \\ \  \|___ \  \_|
+	 \ \   ____\ \  \\\  \ \  \ \  \\ \  \   \ \  \
+	  \ \  \___|\ \  \\\  \ \  \ \  \\ \  \   \ \  \
 	   \ \__\    \ \_______\ \__\ \__\\ \__\   \ \__\
 	    \|__|     \|_______|\|__|\|__| \|__|    \|__|
-	                                                 
+
  */
 
 /*
@@ -43,10 +43,10 @@ const getMarkerAlphaRules = function(c3ss) {
 	else {
 		let fill = c3ss[PR['fill-opacity'].css],
 			stroke = c3ss[PR['stroke-opacity'].css];
-		
+
 		fill = fill ? Utils.buildCCSSFn(fill.js).toString() : fill;
 		stroke = stroke ? Utils.buildCCSSFn(stroke.js).toString() : stroke;
-		
+
 		return { fill, stroke };
 	}
 };
@@ -98,7 +98,7 @@ const getColors = function(c3ss) {
 const getWidths = function(c3ss) {
 	const size = c3ss[PR.width.css];
 	const borderWidth = c3ss[PR['stroke-width'].css];
-	
+
 	let draw = {
 		size: Utils.buildCCSSFn(size.js).toString()
 	};
@@ -117,7 +117,7 @@ const getWidths = function(c3ss) {
  */
 const getCollide = function(c3ss) {
 	const collide = c3ss[PR['allow-overlap'].css];
-	
+
 	if (collide) {
 		return {
 			collide: Utils.buildCCSSFn(collide.js, ['$zoom'])(10) // NOTE: I've put 10 as a default zoom parameter :)
@@ -171,7 +171,7 @@ export default Point;
  */
 Point.getDraw = function(c3ss) {
 	var point = {};
-	
+
 	if (TR.checkSymbolizer(c3ss, 'markers')) {
 		point = {};
 

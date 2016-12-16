@@ -31,4 +31,3 @@ BH.defaultAlpha = function(Ref, type) {
 BH.defaultColor = function(Ref, type) {
 	return BH.generateDefaultFromRef(Ref, COLOR[type]);
 };
-

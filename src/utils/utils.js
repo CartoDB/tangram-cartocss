@@ -9,7 +9,7 @@ Utils.wrapCodeInFunction = function(innerCode, attr = [' ']) {
 				var _value = null;
 				${innerCode}
 				return _value;
-			}`.replace(/\t/g, '');
+			}`.replace(/(\s|\t)/g, '');
 };
 
 Utils.functionString = function(fn) {

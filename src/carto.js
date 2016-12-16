@@ -13,26 +13,26 @@ const extractFeatures = function (ccss) {
 
   // NOTE: this is wrong, we have to separate the layers.
   for (var i = 0; i < layers.length; i++) {
-			let ly = layers[i].shader;
+		let ly = layers[i].shader;
 
-      Object.assign(
-          draw,
-          Points.getDraw(ly),
-          Polygons.getDraw(ly),
-          Lines.getDraw(ly)
-        );
+    Object.assign(
+        draw,
+        Points.getDraw(ly),
+        Polygons.getDraw(ly),
+        Lines.getDraw(ly)
+      );
 
-      Object.assign(
-          textures,
-          Points.getTextures(ly)
-        );
+    Object.assign(
+        textures,
+        Points.getTextures(ly)
+      );
 
-      Object.assign(
-          styles,
-          Points.getStyle(ly),
-          Polygons.getStyle(ly),
-          Lines.getStyle(ly)
-        );
+    Object.assign(
+        styles,
+        Points.getStyle(ly),
+        Polygons.getStyle(ly),
+        Lines.getStyle(ly)
+      );
   }
 
   return {textures, draw, styles};
