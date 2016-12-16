@@ -8,5 +8,5 @@ Geom.px2Meters = function (fn) {
   		var val = (${fn}());
   		return val / ($zoom * 0.0003);
   	}
-  `.replace(/(\s|\t)/g, '');
+  `.replace(/(\t)/g, '');
 };
