@@ -80,7 +80,7 @@ const getColors = function(c3ss) {
 	};
 
 	if (colors.stroke) {
-		draw.border_color = Colors.getAlphaColor(
+		draw.outline_color = Colors.getAlphaColor(
 			Utils.buildCCSSFn(colors.stroke.js).toString(),
 			alpha.global || alpha.stroke
 		);
@@ -97,14 +97,14 @@ const getColors = function(c3ss) {
  */
 const getWidths = function(c3ss) {
 	const size = c3ss[PR.width.css];
-	const borderWidth = c3ss[PR['stroke-width'].css];
+	const outlineWidth = c3ss[PR['stroke-width'].css];
 
 	let draw = {
 		size: Utils.buildCCSSFn(size.js).toString()
 	};
 
-	if (borderWidth) {
-		draw.border_width = Utils.buildCCSSFn(borderWidth.js).toString();
+	if (outlineWidth) {
+		draw.outline_width = Utils.buildCCSSFn(outlineWidth.js).toString();
 	}
 
 	return draw;
@@ -120,7 +120,7 @@ const getCollide = function(c3ss) {
 
 	if (collide) {
 		return {
-			collide: Utils.buildCCSSFn(collide.js, ['$zoom'])(10) // NOTE: I've put 10 as a default zoom parameter :)
+			collide: !Utils.buildCCSSFn(collide.js, ['$zoom'])(10) // NOTE: I've put 10 as a default zoom parameter :)
 		};
 	}
 
@@ -152,6 +152,24 @@ const getTexture = function(c3ss) {
 	return {};
 };
 
+const getBlending = function(c3ss) {
+	const blend = c3ss[PR['comp-op'].css];
+
+	if (blend) {
+		if (Utils.buildCCSSFn(blend.js, ['$zoom'])(10) === 'multiply') {
+			return {
+				blend: 'multiply'
+			};
+		}
+		else {
+			return {
+				blend: 'overlay'
+			};
+		}
+	}
+
+	return {};
+};
 
 
 
@@ -204,7 +222,8 @@ Point.getStyle = function(c3ss) {
 	if (TR.checkSymbolizer(c3ss, 'markers')) {
 		style.points_blend = Object.assign(
 				style.points_blend,
-				getTexture(c3ss)
+				getTexture(c3ss),
+				getBlending(c3ss)
 			);
 	}
 
