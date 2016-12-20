@@ -156,9 +156,10 @@ const getBlending = function(c3ss) {
 	const blend = c3ss[PR['comp-op'].css];
 
 	if (blend) {
-		if (Utils.buildCCSSFn(blend.js, ['$zoom'])(10) === 'multiply') {
+		let val = Utils.buildCCSSFn(blend.js, ['$zoom'])(10);
+		if (TR.checkType(PR['comp-op'], val)) {
 			return {
-				blend: 'multiply'
+				blend: val
 			};
 		}
 		else {

@@ -26,3 +26,7 @@ TR.getPolygon = function(prop) {
 TR.checkSymbolizer = function(c3ss, sym) {
 	return c3ss.symbolizers.indexOf(sym) !== -1;
 };
+
+TR.checkType = function(ref, val) {
+	return ref.type.indexOf(val) !== -1;
+};
