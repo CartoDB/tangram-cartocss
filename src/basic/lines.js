@@ -57,6 +57,8 @@ const getWidth = function(c3ss) {
 
 	return {
 		width: Geom.px2Meters(Utils.buildCCSSFn(width.js).toString())
+			.replace(/\n/g, ' ')
+			.trim()
 	};
 };
 /**

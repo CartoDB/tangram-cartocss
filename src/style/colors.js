@@ -80,7 +80,7 @@ Colors.getAlphaColor = function (color, opacity) {
 	if (color && typeof opacity !== 'number') {
 		return Utils.functionString(
 				`function () {
-					return ${C.getAlphaColorFn}(${color}(), ${opacity}() || 1.);
+					return ${C.getAlphaColorFn}(${color}(), ${opacity}() || 1);
 				}`
 			);
 	}

@@ -21,7 +21,7 @@ const COLOR = {
 };
 
 BH.generateDefaultFromRef = function(Ref, prop) {
-	return { js: Utils.generateDefault(Ref[prop]['default-value']) };
+	return { js: Utils.generateDefault(`"${Ref[prop]['default-value']}"`) };
 };
 
 BH.defaultAlpha = function(Ref, type) {
