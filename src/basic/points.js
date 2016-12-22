@@ -18,12 +18,12 @@ import MD5 from 'md5';
 	INTERNAL DEPENDENCIES
  */
 
-import BH from './helpers';
+import ReferenceHelper from './reference-helpers';
 import Utils from '../utils/utils';
-import TR from '../utils/reference';
+import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
 
-const PR = TR.getPoint(); // Point reference
+const PR = TangramReference.getPoint(); // Point reference
 
 /*
 	INTERNAL MARKER FUNCTIONS
@@ -35,7 +35,7 @@ const PR = TR.getPoint(); // Point reference
  * @return {object}      object with the alpha extracted (global or local)
  */
 const getMarkerAlphaRules = function(c3ss) {
-	let gAlpha = c3ss[PR.opacity.css];
+	let gAlpha = c3ss[PR['fill-opacity'].css] || c3ss[PR.opacity.css] || ReferenceHelper.defaultAlpha(PR, 'point');
 
 	if (gAlpha) {
 		return {global: Utils.buildCCSSFn(gAlpha.js).toString()};
@@ -58,7 +58,7 @@ const getMarkerAlphaRules = function(c3ss) {
  */
 const getMarkerColors = function(c3ss) {
 	return {
-		fill: c3ss[PR.fill.css] || BH.defaultColor(PR, 'point'),
+		fill: c3ss[PR.fill.css] || ReferenceHelper.defaultColor(PR, 'point'),
 		stroke: c3ss[PR.stroke.css]
 	};
 };
@@ -157,7 +157,7 @@ const getBlending = function(c3ss) {
 
 	if (blend) {
 		let val = Utils.buildCCSSFn(blend.js, ['$zoom'])(10);
-		if (TR.checkType(PR['comp-op'], val)) {
+		if (TangramReference.checkType(PR['comp-op'], val)) {
 			return {
 				blend: val
 			};
@@ -191,7 +191,7 @@ export default Point;
 Point.getDraw = function(c3ss) {
 	var point = {};
 
-	if (TR.checkSymbolizer(c3ss, 'markers')) {
+	if (TangramReference.checkSymbolizer(c3ss, 'markers')) {
 		point = {};
 
 		Object.assign(
@@ -220,7 +220,7 @@ Point.getStyle = function(c3ss) {
 		}
 	};
 
-	if (TR.checkSymbolizer(c3ss, 'markers')) {
+	if (TangramReference.checkSymbolizer(c3ss, 'markers')) {
 		style.points_blend = Object.assign(
 				style.points_blend,
 				getTexture(c3ss),
@@ -232,7 +232,7 @@ Point.getStyle = function(c3ss) {
 };
 
 Point.getTextures = function(c3ss) {
-	if (TR.checkSymbolizer(c3ss, 'markers')) {
+	if (TangramReference.checkSymbolizer(c3ss, 'markers')) {
 		let texture = getTextureFile(c3ss);
 		let tex = {};
 

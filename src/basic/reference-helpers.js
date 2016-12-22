@@ -1,10 +1,10 @@
 import Utils from '../utils/utils';
 
-var BaseHelpers = {};
+var ReferenceHelpers = {};
 
-let BH = BaseHelpers;
+let RH = ReferenceHelpers;
 
-export default BaseHelpers;
+export default ReferenceHelpers;
 
 const OPACITY = {
 	line: 'stroke-opacity',
@@ -20,14 +20,14 @@ const COLOR = {
 	polygon: 'fill'
 };
 
-BH.generateDefaultFromRef = function(Ref, prop) {
+RH.generateDefaultFromRef = function(Ref, prop) {
 	return { js: Utils.generateDefault(`"${Ref[prop]['default-value']}"`) };
 };
 
-BH.defaultAlpha = function(Ref, type) {
-	return BH.generateDefaultFromRef(Ref, OPACITY[type]);
+RH.defaultAlpha = function(Ref, type) {
+	return RH.generateDefaultFromRef(Ref, OPACITY[type]);
 };
 
-BH.defaultColor = function(Ref, type) {
-	return BH.generateDefaultFromRef(Ref, COLOR[type]);
+RH.defaultColor = function(Ref, type) {
+	return RH.generateDefaultFromRef(Ref, COLOR[type]);
 };

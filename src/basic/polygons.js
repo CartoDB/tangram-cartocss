@@ -19,19 +19,19 @@
 	INTERNAL DEPENDENCIES
  */
 
-import BH from './helpers';
+import ReferenceHelper from './reference-helpers';
 import Utils from '../utils/utils';
-import TR from '../utils/reference';
+import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
 
-const PR = TR.getPolygon(); // Polygon reference
+const PR = TangramReference.getPolygon(); // Polygon reference
 
 /*
 	INTERNAL POLYGONS FUNCTIONS
  */
 
 const getPolygonAlpha = function(c3ss) {
-	let alpha = c3ss[PR['fill-opacity'].css] || BH.defaultAlpha(PR, 'polygon'); // NOTE: improve the way of getting this. (functional)
+	let alpha = c3ss[PR['fill-opacity'].css] || ReferenceHelper.defaultAlpha(PR, 'polygon'); // NOTE: improve the way of getting this. (functional)
 
 	if (alpha) {
 		return Utils.buildCCSSFn(alpha.js).toString();
@@ -39,7 +39,7 @@ const getPolygonAlpha = function(c3ss) {
 };
 
 const getPolygonColor = function(c3ss) {
-	return c3ss[PR.fill.css] || BH.defaultColor(PR, 'polygon');
+	return c3ss[PR.fill.css] || ReferenceHelper.defaultColor(PR, 'polygon');
 };
 
 const getColor = function (c3ss) {
@@ -66,7 +66,7 @@ export default Polygon;
 Polygon.getDraw = function(c3ss) {
 	let polygon = {};
 
-	if (TR.checkSymbolizer(c3ss, 'polygon')) {
+	if (TangramReference.checkSymbolizer(c3ss, 'polygon')) {
 		Object.assign(
 				polygon,
 				getColor(c3ss)
@@ -87,7 +87,7 @@ Polygon.getStyle = function() {
 	};
 
 	// NOTE: this no makes sense actually. It will necessary in the future.
-	// if (TR.checkSymbolizer(c3ss, 'polygons')) {
+	// if (TangramReference.checkSymbolizer(c3ss, 'polygons')) {
 	// 	Object.assign(
 	// 			style.polygons_blend
 	// 		);

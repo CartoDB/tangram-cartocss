@@ -3,10 +3,10 @@ import Points from './basic/points';
 import Polygons from './basic/polygons';
 import Lines from './basic/lines';
 
-const CCSS = new Carto.RendererJS();
+const CartoCSSRenderer = new Carto.RendererJS();
 
 const extractFeatures = function (ccss) {
-  let layers = CCSS.render(ccss).getLayers(),
+  let layers = CartoCSSRenderer.render(ccss).getLayers(),
       draw = {},
       styles = {},
       textures = {};
