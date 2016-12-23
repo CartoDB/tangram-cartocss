@@ -30,6 +30,12 @@ const PR = TangramReference.getPolygon(); // Polygon reference
 	INTERNAL POLYGONS FUNCTIONS
  */
 
+/**
+ * function tha returns the alpha from a polygon
+ *
+ * @param   {object} c3ss compiled carto css
+ * @returns {function} function that returns an alpha value
+ */
 const getPolygonAlpha = function(c3ss) {
 	let alpha = c3ss[PR['fill-opacity'].css] || ReferenceHelper.defaultAlpha(PR, 'polygon'); // NOTE: improve the way of getting this. (functional)
 
@@ -38,10 +44,22 @@ const getPolygonAlpha = function(c3ss) {
 	}
 };
 
+/**
+ * Function to get the compiled carto css for the color property
+ *
+ * @param   {object} c3ss compiled carto css
+ * @returns {object} with the compiled carto css for the color property
+ */
 const getPolygonColor = function(c3ss) {
 	return c3ss[PR.fill.css] || ReferenceHelper.defaultColor(PR, 'polygon');
 };
 
+/**
+ * Function for getting the color in rgba
+ *
+ * @param   {object} c3ss compiled carto css
+ * @returns {object} with a function that contain the conditions to return a color with alpha channel
+ */
 const getColor = function (c3ss) {
 	const alpha = getPolygonAlpha(c3ss);
 	const color = getPolygonColor(c3ss);
@@ -63,6 +81,12 @@ var Polygon = {};
 
 export default Polygon;
 
+/**
+ * Function to get the draw object of a polygon.
+ *
+ * @param   {object} c3ss compiled carto css
+ * @returns {function} function with the conditions to return alpha value
+ */
 Polygon.getDraw = function(c3ss) {
 	let polygon = {};
 
@@ -78,6 +102,11 @@ Polygon.getDraw = function(c3ss) {
 };
 
 
+/**
+ * Function to get the style configuration of a polygon.
+ *
+ * @returns default style configuration for polygon
+ */
 Polygon.getStyle = function() {
 	let style = {
 		polygons_blend: {
