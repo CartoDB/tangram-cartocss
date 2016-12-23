@@ -24,7 +24,7 @@ let lineCCSS =
   }
 `;
 
-describe('line', () => {
+describe('Line', () => {
   const c3ss = Utils.getShader(lineCCSS);
 
   describe('.getDraw()', () => {
