@@ -5,7 +5,7 @@ let assert = chai.assert;
 
 import Point from '../../src/basic/points';
 
-let pointCCSS = 
+let pointCCSS =
 ` // Marker with global opacity and border
   #layer {
     marker-fill: #F00;
@@ -30,12 +30,12 @@ let pointCCSS =
   }
 `;
 
-describe('Point', () => {
+describe( 'Point', () => {
   const c3ss = Utils.getShader(pointCCSS);
 
   describe('.getDraw()', () => {
     let point = Point.getDraw(c3ss).points_blend;
-    
+
     it('should have color', () => {
       assert.property(point, 'color');
     });
@@ -53,7 +53,7 @@ describe('Point', () => {
         assert.equal(Utils.eval(point.color)({height: 16}, 10), 'rgba(255, 0, 0, 0.3)');
       });
     });
-    
+
     it('should have size', () => {
       assert.property(point, 'size');
     });
@@ -71,7 +71,7 @@ describe('Point', () => {
         assert.equal(Utils.eval(point.size)({height: 16}, 10), '30');
       });
     });
-    
+
     it('should have outline_width', () => {
       assert.property(point, 'outline_width');
     });
