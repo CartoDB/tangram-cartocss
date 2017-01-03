@@ -1,12 +1,12 @@
 {
   "name": "tangram-cartocss",
-  "version": "0.2.5",
+  "version": "0.2.21",
   "description": "Transform cartocss into a draw tangram object.",
   "repository": {
     "type": "git",
     "url": "git://github.com/cartodb/tangram-cartocss.git"
   },
-  "main": "dist/tangram-cartocss.min.js",
+  "main": "dist/tangram-cartocss.debug.js",
   "homepage": "https://github.com/cartodb/tangram-cartocss",
   "keywords": [
     "maps",
@@ -34,7 +34,8 @@
     "build-bundle": "$(npm bin)/browserify src/module.js -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s CCSS -p browserify-derequire --debug",
     "build-minify": "$(npm bin)/uglifyjs dist/tangram-cartocss.debug.js -c warnings=false -m -o dist/tangram-cartocss.min.js && npm run build-size",
     "build-size": "gzip dist/tangram-cartocss.min.js -c | wc -c | awk '{kb=$1/1024; print kb}' OFMT='%.0fk minified+gzipped'",
-    "watch": "$(npm bin)/budo src/module.js:dist/tangram-cartocss.debug.js --port 8000 --cors --live -- -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s CCSS"
+    "watch": "$(npm bin)/budo src/module.js:dist/tangram-cartocss.debug.js demos/main.js:dist/main.js --port 8000 --cors --live -- -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s CCSS",
+    "build-demo": "$(npm bin)/browserify demos/main.js -t [ babelify --presets [ es2015 ] --plugins transform-runtime ] -t brfs -s main -p browserify-derequire --debug"
   },
   "author": {
     "name": "Carto",
@@ -49,7 +50,9 @@
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "6.11.6",
-    "carto": "CartoDB/carto#master"
+    "carto": "CartoDB/carto#f17aea8657ea27f2a660db15dd13b57127e823f9",
+    "md5": "2.2.1",
+    "tangram-reference": "^1.0.8"
   },
   "devDependencies": {
     "Cartogram-Utils": "0.1.0",
@@ -57,24 +60,25 @@
     "babel-preset-es2015": "6.13.2",
     "babelify": "7.3.0",
     "brfs": "^1.4.3",
-    "browserify": "13.0.1",
+    "browserify": "13.1.1",
     "browserify-derequire": "0.9.4",
     "budo": "8.2.1",
     "chai": "1.9.2",
     "chai-as-promised": "4.1.1",
     "glob": "4.0.6",
     "jshint": "jshint/jshint#3a8efa979dbb157bfb5c10b5826603a55a33b9ad",
-    "karma": "0.12.23",
+    "karma": "1.3.0",
     "karma-browserify": "5.1.0",
-    "karma-chrome-launcher": "0.1.4",
-    "karma-mocha": "0.1.9",
-    "karma-mocha-reporter": "1.0.0",
+    "karma-chrome-launcher": "2.0.0",
+    "karma-mocha": "1.3.0",
+    "karma-mocha-reporter": "2.2.1",
     "karma-sauce-launcher": "tangrams/karma-sauce-launcher#firefox-profiles",
     "karma-sinon": "1.0.4",
-    "mocha": "1.21.4",
-    "sinon": "1.10.3",
+    "mocha": "3.2.0",
+    "sinon": "1.17.6",
     "tangram": "tangrams/tangram#master",
-    "uglify-js": "2.4.14",
+    "uglify-js": "2.7.5",
+    "vue": "^2.1.3",
     "yargs": "1.3.2"
   }
 }
