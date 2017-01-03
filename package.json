@@ -52,7 +52,7 @@
     "babel-runtime": "6.11.6",
     "carto": "CartoDB/carto#f17aea8657ea27f2a660db15dd13b57127e823f9",
     "md5": "2.2.1",
-    "tangram-reference": "^1.0.8"
+    "tangram-reference": "1.0.11"
   },
   "devDependencies": {
     "Cartogram-Utils": "0.1.0",
