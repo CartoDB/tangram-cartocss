@@ -1,3 +1,4 @@
+import R from 'ramda';
 import Utils from '../utils/utils';
 
 var ReferenceHelpers = {};
@@ -31,3 +32,15 @@ RH.defaultAlpha = function(Ref, type) {
 RH.defaultColor = function(Ref, type) {
 	return RH.generateDefaultFromRef(Ref, COLOR[type]);
 };
+
+RH.getDefProp = R.curry((prop, ref) => {
+  return RH.generateDefaultFromRef(ref, prop);
+});
+
+// ref = 'stroke-opacity' -> get {stroke-opacity: {css: 'line-opacity'}} -> line-opacity;
+// ref['line-opacity'];
+RH.getProp = R.curry((prop, ref, c3ss) => {
+  return Utils.pick(Utils.pick(prop + '.css', ref), c3ss);
+});
+
+RH.getPropOrDef = R.either(RH.getProp, RH.getDefProp);
