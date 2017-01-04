@@ -1,3 +1,4 @@
+import R from 'ramda';
 import reference from 'tangram-reference';
 
 const Ref = reference.load('1.0.0');
@@ -27,6 +28,6 @@ TangramReference.checkSymbolizer = function(c3ss, sym) {
 	return c3ss.symbolizers.indexOf(sym) !== -1;
 };
 
-TangramReference.checkType = function(ref, val) {
-	return ref.type.indexOf(val) !== -1;
-};
+TangramReference.checkType = R.curry(function(ref, val) {
+	return ref.type.indexOf(val) !== -1 ? val : false;
+});

@@ -31,23 +31,11 @@ const LR = TangramReference.getLine(); // Line reference
 	INTERNAL LINE FUNCTIONS
  */
 
-const getExecutedFn = R.curry((prop, ref, c3ss) => R.compose(
-  Utils.buildAndExecuteFn,
-  R.prop('js'),
-  ReferenceHelper.getPropOrDef
-)(prop,ref,c3ss));
+const getExecutedFn = ReferenceHelper.getExecutedFn;
 
-const getPropertyOrDefFn = R.curry((prop, ref, c3ss) => R.compose(
-  Utils.buildCCSSFn,
-  R.prop('js'),
-  ReferenceHelper.getPropOrDef
-)(prop,ref,c3ss));
+const getPropertyOrDefFn = ReferenceHelper.getPropertyOrDefFn;
 
-const getPropertyFn = R.curry((prop, ref, c3ss) => R.compose(
-  Utils.buildCCSSFn,
-  R.prop('js'),
-  ReferenceHelper.getProp
-)(prop,ref,c3ss));
+const getPropertyFn = ReferenceHelper.getPropertyFn;
 
 /**
  * Function to get the alpha channel of a line
@@ -97,6 +85,11 @@ const getCap = getExecutedFn('stroke-linecap', LR);
 
 const getJoin = getExecutedFn('stroke-linejoin', LR);
 
+const getBlend = R.compose(
+  R.defaultTo('overlay'),
+  TangramReference.checkType(LR['comp-op']),
+  getExecutedFn('comp-op', LR)
+);
 
 /**
  * Basic Line
@@ -114,7 +107,6 @@ export default Line;
  */
 
 Line.getDraw = c3ss => {
-  console.log(LR);
   return {
     lines_blend: {
       color: getColor(c3ss),
@@ -130,20 +122,11 @@ Line.getDraw = c3ss => {
  *
  * @returns default style configuration for lines
  */
-Line.getStyle = function() {
-	let style = {
+Line.getStyle = function(c3ss) {
+	return {
 		lines_blend: {
 			base: 'lines',
-			blend: 'overlay'
+			blend: getBlend(c3ss)
 		}
 	};
-
-	// NOTE: this no makes sense actually.
-	// if (TangramReference.checkSymbolizer(c3ss, 'polygons')) {
-	// 	Object.assign(
-	// 			style.polygons_blend
-	// 		);
-	// };
-
-	return style;
 };

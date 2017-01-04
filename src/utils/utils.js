@@ -6,6 +6,10 @@ export default Utils;
 
 const replace = R.curry(R.replace);
 
+Utils.curryCompose3 = function (compose) {
+  return R.curry((a,b,c) => compose(a,b,c));
+};
+
 Utils.wrapCodeInFunction = function(innerCode, attr = [' ']) {
 	attr = attr.join(',');
 
