@@ -29,5 +29,5 @@ TangramReference.checkSymbolizer = function(c3ss, sym) {
 };
 
 TangramReference.checkType = R.curry(function(ref, val) {
-	return ref.type.indexOf(val) !== -1 ? val : false;
+	return ref.type.indexOf(val) !== -1 ? val : null;
 });

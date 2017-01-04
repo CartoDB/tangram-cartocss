@@ -91,6 +91,12 @@ const getBlend = R.compose(
   getExecutedFn('comp-op', LR)
 );
 
+const getDashed = c3ss => {
+  let val = getExecutedFn('stroke-dasharray', LR, c3ss);
+
+  return val === 'none' ? undefined : val;
+};
+
 /**
  * Basic Line
  */
@@ -126,7 +132,8 @@ Line.getStyle = function(c3ss) {
 	return {
 		lines_blend: {
 			base: 'lines',
-			blend: getBlend(c3ss)
+			blend: getBlend(c3ss),
+      dash: getDashed(c3ss)
 		}
 	};
 };
