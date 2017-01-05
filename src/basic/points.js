@@ -23,7 +23,7 @@ import Utils from '../utils/utils';
 import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
 
-const PR = TangramReference.getPoint(); // Point reference
+const PR = TangramReference.getPoint(null); // Point reference
 
 /*
 	INTERNAL MARKER FUNCTIONS

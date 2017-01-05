@@ -85,27 +85,19 @@ export default Polygon;
  * @param   {object} c3ss compiled carto css
  * @returns {function} function with the conditions to return alpha value
  */
-Polygon.getDraw = function(c3ss) {
-	let polygon = {};
-
-	if (TangramReference.checkSymbolizer(c3ss, 'polygon')) {
-		Object.assign(
-				polygon,
-				getColor(c3ss)
-			);
-
-	}
-
-	return { polygons_blend: polygon };
-};
 
 Polygon.getDraw = c3ss => {
-  return {
-    lines_blend: {
-      color: getColor(c3ss)
-    }
-  };
-}
+
+  if (TangramReference.checkSymbolizer(c3ss, 'polygon')) {
+    return {
+      polygons_blend: {
+        color: getColor(c3ss)
+      }
+    };
+  }
+
+  return {};
+};
 
 /**
  * Function to get the style configuration of a polygon.

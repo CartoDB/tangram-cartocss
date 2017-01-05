@@ -79,7 +79,7 @@ const getColor = function(c3ss) {
 
 const getWidth = R.compose(
   Geom.px2Meters,
-  getPropertyFn('stroke-width', LR)
+  getPropertyOrDefFn('stroke-width', LR)
 );
 
 /**
@@ -134,14 +134,19 @@ export default Line;
  */
 
 Line.getDraw = c3ss => {
-  return {
-    lines_blend: {
-      color: getColor(c3ss),
-      width: getWidth(c3ss),
-      cap: getCap(c3ss),
-      join: getJoin(c3ss)
-    }
-  };
+
+  if (TangramReference.checkSymbolizer(c3ss, 'line')) {
+    return {
+      lines_blend: {
+        color: getColor(c3ss),
+        width: getWidth(c3ss),
+        cap: getCap(c3ss),
+        join: getJoin(c3ss)
+      }
+    };
+  }
+
+  return {};
 };
 
 /**
