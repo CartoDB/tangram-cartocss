@@ -146,7 +146,7 @@ Line.getDraw = c3ss => {
     };
   }
 
-  return {};
+  return {lines_blend: {}};
 };
 
 /**

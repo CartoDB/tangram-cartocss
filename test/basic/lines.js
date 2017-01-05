@@ -82,7 +82,6 @@ describe('Line', () => {
 
   describe('.getStyle()', () => {
     let line = Line.getStyle(c3ss);
-
     it('should have lines_blend property', () => {
       assert.property(line, 'lines_blend');
     });

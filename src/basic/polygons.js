@@ -23,7 +23,6 @@ import R from 'ramda';
 import ReferenceHelper from './reference-helpers';
 import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
-import Utils from '../utils/utils';
 
 const PR = TangramReference.getPolygon(null); // Polygon reference
 const PPR = TangramReference.getPolygonPattern(null);
@@ -35,8 +34,6 @@ const PPR = TangramReference.getPolygonPattern(null);
 const getExecutedFn = ReferenceHelper.getExecutedFn;
 
 const getPropertyOrDefFn = ReferenceHelper.getPropertyOrDefFn;
-
-const getPropertyFn = ReferenceHelper.getPropertyFn;
 
 const getBlendFn = ReferenceHelper.getBlendFn;
 

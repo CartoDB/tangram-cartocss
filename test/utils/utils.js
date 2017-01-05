@@ -5,6 +5,7 @@ var Utils = {};
 Utils.wrapEval = function (fn) {
   return `
     (function (feature, $zoom) {
+      var $meters_per_pixel = 5000;
       return (${fn}());
     })
   `;
