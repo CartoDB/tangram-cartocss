@@ -21,12 +21,11 @@ import R from 'ramda';
  */
 
 import ReferenceHelper from './reference-helpers';
-import Utils from '../utils/utils';
 import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
 import Geom from '../utils/geom';
 
-const LR = TangramReference.getLine(); // Line reference
+const LR = TangramReference.getLine(null); // Line reference
 /*
 	INTERNAL LINE FUNCTIONS
  */
