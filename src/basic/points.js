@@ -29,6 +29,8 @@ const PR = TangramReference.getPoint(null); // Point reference
 	INTERNAL MARKER FUNCTIONS
  */
 
+const checkMarkerSym = TangramReference.checkSymbolizer('markers');
+
 /**
  * get the internals marker alpha rules global alpha predomines above local alpha's
  * @param  {object} c3ss compiled carto css
@@ -191,7 +193,7 @@ export default Point;
 Point.getDraw = function(c3ss) {
 	var point = {};
 
-	if (TangramReference.checkSymbolizer(c3ss, 'markers')) {
+	if (checkMarkerSym(c3ss)) {
 		point = {};
 
 		Object.assign(
@@ -220,7 +222,7 @@ Point.getStyle = function(c3ss) {
 		}
 	};
 
-	if (TangramReference.checkSymbolizer(c3ss, 'markers')) {
+	if (checkMarkerSym(c3ss)) {
 		style.points_blend = Object.assign(
 				style.points_blend,
 				getTexture(c3ss),
@@ -232,7 +234,7 @@ Point.getStyle = function(c3ss) {
 };
 
 Point.getTextures = function(c3ss) {
-	if (TangramReference.checkSymbolizer(c3ss, 'markers')) {
+	if (checkMarkerSym(c3ss)) {
 		let texture = getTextureFile(c3ss);
 		let tex = {};
 

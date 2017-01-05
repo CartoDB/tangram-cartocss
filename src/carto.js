@@ -24,7 +24,8 @@ const extractFeatures = function (ccss) {
 
     Object.assign(
         textures,
-        Points.getTextures(ly)
+        Points.getTextures(ly),
+        Polygons.getTextures(ly)
       );
 
     Object.assign(

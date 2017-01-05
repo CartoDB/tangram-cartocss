@@ -34,9 +34,9 @@ const getExecutedFn = ReferenceHelper.getExecutedFn;
 
 const getPropertyOrDefFn = ReferenceHelper.getPropertyOrDefFn;
 
-const getPropertyFn = ReferenceHelper.getPropertyFn;
-
 const getBlendFn = ReferenceHelper.getBlendFn;
+
+const checkLineSym = TangramReference.checkSymbolizer('line');
 
 /**
  * Function to get the alpha channel of a line
@@ -135,7 +135,7 @@ export default Line;
 
 Line.getDraw = c3ss => {
 
-  if (TangramReference.checkSymbolizer(c3ss, 'line')) {
+  if (checkLineSym(c3ss)) {
     return {
       lines_blend: {
         color: getColor(c3ss),

@@ -18,9 +18,9 @@ TangramReference.getLine = getProperty('line');
 
 TangramReference.getPolygon = getProperty('polygon');
 
-TangramReference.checkSymbolizer = function(c3ss, sym) {
-	return c3ss.symbolizers.indexOf(sym) !== -1;
-};
+TangramReference.checkSymbolizer = R.curry(function(sym, c3ss) {
+	return c3ss.symbolizers.indexOf(sym) !== -1 ? c3ss : null;
+});
 
 TangramReference.checkType = R.curry(function(ref, val) {
 	return ref.type.indexOf(val) !== -1 ? val : null;

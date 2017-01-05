@@ -13,7 +13,8 @@
 /*
 	EXTERNAL DEPENDENCIES
  */
-// import MD5 from 'md5'; // NOTE: used when we support textures.
+import MD5 from 'md5';
+import R from 'ramda';
 
 /*
 	INTERNAL DEPENDENCIES
@@ -37,6 +38,8 @@ const getPropertyOrDefFn = ReferenceHelper.getPropertyOrDefFn;
 const getPropertyFn = ReferenceHelper.getPropertyFn;
 
 const getBlendFn = ReferenceHelper.getBlendFn;
+
+const checkPolygonSym = TangramReference.checkSymbolizer('polygon');
 
 /**
  * function tha returns the alpha from a polygon
@@ -69,6 +72,13 @@ const getColor = function (c3ss) {
 	return Colors.getAlphaColor(color, alpha);
 };
 
+const getTextureFile = getExecutedFn('file', PR);
+
+const getTexture = R.compose(
+  MD5,
+  getTextureFile
+);
+
 const getBlending = getBlendFn(PR);
 
 /**
@@ -85,10 +95,9 @@ export default Polygon;
  * @param   {object} c3ss compiled carto css
  * @returns {function} function with the conditions to return alpha value
  */
-
 Polygon.getDraw = c3ss => {
 
-  if (TangramReference.checkSymbolizer(c3ss, 'polygon')) {
+  if (checkPolygonSym(c3ss)) {
     return {
       polygons_blend: {
         color: getColor(c3ss)
@@ -108,9 +117,23 @@ Polygon.getStyle = function(c3ss) {
 	let style = {
 		polygons_blend: {
 			base: 'polygons',
-			blend: getBlending(c3ss)
+			blend: getBlending(c3ss),
+      texture: checkPolygonSym(c3ss) ? getTexture(c3ss) : void 0
 		}
 	};
 
 	return style;
+};
+
+Polygon.getTextures = c3ss => {
+  if (checkPolygonSym(c3ss)) {
+    let texture = getTextureFile(c3ss);
+    let tex = {};
+
+    if (texture) {
+      tex[MD5(texture)] = {url: texture};
+    }
+
+    return tex;
+  }
 };
