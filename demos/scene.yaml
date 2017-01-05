@@ -13,7 +13,7 @@ styles:
     blend: overlay
   lines_blend:
     base: lines
-    blend: depthinlay
+    blend: overlay
   points_blend:
     base: points
     blend: overlay

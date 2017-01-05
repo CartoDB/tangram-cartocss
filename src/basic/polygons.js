@@ -20,15 +20,23 @@
  */
 
 import ReferenceHelper from './reference-helpers';
-import Utils from '../utils/utils';
 import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
+import Utils from '../utils/utils';
 
-const PR = TangramReference.getPolygon(); // Polygon reference
+const PR = TangramReference.getPolygon(null); // Polygon reference
 
 /*
 	INTERNAL POLYGONS FUNCTIONS
  */
+
+const getExecutedFn = ReferenceHelper.getExecutedFn;
+
+const getPropertyOrDefFn = ReferenceHelper.getPropertyOrDefFn;
+
+const getPropertyFn = ReferenceHelper.getPropertyFn;
+
+const getBlendFn = ReferenceHelper.getBlendFn;
 
 /**
  * function tha returns the alpha from a polygon
@@ -36,13 +44,8 @@ const PR = TangramReference.getPolygon(); // Polygon reference
  * @param   {object} c3ss compiled carto css
  * @returns {function} function that returns an alpha value
  */
-const getPolygonAlpha = function(c3ss) {
-	let alpha = c3ss[PR['fill-opacity'].css] || ReferenceHelper.defaultAlpha(PR, 'polygon'); // NOTE: improve the way of getting this. (functional)
 
-	if (alpha) {
-		return Utils.buildCCSSFn(alpha.js).toString();
-	}
-};
+const getAlpha = getPropertyOrDefFn('fill-opacity', PR);
 
 /**
  * Function to get the compiled carto css for the color property
@@ -50,9 +53,8 @@ const getPolygonAlpha = function(c3ss) {
  * @param   {object} c3ss compiled carto css
  * @returns {object} with the compiled carto css for the color property
  */
-const getPolygonColor = function(c3ss) {
-	return c3ss[PR.fill.css] || ReferenceHelper.defaultColor(PR, 'polygon');
-};
+
+const getBaseColor = getPropertyOrDefFn('fill', PR);
 
 /**
  * Function for getting the color in rgba
@@ -61,17 +63,13 @@ const getPolygonColor = function(c3ss) {
  * @returns {object} with a function that contain the conditions to return a color with alpha channel
  */
 const getColor = function (c3ss) {
-	const alpha = getPolygonAlpha(c3ss);
-	const color = getPolygonColor(c3ss);
+	const color = getBaseColor(c3ss);
+	const alpha = getAlpha(c3ss);
 
-	return {
-		color: Colors.getAlphaColor(
-				Utils.buildCCSSFn(color.js),
-				alpha
-			)
-	};
+	return Colors.getAlphaColor(color, alpha);
 };
 
+const getBlending = getBlendFn(PR);
 
 /**
  * Basic Polygon
@@ -101,26 +99,26 @@ Polygon.getDraw = function(c3ss) {
 	return { polygons_blend: polygon };
 };
 
+Polygon.getDraw = c3ss => {
+  return {
+    lines_blend: {
+      color: getColor(c3ss)
+    }
+  };
+}
 
 /**
  * Function to get the style configuration of a polygon.
  *
  * @returns default style configuration for polygon
  */
-Polygon.getStyle = function() {
+Polygon.getStyle = function(c3ss) {
 	let style = {
 		polygons_blend: {
 			base: 'polygons',
-			blend: 'overlay'
+			blend: getBlending(c3ss)
 		}
 	};
-
-	// NOTE: this no makes sense actually. It will necessary in the future.
-	// if (TangramReference.checkSymbolizer(c3ss, 'polygons')) {
-	// 	Object.assign(
-	// 			style.polygons_blend
-	// 		);
-	// };
 
 	return style;
 };

@@ -36,6 +36,8 @@ const getPropertyOrDefFn = ReferenceHelper.getPropertyOrDefFn;
 
 const getPropertyFn = ReferenceHelper.getPropertyFn;
 
+const getBlendFn = ReferenceHelper.getBlendFn;
+
 /**
  * Function to get the alpha channel of a line
  *
@@ -102,11 +104,7 @@ const getJoin = getExecutedFn('stroke-linejoin', LR);
  * @param   {object} c3ss compiled carto css
  * @returns {string} with blending value Ex: "multiply"
  */
-const getBlending = R.compose(
-  R.defaultTo('overlay'),
-  TangramReference.checkType(LR['comp-op']),
-  getExecutedFn('comp-op', LR)
-);
+const getBlending = getBlendFn(LR);
 
 /**
  * Function for getting dash value statically

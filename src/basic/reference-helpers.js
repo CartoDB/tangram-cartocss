@@ -1,6 +1,6 @@
 import R from 'ramda';
 import Utils from '../utils/utils';
-
+import TangramReference from '../utils/reference';
 
 
 /*
@@ -77,3 +77,9 @@ RH.getExecutedFn = curryComp(R.compose(
   R.prop('js'),
   RH.getPropOrDef
 ));
+
+RH.getBlendFn = R.curry((ref, c3ss) => R.compose(
+  R.defaultTo('overlay'),
+  TangramReference.checkType(ref['comp-op']),
+  RH.getExecutedFn('comp-op')
+)(ref, c3ss));
