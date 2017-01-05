@@ -7,22 +7,16 @@ var TangramReference = {};
 
 export default TangramReference;
 
-const getProperty = function (type, prop) {
+const getProperty = R.curry(function (type, prop) {
 	const obj = Ref.symbolizers[type];
 	return prop ? obj[prop] : obj;
-};
+});
 
-TangramReference.getPoint = function(prop) {
-	return getProperty('markers', prop);
-};
+TangramReference.getPoint = getProperty('markers');
 
-TangramReference.getLine = function(prop) {
-	return getProperty('line', prop);
-};
+TangramReference.getLine = getProperty('line');
 
-TangramReference.getPolygon = function(prop) {
-	return getProperty('polygon', prop);
-};
+TangramReference.getPolygon = getProperty('polygon');
 
 TangramReference.checkSymbolizer = function(c3ss, sym) {
 	return c3ss.symbolizers.indexOf(sym) !== -1;

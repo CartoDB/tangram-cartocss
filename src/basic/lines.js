@@ -70,7 +70,7 @@ const getColor = function(c3ss) {
 };
 
 /**
- * Function for get the width in meters dynamically by zoom
+ * Function for getting the width in meters dynamically by zoom
  *
  * @param   {object} c3ss compiled carto css
  * @returns {object} witha a function with the conditions to return width value
@@ -81,16 +81,40 @@ const getWidth = R.compose(
   getPropertyFn('stroke-width', LR)
 );
 
+/**
+ * Function for getting the cap statically
+ *
+ * @param   {object} c3ss compiled carto css
+ * @returns {string} with cap value Ex: round
+ */
 const getCap = getExecutedFn('stroke-linecap', LR);
 
+/**
+ * Function for getting the join statically
+ *
+ * @param   {object} c3ss compiled carto css
+ * @returns {string} with join value Ex: round
+ */
 const getJoin = getExecutedFn('stroke-linejoin', LR);
 
-const getBlend = R.compose(
+/**
+ * Function for getting the blend statically
+ *
+ * @param   {object} c3ss compiled carto css
+ * @returns {string} with blending value Ex: "multiply"
+ */
+const getBlending = R.compose(
   R.defaultTo('overlay'),
   TangramReference.checkType(LR['comp-op']),
   getExecutedFn('comp-op', LR)
 );
 
+/**
+ * Function for getting dash value statically
+ *
+ * @param   {object} c3ss compiled carto css
+ * @returns {string} with dash value Ex: [2, 1]
+ */
 const getDashed = c3ss => {
   let val = getExecutedFn('stroke-dasharray', LR, c3ss);
 
@@ -132,7 +156,7 @@ Line.getStyle = function(c3ss) {
 	return {
 		lines_blend: {
 			base: 'lines',
-			blend: getBlend(c3ss),
+			blend: getBlending(c3ss),
       dash: getDashed(c3ss)
 		}
 	};
