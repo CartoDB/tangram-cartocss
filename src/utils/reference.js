@@ -18,6 +18,8 @@ TangramReference.getLine = getProperty('line');
 
 TangramReference.getPolygon = getProperty('polygon');
 
+TangramReference.getPolygonPattern = getProperty('polygon-pattern');
+
 TangramReference.checkSymbolizer = R.curry(function(sym, c3ss) {
 	return c3ss.symbolizers.indexOf(sym) !== -1 ? c3ss : null;
 });

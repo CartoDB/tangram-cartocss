@@ -26,6 +26,7 @@ import Colors from '../style/colors';
 import Utils from '../utils/utils';
 
 const PR = TangramReference.getPolygon(null); // Polygon reference
+const PPR = TangramReference.getPolygonPattern(null);
 
 /*
 	INTERNAL POLYGONS FUNCTIONS
@@ -40,6 +41,7 @@ const getPropertyFn = ReferenceHelper.getPropertyFn;
 const getBlendFn = ReferenceHelper.getBlendFn;
 
 const checkPolygonSym = TangramReference.checkSymbolizer('polygon');
+const checkPolPatternSym = TangramReference.checkSymbolizer('polygon-pattern');
 
 /**
  * function tha returns the alpha from a polygon
@@ -72,7 +74,7 @@ const getColor = function (c3ss) {
 	return Colors.getAlphaColor(color, alpha);
 };
 
-const getTextureFile = getExecutedFn('file', PR);
+const getTextureFile = getExecutedFn('file', PPR);
 
 const getTexture = R.compose(
   MD5,
@@ -118,7 +120,12 @@ Polygon.getStyle = function(c3ss) {
 		polygons_blend: {
 			base: 'polygons',
 			blend: getBlending(c3ss),
-      texture: checkPolygonSym(c3ss) ? getTexture(c3ss) : void 0
+      material: {
+        diffuse: {
+          texture: checkPolPatternSym(c3ss) ? getTexture(c3ss) : void 0,
+          mapping: 'uv'
+        }
+      }
 		}
 	};
 
@@ -126,7 +133,7 @@ Polygon.getStyle = function(c3ss) {
 };
 
 Polygon.getTextures = c3ss => {
-  if (checkPolygonSym(c3ss)) {
+  if (checkPolPatternSym(c3ss)) {
     let texture = getTextureFile(c3ss);
     let tex = {};
 
