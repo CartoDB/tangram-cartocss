@@ -1,6 +1,8 @@
 /* globals describe, it */
 import Utils from '../utils/utils';
 import chai from 'chai';
+import MD5 from 'md5';
+
 let assert = chai.assert;
 
 import Line from '../../src/basic/lines';
@@ -26,9 +28,11 @@ let lineCCSS =
 
 describe('Line', () => {
   const c3ss = Utils.getShader(lineCCSS);
+  const id = MD5(lineCCSS);
 
   describe('.getDraw()', () => {
-    let line = Line.getDraw(c3ss).lines_blend;
+    let line = Line.getDraw(c3ss, id)['lines_' + id];
+
 
     it('should have color', () => {
       assert.property(line, 'color');
@@ -81,26 +85,27 @@ describe('Line', () => {
   });
 
   describe('.getStyle()', () => {
-    let line = Line.getStyle(c3ss);
-    it('should have lines_blend property', () => {
-      assert.property(line, 'lines_blend');
+    let line = Line.getStyle(c3ss, id);
+    it('should have lines_id property', () => {
+      assert.property(line, 'lines_' + id);
     });
 
     describe('.lines_blend', () => {
+      let lines_blend = line['lines_' + id];
       it('should have base property', () => {
-        assert.property(line.lines_blend, 'base');
+        assert.property(lines_blend, 'base');
       });
 
       it('shoul have blend property', () => {
-        assert.property(line.lines_blend, 'blend');
+        assert.property(lines_blend, 'blend');
       });
 
       it('should have base property equal to lines', () => {
-        assert.equal(line.lines_blend.base, 'lines');
+        assert.equal(lines_blend.base, 'lines');
       });
 
       it('should have blend property equal to overlay', () => {
-        assert.equal(line.lines_blend.blend, 'overlay');
+        assert.equal(lines_blend.blend, 'overlay');
       });
     });
   });

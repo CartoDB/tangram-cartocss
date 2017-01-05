@@ -133,20 +133,18 @@ export default Line;
  * @returns {function} function with the conditions to return alpha value
  */
 
-Line.getDraw = c3ss => {
-
+Line.getDraw = (c3ss, id) => {
+  let draw = {};
   if (checkLineSym(c3ss)) {
-    return {
-      lines_blend: {
-        color: getColor(c3ss),
-        width: getWidth(c3ss),
-        cap: getCap(c3ss),
-        join: getJoin(c3ss)
-      }
+    draw['lines_' + id] = {
+      color: getColor(c3ss),
+      width: getWidth(c3ss),
+      cap: getCap(c3ss),
+      join: getJoin(c3ss)
     };
   }
 
-  return {lines_blend: {}};
+  return draw;
 };
 
 /**
@@ -154,12 +152,14 @@ Line.getDraw = c3ss => {
  *
  * @returns default style configuration for lines
  */
-Line.getStyle = function(c3ss) {
-	return {
-		lines_blend: {
-			base: 'lines',
-			blend: getBlending(c3ss),
-      dash: getDashed(c3ss)
-		}
-	};
+Line.getStyle = function(c3ss, id) {
+  let style = {};
+
+  style['lines_' + id] = {
+    base: 'lines',
+    blend: getBlending(c3ss),
+    dash: getDashed(c3ss)
+  };
+
+  return style;
 };

@@ -94,17 +94,16 @@ export default Polygon;
  * @param   {object} c3ss compiled carto css
  * @returns {function} function with the conditions to return alpha value
  */
-Polygon.getDraw = c3ss => {
+Polygon.getDraw = (c3ss, id) => {
+  let draw = {};
 
   if (checkPolygonSym(c3ss)) {
-    return {
-      polygons_blend: {
-        color: getColor(c3ss)
-      }
+    draw['polygons_' + id] = {
+      color: getColor(c3ss)
     };
   }
 
-  return {};
+  return draw;
 };
 
 /**
@@ -112,32 +111,32 @@ Polygon.getDraw = c3ss => {
  *
  * @returns default style configuration for polygon
  */
-Polygon.getStyle = function(c3ss) {
-	let style = {
-		polygons_blend: {
-			base: 'polygons',
-			blend: getBlending(c3ss),
-      material: {
-        diffuse: {
-          texture: checkPolPatternSym(c3ss) ? getTexture(c3ss) : void 0,
-          mapping: 'uv'
-        }
+Polygon.getStyle = function(c3ss, id) {
+  let style = {};
+
+  style['polygons_' + id] = {
+    base: 'polygons',
+    blend: getBlending(c3ss),
+    material: {
+      diffuse: {
+        texture: checkPolPatternSym(c3ss) ? getTexture(c3ss) : void 0,
+        mapping: 'uv'
       }
-		}
-	};
+    }
+  };
 
 	return style;
 };
 
 Polygon.getTextures = c3ss => {
+  let tex = {};
   if (checkPolPatternSym(c3ss)) {
     let texture = getTextureFile(c3ss);
-    let tex = {};
 
     if (texture) {
       tex[MD5(texture)] = {url: texture};
     }
 
-    return tex;
   }
+  return tex;
 };
