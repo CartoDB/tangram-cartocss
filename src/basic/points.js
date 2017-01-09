@@ -35,6 +35,10 @@ const getPropertyOrDefFn = ReferenceHelper.getPropertyOrDefFn;
 
 const getEitherProp = ReferenceHelper.getEitherProp;
 
+const getExecutedFn = ReferenceHelper.getExecutedFn;
+
+const getBlendFn = ReferenceHelper.getBlendFn;
+
 const checkMarkerSym = TangramReference.checkSymbolizer('markers');
 
 /**
@@ -129,64 +133,22 @@ const getWidths = R.compose(
  * @param  {object} c3ss compiled carto css
  * @return {object}      return draw object with a non-dynamic collide option
  */
-const getCollide = function(c3ss) {
-	const collide = c3ss[PR['allow-overlap'].css];
 
-	if (collide) {
-		return {
-			collide: !Utils.buildCCSSFn(collide.js, ['$zoom'])(10) // NOTE: I've put 10 as a default zoom parameter :)
-		};
-	}
+const getCollide = getExecutedFn('allow-overlap', PR);
 
-	return {};
-};
-
-const getTextureFile = function(c3ss) {
-	const texture = c3ss[PR.file.css];
-
-	if (texture) {
-		return Utils.buildCCSSFn(texture.js, ['$zoom'])(10);
-	}
-};
+const getTextureFile = getExecutedFn('file', PR);
 
 /**
  * Get texture from marker-file in cartocss [NON-DYNAMIC]
  * @param  {object} c3ss compiled carto css
  * @return {object}      return draw object with a non-dynamic texture.
  */
-const getTexture = function(c3ss) {
-	const texture = c3ss[PR.file.css];
+const getTexture = R.compose(
+  MD5,
+  getTextureFile
+);
 
-	if (texture) {
-		return {
-			texture: MD5(getTextureFile(c3ss))
-		};
-	}
-
-	return {};
-};
-
-const getBlending = function(c3ss) {
-	const blend = c3ss[PR['comp-op'].css];
-
-	if (blend) {
-		let val = Utils.buildCCSSFn(blend.js, ['$zoom'])(10);
-		if (TangramReference.checkType(PR['comp-op'], val)) {
-			return {
-				blend: val
-			};
-		}
-		else {
-			return {
-				blend: 'overlay'
-			};
-		}
-	}
-
-	return {};
-};
-
-
+const getBlending = getBlendFn(PR);
 
 /**
  * Basic point
@@ -207,15 +169,14 @@ Point.getDraw = function(c3ss, id) {
       draw = {};
 
 	if (checkMarkerSym(c3ss)) {
-		point = {};
 
 		Object.assign(
 				point,
 				getColors(c3ss),
-				getWidths(c3ss),
-				getCollide(c3ss)
+				getWidths(c3ss)
 			);
 
+    point.collide = !getCollide(c3ss);
 	}
 
   draw['points_' + id] = point;
