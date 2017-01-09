@@ -111,20 +111,18 @@ const getColors = R.compose(
  * @param  {object} c3ss compiled carto css
  * @return {object}      size and border_width
  */
-const getWidths = function(c3ss) {
-	const size = c3ss[PR.width.css];
-	const outlineWidth = c3ss[PR['stroke-width'].css];
 
-	let draw = {
-		size: Utils.buildCCSSFn(size.js).toString()
-	};
+const getMarkerWidth = getPropertyFnSafe('width', PR);
 
-	if (outlineWidth) {
-		draw.outline_width = Utils.buildCCSSFn(outlineWidth.js).toString();
-	}
+const getOutlineWidth = getPropertyFnSafe('stroke-width', PR);
 
-	return draw;
-};
+const getWidths = R.compose(
+  R.pickBy(R.compose(R.not, R.isNil)),
+  R.applySpec({
+    size: getMarkerWidth,
+    outline_width: getOutlineWidth
+  })
+);
 
 /**
  * Get collide from allow-overlap in cartocss [NON-DYNAMIC]
