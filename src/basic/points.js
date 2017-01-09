@@ -13,6 +13,7 @@
 	EXTERNAL DEPENDENCIES
  */
 import MD5 from 'md5';
+import R from 'ramda';
 
 /*
 	INTERNAL DEPENDENCIES
@@ -28,6 +29,11 @@ const PR = TangramReference.getPoint(null); // Point reference
 /*
 	INTERNAL MARKER FUNCTIONS
  */
+const getPropertyFnSafe = ReferenceHelper.getPropertyFnSafe;
+
+const getPropertyOrDefFn = ReferenceHelper.getPropertyOrDefFn;
+
+const getEitherProp = ReferenceHelper.getEitherProp;
 
 const checkMarkerSym = TangramReference.checkSymbolizer('markers');
 
@@ -36,61 +42,69 @@ const checkMarkerSym = TangramReference.checkSymbolizer('markers');
  * @param  {object} c3ss compiled carto css
  * @return {object}      object with the alpha extracted (global or local)
  */
-const getMarkerAlphaRules = function(c3ss) {
-	let gAlpha = c3ss[PR['fill-opacity'].css] || c3ss[PR.opacity.css] || ReferenceHelper.defaultAlpha(PR, 'point');
 
-	if (gAlpha) {
-		return {global: Utils.buildCCSSFn(gAlpha.js).toString()};
-	}
-	else {
-		let fill = c3ss[PR['fill-opacity'].css],
-			stroke = c3ss[PR['stroke-opacity'].css];
+const getMarkerFillAlpha = getEitherProp('fill-opacity', 'opacity', PR);
 
-		fill = fill ? Utils.buildCCSSFn(fill.js).toString() : fill;
-		stroke = stroke ? Utils.buildCCSSFn(stroke.js).toString() : stroke;
-
-		return { fill, stroke };
-	}
-};
+const getMarkerStrokeAlpha = getEitherProp('stroke-opacity', 'opacity', PR);
 
 /**
  * get marker c3ss colors
  * @param  {object} c3ss compiled carto css
  * @return {object}      object with the colors
  */
-const getMarkerColors = function(c3ss) {
-	return {
-		fill: c3ss[PR.fill.css] || ReferenceHelper.defaultColor(PR, 'point'),
-		stroke: c3ss[PR.stroke.css]
-	};
-};
+const getMarkerFillColor = getPropertyOrDefFn('fill', PR);
+
+const getMarkerStrokeColor = getPropertyFnSafe('stroke', PR);
 
 /**
  * get colors from cartocss with the alpha channel applied
  * @param  {object} c3ss compiled carto css
  * @return {object}      draw object with color and border_color
  */
-const getColors = function(c3ss) {
-	const alpha = getMarkerAlphaRules(c3ss);
-	const colors = getMarkerColors(c3ss);
+// const getColors = function(c3ss) {
+// 	const alpha = getMarkerAlpha(c3ss);
+// 	const colors = getMarkerColors(c3ss);
 
-	let draw = {
-		color: Colors.getAlphaColor(
-				Utils.buildCCSSFn(colors.fill.js).toString(),
-				alpha.global || alpha.fill
-			)
-	};
+// 	let draw = {
+// 		color: Colors.getAlphaColor(
+//         colors.fill,
+// 				alpha.fill
+// 			)
+// 	};
 
-	if (colors.stroke) {
-		draw.outline_color = Colors.getAlphaColor(
-			Utils.buildCCSSFn(colors.stroke.js).toString(),
-			alpha.global || alpha.stroke
-		);
-	}
+// 	if (colors.stroke) {
+// 		draw.outline_color = Colors.getAlphaColor(
+// 			colors.stroke,
+// 			alpha.stroke
+// 		);
+// 	}
 
-	return draw;
+// 	return draw;
+// };
 
-};
+const getColor = R.compose(
+  (color) => Colors.getAlphaColor(color.fill, color.alpha),
+  R.applySpec({
+    fill: getMarkerFillColor,
+    alpha: getMarkerFillAlpha
+  })
+);
+
+const getOutlineColor = R.compose(
+  (color) => Colors.getAlphaColor(color.stroke, color.alpha),
+  R.applySpec({
+    stroke: getMarkerStrokeColor,
+    alpha: getMarkerStrokeAlpha
+  })
+);;
+
+const getColors = R.compose(
+  R.pickBy(R.compose(R.not,R.isNil)),
+  R.applySpec({
+    color: getColor,
+    outline_color: getOutlineColor
+  })
+);
 
 /**
  * getWidth for the marker and his border

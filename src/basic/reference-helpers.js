@@ -66,6 +66,17 @@ RH.getPropertyFn = curryComp(R.compose(
   RH.getProp
 ));
 
+RH.getPropertyFnSafe = R.ifElse(
+  RH.getProp,
+  RH.getPropertyFn,
+  () => void 0
+);
+
+RH.getEitherProp = (propA, propB, ref) => R.either(
+  RH.getPropertyFnSafe(propA, ref),
+  RH.getPropertyOrDefFn(propB, ref)
+);
+
 RH.getPropertyOrDefFn = curryComp(R.compose(
   Utils.buildCCSSFn,
   R.prop('js'),

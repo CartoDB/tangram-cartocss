@@ -117,13 +117,16 @@ Polygon.getStyle = function(c3ss, id) {
   style['polygons_' + id] = {
     base: 'polygons',
     blend: getBlending(c3ss),
-    material: {
+  };
+
+  if (checkPolPatternSym(c3ss)) {
+    style['polygons_' + id].material = {
       diffuse: {
-        texture: checkPolPatternSym(c3ss) ? getTexture(c3ss) : void 0,
+        texture: getTexture(c3ss),
         mapping: 'uv'
       }
-    }
-  };
+    };
+  }
 
 	return style;
 };
