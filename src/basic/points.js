@@ -65,26 +65,6 @@ const getMarkerStrokeColor = getPropertyFnSafe('stroke', PR);
  * @param  {object} c3ss compiled carto css
  * @return {object}      draw object with color and border_color
  */
-// const getColors = function(c3ss) {
-// 	const alpha = getMarkerAlpha(c3ss);
-// 	const colors = getMarkerColors(c3ss);
-
-// 	let draw = {
-// 		color: Colors.getAlphaColor(
-//         colors.fill,
-// 				alpha.fill
-// 			)
-// 	};
-
-// 	if (colors.stroke) {
-// 		draw.outline_color = Colors.getAlphaColor(
-// 			colors.stroke,
-// 			alpha.stroke
-// 		);
-// 	}
-
-// 	return draw;
-// };
 
 const getColor = R.compose(
   (color) => Colors.getAlphaColor(color.fill, color.alpha),
