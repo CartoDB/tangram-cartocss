@@ -20,7 +20,6 @@ import R from 'ramda';
  */
 
 import ReferenceHelper from './reference-helpers';
-import Utils from '../utils/utils';
 import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
 
@@ -80,7 +79,7 @@ const getOutlineColor = R.compose(
     stroke: getMarkerStrokeColor,
     alpha: getMarkerStrokeAlpha
   })
-);;
+);
 
 const getColors = R.compose(
   R.pickBy(R.compose(R.not,R.isNil)),

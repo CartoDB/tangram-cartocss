@@ -98,6 +98,7 @@ var ReferenceHelper = {
   getProp,
   getPropOrDef,
   getPropertyFn,
+  getPropertyFnSafe,
   getPropertyOrDefFn,
   getEitherProp,
   getExecutedFn,
