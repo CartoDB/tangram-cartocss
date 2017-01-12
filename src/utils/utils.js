@@ -40,7 +40,8 @@ Utils.functionString = function(fn) {
 
 Utils.transpile2Tangram = R.compose(
   replace(/ctx.zoom/g, '$zoom'),
-  replace(/data\[/g, 'feature[')
+  replace(/data\[/g, 'feature['),
+  replace(/&& data\['mapnik::geometry_type'\] === \d/g, '')
 );
 
 Utils.buildCCSSFn = function(js, attr) {
