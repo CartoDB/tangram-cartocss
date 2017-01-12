@@ -13,11 +13,6 @@ const curryComp = Utils.curryCompose3;
 /*
   REFERENCE HELPER
  */
-var ReferenceHelper = {};
-
-let RH = ReferenceHelper;
-
-export default ReferenceHelper;
 
 // NOTE: to be removed ////
 const OPACITY = {
@@ -35,51 +30,66 @@ const COLOR = {
 };
 ///////////////////////////
 
-RH.generateDefaultFromRef = function(Ref, prop) {
+const generateDefaultFromRef = function(Ref, prop) {
 	return { js: Utils.generateDefault(`"${Ref[prop]['default-value']}"`) };
 };
 
-RH.defaultAlpha = function(Ref, type) {
-	return RH.generateDefaultFromRef(Ref, OPACITY[type]);
+const defaultAlpha = function(Ref, type) {
+	return generateDefaultFromRef(Ref, OPACITY[type]);
 };
 
-RH.defaultColor = function(Ref, type) {
-	return RH.generateDefaultFromRef(Ref, COLOR[type]);
+const defaultColor = function(Ref, type) {
+	return generateDefaultFromRef(Ref, COLOR[type]);
 };
 
-RH.getDefProp = R.curry((prop, ref) => {
-  return RH.generateDefaultFromRef(ref, prop);
+const getDefProp = R.curry((prop, ref) => {
+  return generateDefaultFromRef(ref, prop);
 });
 
 // ref = 'stroke-opacity' -> get {stroke-opacity: {css: 'line-opacity'}} -> line-opacity;
 // ref['line-opacity'];
-RH.getProp = R.curry((prop, ref, c3ss) => {
+const getProp = R.curry((prop, ref, c3ss) => {
   return Utils.pick(Utils.pick(prop + '.css', ref), c3ss);
 });
 
-RH.getPropOrDef = R.either(RH.getProp, RH.getDefProp);
+const getPropOrDef = R.either(getProp, getDefProp);
 
 
-RH.getPropertyFn = curryComp(R.compose(
+const getPropertyFn = curryComp(R.compose(
   Utils.buildCCSSFn,
   R.prop('js'), // get property js from object
-  RH.getProp
+  getProp
 ));
 
-RH.getPropertyOrDefFn = curryComp(R.compose(
+const getPropertyOrDefFn = curryComp(R.compose(
   Utils.buildCCSSFn,
   R.prop('js'),
-  RH.getPropOrDef
+  getPropOrDef
 ));
 
-RH.getExecutedFn = curryComp(R.compose(
+const getExecutedFn = curryComp(R.compose(
   Utils.buildAndExecuteFn,
   R.prop('js'),
-  RH.getPropOrDef
+  getPropOrDef
 ));
 
-RH.getBlendFn = R.curry((ref, c3ss) => R.compose(
+const getBlendFn = R.curry((ref, c3ss) => R.compose(
   R.defaultTo('overlay'),
   TangramReference.checkType(ref['comp-op']),
-  RH.getExecutedFn('comp-op')
+  getExecutedFn('comp-op')
 )(ref, c3ss));
+
+var ReferenceHelper = {
+  generateDefaultFromRef,
+  defaultAlpha,
+  defaultColor,
+  getDefProp,
+  getProp,
+  getPropOrDef,
+  getPropertyFn,
+  getPropertyOrDefFn,
+  getExecutedFn,
+  getBlendFn
+};
+
+export default ReferenceHelper;
