@@ -62,7 +62,8 @@ Colors.toRGBA = Utils.functionString(
 
 Colors.getAlphaColorFn = Utils.functionString(
 	`function (color, opacity) {
-    color = color || 'black';
+		// TODO: review this fallback to 'black' color.
+		color = color || 'black';
 		if ( ${C._isRGBA}(color) ) {
 			return color;
 		}
