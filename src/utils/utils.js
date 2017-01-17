@@ -1,6 +1,14 @@
+import R from 'ramda';
+
 var Utils = {};
 
 export default Utils;
+
+const replace = R.curry(R.replace);
+
+Utils.curryCompose3 = function (compose) {
+  return R.curry((a,b,c) => compose(a,b,c));
+};
 
 Utils.wrapCodeInFunction = function(innerCode, attr = [' ']) {
 	attr = attr.join(',');
@@ -29,11 +37,11 @@ Utils.functionString = function(fn) {
 	return func;
 };
 
-Utils.transpile2Tangram = function(cond) {
-	return cond
-		.replace(/ctx.zoom/g, '$zoom')
-		.replace(/data\[/g, 'feature[');
-};
+
+Utils.transpile2Tangram = R.compose(
+  replace(/ctx.zoom/g, '$zoom'),
+  replace(/data\[/g, 'feature[')
+);
 
 Utils.buildCCSSFn = function(js, attr) {
 	let fn = '';
@@ -45,6 +53,16 @@ Utils.buildCCSSFn = function(js, attr) {
 	return Utils.functionString(Utils.wrapCodeInFunction(fn, attr));
 };
 
+Utils.buildAndExecuteFn =  function (js) {
+  return Utils.buildCCSSFn(js, ['$zoom'])(10);
+};
+
 Utils.generateDefault = function(val) {
 	return `return ${val};`;
 };
+
+Utils.pick = R.curry((path, obj) => {
+  return R.reduce((accumulator, key) => {
+    return accumulator[key];
+  }, obj, R.split('.', path));
+});

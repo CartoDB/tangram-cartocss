@@ -14,21 +14,29 @@
 	EXTERNAL DEPENDENCIES
  */
 
+import R from 'ramda';
+
 /*
 	INTERNAL DEPENDENCIES
  */
 
 import ReferenceHelper from './reference-helpers';
-import Utils from '../utils/utils';
 import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
 import Geom from '../utils/geom';
 
-const LR = TangramReference.getLine(); // Line reference
-
+const LR = TangramReference.getLine(null); // Line reference
 /*
 	INTERNAL LINE FUNCTIONS
  */
+
+const getExecutedFn = ReferenceHelper.getExecutedFn;
+
+const getPropertyOrDefFn = ReferenceHelper.getPropertyOrDefFn;
+
+const getBlendFn = ReferenceHelper.getBlendFn;
+
+const checkLineSym = TangramReference.checkSymbolizer('line');
 
 /**
  * Function to get the alpha channel of a line
@@ -36,11 +44,8 @@ const LR = TangramReference.getLine(); // Line reference
  * @param   {object} c3ss compiled carto css
  * @returns {function} function with the conditions to return alpha value
  */
-const getLineAlpha = function(c3ss) {
-	let alpha = c3ss[LR['stroke-opacity'].css] || ReferenceHelper.defaultAlpha(LR, 'line');
 
-	return Utils.buildCCSSFn(alpha.js).toString();
-};
+const getAlpha = getPropertyOrDefFn('stroke-opacity', LR);
 
 /**
  * Function to get the compiled carto css for the color property
@@ -48,9 +53,8 @@ const getLineAlpha = function(c3ss) {
  * @param   {object} c3ss compiled carto css
  * @returns {object} with the compiled carto css for the color property
  */
-const getLineColor = function(c3ss) {
-	return c3ss[LR.stroke.css] || ReferenceHelper.defaultColor(LR, 'line');
-};
+
+const getBaseColor = getPropertyOrDefFn('stroke', LR);
 
 /**
  * Function for getting the color in rgba
@@ -58,33 +62,62 @@ const getLineColor = function(c3ss) {
  * @param   {object} c3ss compiled carto css
  * @returns {object} with a function that contain the conditions to return a color with alpha channel
  */
-const getColor = function(c3ss) {
-	const alpha = getLineAlpha(c3ss);
-	const color = getLineColor(c3ss);
 
-	return {
-		color: Colors.getAlphaColor(
-				Utils.buildCCSSFn(color.js),
-				alpha
-			)
-	};
+const getColor = function(c3ss) {
+	const color = getBaseColor(c3ss);
+	const alpha = getAlpha(c3ss);
+
+	return Colors.getAlphaColor(color, alpha);
 };
 
 /**
- * Function for get the width in meters dynamically by zoom
+ * Function for getting the width in meters dynamically by zoom
  *
  * @param   {object} c3ss compiled carto css
  * @returns {object} witha a function with the conditions to return width value
  */
-const getWidth = function(c3ss) {
-	let width = c3ss[LR['stroke-width'].css];
 
-	return {
-		width: Geom.px2Meters(Utils.buildCCSSFn(width.js).toString())
-			.replace(/\n/g, ' ')
-			.trim()
-	};
+const getWidth = R.compose(
+  Geom.px2Meters,
+  getPropertyOrDefFn('stroke-width', LR)
+);
+
+/**
+ * Function for getting the cap statically
+ *
+ * @param   {object} c3ss compiled carto css
+ * @returns {string} with cap value Ex: round
+ */
+const getCap = getExecutedFn('stroke-linecap', LR);
+
+/**
+ * Function for getting the join statically
+ *
+ * @param   {object} c3ss compiled carto css
+ * @returns {string} with join value Ex: round
+ */
+const getJoin = getExecutedFn('stroke-linejoin', LR);
+
+/**
+ * Function for getting the blend statically
+ *
+ * @param   {object} c3ss compiled carto css
+ * @returns {string} with blending value Ex: "multiply"
+ */
+const getBlending = getBlendFn(LR);
+
+/**
+ * Function for getting dash value statically
+ *
+ * @param   {object} c3ss compiled carto css
+ * @returns {string} with dash value Ex: [2, 1]
+ */
+const getDashed = c3ss => {
+  let val = getExecutedFn('stroke-dasharray', LR, c3ss);
+
+  return val === 'none' ? undefined : val;
 };
+
 /**
  * Basic Line
  */
@@ -99,18 +132,19 @@ export default Line;
  * @param   {object} c3ss compiled carto css
  * @returns {function} function with the conditions to return alpha value
  */
-Line.getDraw = function(c3ss) {
-	let line = {};
 
-	if (TangramReference.checkSymbolizer(c3ss, 'line')) {
-		Object.assign(
-				line,
-				getColor(c3ss),
-				getWidth(c3ss)
-			);
-	}
+Line.getDraw = (c3ss, id) => {
+  let draw = {};
+  if (checkLineSym(c3ss)) {
+    draw['lines_' + id] = {
+      color: getColor(c3ss),
+      width: getWidth(c3ss),
+      cap: getCap(c3ss),
+      join: getJoin(c3ss)
+    };
+  }
 
-	return { lines_blend: line };
+  return draw;
 };
 
 /**
@@ -118,20 +152,14 @@ Line.getDraw = function(c3ss) {
  *
  * @returns default style configuration for lines
  */
-Line.getStyle = function() {
-	let style = {
-		lines_blend: {
-			base: 'lines',
-			blend: 'overlay'
-		}
-	};
+Line.getStyle = function(c3ss, id) {
+  let style = {};
 
-	// NOTE: this no makes sense actually.
-	// if (TangramReference.checkSymbolizer(c3ss, 'polygons')) {
-	// 	Object.assign(
-	// 			style.polygons_blend
-	// 		);
-	// };
+  style['lines_' + id] = {
+    base: 'lines',
+    blend: getBlending(c3ss),
+    dash: getDashed(c3ss)
+  };
 
-	return style;
+  return style;
 };

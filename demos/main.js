@@ -15,6 +15,7 @@ var app = new Vue({
 	el: '#gui',
 	data: {
 		uri: 'https://eduardorodes.carto.com/builder/2c212118-b711-11e6-9e07-0ef7f98ade21/embed',
+    // uri: 'https://flopez2.carto.com/builder/27a982d0-bdea-11e6-8daa-0e05a8b3e3d7/',
 		layers: [
 		]
 	},

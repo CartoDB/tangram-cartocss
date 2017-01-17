@@ -13,22 +13,32 @@
 /*
 	EXTERNAL DEPENDENCIES
  */
-// import MD5 from 'md5'; // NOTE: used when we support textures.
+import MD5 from 'md5';
+import R from 'ramda';
 
 /*
 	INTERNAL DEPENDENCIES
  */
 
 import ReferenceHelper from './reference-helpers';
-import Utils from '../utils/utils';
 import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
 
-const PR = TangramReference.getPolygon(); // Polygon reference
+const PR = TangramReference.getPolygon(null); // Polygon reference
+const PPR = TangramReference.getPolygonPattern(null);
 
 /*
 	INTERNAL POLYGONS FUNCTIONS
  */
+
+const getExecutedFn = ReferenceHelper.getExecutedFn;
+
+const getPropertyOrDefFn = ReferenceHelper.getPropertyOrDefFn;
+
+const getBlendFn = ReferenceHelper.getBlendFn;
+
+const checkPolygonSym = TangramReference.checkSymbolizer('polygon');
+const checkPolPatternSym = TangramReference.checkSymbolizer('polygon-pattern');
 
 /**
  * function tha returns the alpha from a polygon
@@ -36,13 +46,8 @@ const PR = TangramReference.getPolygon(); // Polygon reference
  * @param   {object} c3ss compiled carto css
  * @returns {function} function that returns an alpha value
  */
-const getPolygonAlpha = function(c3ss) {
-	let alpha = c3ss[PR['fill-opacity'].css] || ReferenceHelper.defaultAlpha(PR, 'polygon'); // NOTE: improve the way of getting this. (functional)
 
-	if (alpha) {
-		return Utils.buildCCSSFn(alpha.js).toString();
-	}
-};
+const getAlpha = getPropertyOrDefFn('fill-opacity', PR);
 
 /**
  * Function to get the compiled carto css for the color property
@@ -50,9 +55,8 @@ const getPolygonAlpha = function(c3ss) {
  * @param   {object} c3ss compiled carto css
  * @returns {object} with the compiled carto css for the color property
  */
-const getPolygonColor = function(c3ss) {
-	return c3ss[PR.fill.css] || ReferenceHelper.defaultColor(PR, 'polygon');
-};
+
+const getBaseColor = getPropertyOrDefFn('fill', PR);
 
 /**
  * Function for getting the color in rgba
@@ -61,17 +65,20 @@ const getPolygonColor = function(c3ss) {
  * @returns {object} with a function that contain the conditions to return a color with alpha channel
  */
 const getColor = function (c3ss) {
-	const alpha = getPolygonAlpha(c3ss);
-	const color = getPolygonColor(c3ss);
+	const color = getBaseColor(c3ss);
+	const alpha = getAlpha(c3ss);
 
-	return {
-		color: Colors.getAlphaColor(
-				Utils.buildCCSSFn(color.js),
-				alpha
-			)
-	};
+	return Colors.getAlphaColor(color, alpha);
 };
 
+const getTextureFile = getExecutedFn('file', PPR);
+
+const getTexture = R.compose(
+  MD5,
+  getTextureFile
+);
+
+const getBlending = getBlendFn(PR);
 
 /**
  * Basic Polygon
@@ -87,40 +94,49 @@ export default Polygon;
  * @param   {object} c3ss compiled carto css
  * @returns {function} function with the conditions to return alpha value
  */
-Polygon.getDraw = function(c3ss) {
-	let polygon = {};
+Polygon.getDraw = (c3ss, id) => {
+  let draw = {};
 
-	if (TangramReference.checkSymbolizer(c3ss, 'polygon')) {
-		Object.assign(
-				polygon,
-				getColor(c3ss)
-			);
+  if (checkPolygonSym(c3ss)) {
+    draw['polygons_' + id] = {
+      color: getColor(c3ss)
+    };
+  }
 
-	}
-
-	return { polygons_blend: polygon };
+  return draw;
 };
-
 
 /**
  * Function to get the style configuration of a polygon.
  *
  * @returns default style configuration for polygon
  */
-Polygon.getStyle = function() {
-	let style = {
-		polygons_blend: {
-			base: 'polygons',
-			blend: 'overlay'
-		}
-	};
+Polygon.getStyle = function(c3ss, id) {
+  let style = {};
 
-	// NOTE: this no makes sense actually. It will necessary in the future.
-	// if (TangramReference.checkSymbolizer(c3ss, 'polygons')) {
-	// 	Object.assign(
-	// 			style.polygons_blend
-	// 		);
-	// };
+  style['polygons_' + id] = {
+    base: 'polygons',
+    blend: getBlending(c3ss),
+    material: {
+      diffuse: {
+        texture: checkPolPatternSym(c3ss) ? getTexture(c3ss) : void 0,
+        mapping: 'uv'
+      }
+    }
+  };
 
 	return style;
+};
+
+Polygon.getTextures = c3ss => {
+  let tex = {};
+  if (checkPolPatternSym(c3ss)) {
+    let texture = getTextureFile(c3ss);
+
+    if (texture) {
+      tex[MD5(texture)] = {url: texture};
+    }
+
+  }
+  return tex;
 };

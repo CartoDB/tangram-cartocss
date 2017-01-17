@@ -1,6 +1,7 @@
 /* globals describe, it */
 import Utils from '../utils/utils';
 import chai from 'chai';
+import MD5 from 'md5';
 let assert = chai.assert;
 
 import Polygon from '../../src/basic/polygons';
@@ -23,9 +24,10 @@ let polygonCCSS =
 
 describe('Polygon', () => {
   const c3ss = Utils.getShader(polygonCCSS);
+  const id = MD5(polygonCCSS);
 
   describe('.getDraw()', () => {
-    let polygon = Polygon.getDraw(c3ss).polygons_blend;
+    let polygon = Polygon.getDraw(c3ss, id)['polygons_' + id];
 
     it('should have color', () => {
       assert.property(polygon, 'color');
@@ -60,27 +62,28 @@ describe('Polygon', () => {
   });
 
   describe('.getStyle()', () => {
-    let polygon = Polygon.getStyle(c3ss);
+    let polygon = Polygon.getStyle(c3ss, id);
 
     it('should have polygons_blend property', () => {
-      assert.property(polygon, 'polygons_blend');
+      assert.property(polygon, 'polygons_' + id);
     });
 
     describe('.polygons_blend', () => {
+      let polygons_blend = polygon['polygons_' + id];
       it('should have base property', () => {
-        assert.property(polygon.polygons_blend, 'base');
+        assert.property(polygons_blend, 'base');
       });
 
       it('shoul have blend property', () => {
-        assert.property(polygon.polygons_blend, 'blend');
+        assert.property(polygons_blend, 'blend');
       });
 
       it('should have base property equal to polygons', () => {
-        assert.equal(polygon.polygons_blend.base, 'polygons');
+        assert.equal(polygons_blend.base, 'polygons');
       });
 
       it('should have blend property equal to overlay', () => {
-        assert.equal(polygon.polygons_blend.blend, 'overlay');
+        assert.equal(polygons_blend.blend, 'overlay');
       });
     });
   });

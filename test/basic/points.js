@@ -1,6 +1,7 @@
 /* globals describe, it */
 import Utils from '../utils/utils';
 import chai from 'chai';
+import MD5 from 'md5';
 let assert = chai.assert;
 
 import Point from '../../src/basic/points';
@@ -32,9 +33,10 @@ let pointCCSS =
 
 describe( 'Point', () => {
   const c3ss = Utils.getShader(pointCCSS);
+  const id = MD5(pointCCSS);
 
   describe('.getDraw()', () => {
-    let point = Point.getDraw(c3ss).points_blend;
+    let point = Point.getDraw(c3ss, id)['points_' + id];
 
     it('should have color', () => {
       assert.property(point, 'color');
@@ -116,27 +118,28 @@ describe( 'Point', () => {
   });
 
   describe('.getStyle()', () => {
-    let point = Point.getStyle(c3ss);
+    let point = Point.getStyle(c3ss, id);
 
     it('should have points_blend property', () => {
-      assert.property(point, 'points_blend');
+      assert.property(point, 'points_' + id);
     });
 
     describe('.points_blend', () => {
+      let points_blend = point['points_' + id];
       it('should have base property', () => {
-        assert.property(point.points_blend, 'base');
+        assert.property(points_blend, 'base');
       });
 
       it('shoul have blend property', () => {
-        assert.property(point.points_blend, 'blend');
+        assert.property(points_blend, 'blend');
       });
 
       it('should have base property equal to points', () => {
-        assert.equal(point.points_blend.base, 'points');
+        assert.equal(points_blend.base, 'points');
       });
 
       it('should have blend property equal to overlay', () => {
-        assert.equal(point.points_blend.blend, 'overlay');
+        assert.equal(points_blend.blend, 'overlay');
       });
     });
   });

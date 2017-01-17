@@ -23,11 +23,13 @@ import Utils from '../utils/utils';
 import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
 
-const PR = TangramReference.getPoint(); // Point reference
+const PR = TangramReference.getPoint(null); // Point reference
 
 /*
 	INTERNAL MARKER FUNCTIONS
  */
+
+const checkMarkerSym = TangramReference.checkSymbolizer('markers');
 
 /**
  * get the internals marker alpha rules global alpha predomines above local alpha's
@@ -188,10 +190,11 @@ export default Point;
  * @param  {object} c3ss compiled carto @class
  * @return {object}      object with the draw types and their properties
  */
-Point.getDraw = function(c3ss) {
-	var point = {};
+Point.getDraw = function(c3ss, id) {
+	var point = {},
+      draw = {};
 
-	if (TangramReference.checkSymbolizer(c3ss, 'markers')) {
+	if (checkMarkerSym(c3ss)) {
 		point = {};
 
 		Object.assign(
@@ -203,7 +206,9 @@ Point.getDraw = function(c3ss) {
 
 	}
 
-	return { points_blend: point };
+  draw['points_' + id] = point;
+
+  return draw;
 };
 
 // TODO
@@ -212,27 +217,26 @@ Point.getDraw = function(c3ss) {
  * @param  {[type]} c3ss  [description]
  * @return {[type]}       [description]
  */
-Point.getStyle = function(c3ss) {
-	let style = {
-		points_blend: {
-			base: 'points',
-			blend: 'overlay'
-		}
-	};
+Point.getStyle = function(c3ss, id) {
+  let style = {};
+  style['points_' + id] = {
+    base: 'points',
+    blend: 'overlay'
+  };
 
-	if (TangramReference.checkSymbolizer(c3ss, 'markers')) {
-		style.points_blend = Object.assign(
-				style.points_blend,
-				getTexture(c3ss),
-				getBlending(c3ss)
-			);
+	if (checkMarkerSym(c3ss)) {
+		Object.assign(
+        style['points_' + id],
+        getTexture(c3ss),
+        getBlending(c3ss)
+      );
 	}
 
 	return style;
 };
 
 Point.getTextures = function(c3ss) {
-	if (TangramReference.checkSymbolizer(c3ss, 'markers')) {
+	if (checkMarkerSym(c3ss)) {
 		let texture = getTextureFile(c3ss);
 		let tex = {};
 

@@ -2,11 +2,13 @@ import Carto from 'carto';
 import Points from './basic/points';
 import Polygons from './basic/polygons';
 import Lines from './basic/lines';
+import MD5 from 'md5';
 
 const CartoCSSRenderer = new Carto.RendererJS();
 
 const extractFeatures = function (ccss) {
   let layers = CartoCSSRenderer.render(ccss).getLayers(),
+      id = MD5(ccss),
       draw = {},
       styles = {},
       textures = {};
@@ -17,24 +19,25 @@ const extractFeatures = function (ccss) {
 
     Object.assign(
         draw,
-        Points.getDraw(ly),
-        Polygons.getDraw(ly),
-        Lines.getDraw(ly)
+        Points.getDraw(ly, id),
+        Polygons.getDraw(ly, id),
+        Lines.getDraw(ly, id)
       );
 
     Object.assign(
         textures,
-        Points.getTextures(ly)
+        Points.getTextures(ly),
+        Polygons.getTextures(ly)
       );
 
     Object.assign(
         styles,
-        Points.getStyle(ly),
-        Polygons.getStyle(ly),
-        Lines.getStyle(ly)
+        Points.getStyle(ly, id),
+        Polygons.getStyle(ly, id),
+        Lines.getStyle(ly, id)
       );
   }
-
+  console.log(textures);
   return {textures, draw, styles};
 };
 
