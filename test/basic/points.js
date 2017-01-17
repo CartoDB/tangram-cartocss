@@ -111,7 +111,7 @@ describe( 'Point', () => {
     });
 
     it('should not have collide', () => {
-      assert.notProperty(point, 'collide');
+      assert.equal(point.collide, false);
     });
 
 

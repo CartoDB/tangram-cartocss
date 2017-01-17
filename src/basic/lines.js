@@ -115,7 +115,7 @@ const getBlending = getBlendFn(LR);
 const getDashed = c3ss => {
   let val = getExecutedFn('stroke-dasharray', LR, c3ss);
 
-  return val === 'none' ? undefined : val;
+  return val === 'none' ? void 0 : val;
 };
 
 /**

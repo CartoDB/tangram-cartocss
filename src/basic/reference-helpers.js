@@ -61,11 +61,22 @@ const getPropertyFn = curryComp(R.compose(
   getProp
 ));
 
+const getPropertyFnSafe = R.ifElse(
+  getProp,
+  getPropertyFn,
+  () => void 0
+);
+
 const getPropertyOrDefFn = curryComp(R.compose(
   Utils.buildCCSSFn,
   R.prop('js'),
   getPropOrDef
 ));
+
+const getEitherProp = (propA, propB, ref) => R.either(
+  getPropertyFnSafe(propA, ref),
+  getPropertyOrDefFn(propB, ref)
+);
 
 const getExecutedFn = curryComp(R.compose(
   Utils.buildAndExecuteFn,
@@ -87,7 +98,9 @@ var ReferenceHelper = {
   getProp,
   getPropOrDef,
   getPropertyFn,
+  getPropertyFnSafe,
   getPropertyOrDefFn,
+  getEitherProp,
   getExecutedFn,
   getBlendFn
 };
