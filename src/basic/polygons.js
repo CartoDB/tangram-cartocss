@@ -20,7 +20,7 @@ import R from 'ramda';
 	INTERNAL DEPENDENCIES
  */
 
-import ReferenceHelper from './reference-helpers';
+import { getExecutedFn, getPropertyOrDefFn, getBlendFn } from './reference-helpers';
 import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
 
@@ -31,11 +31,11 @@ const PPR = TangramReference.getPolygonPattern(null);
 	INTERNAL POLYGONS FUNCTIONS
  */
 
-const getExecutedFn = ReferenceHelper.getExecutedFn;
+// const getExecutedFn = ReferenceHelper.getExecutedFn;
 
-const getPropertyOrDefFn = ReferenceHelper.getPropertyOrDefFn;
+// const getPropertyOrDefFn = ReferenceHelper.getPropertyOrDefFn;
 
-const getBlendFn = ReferenceHelper.getBlendFn;
+// const getBlendFn = ReferenceHelper.getBlendFn;
 
 const checkPolygonSym = TangramReference.checkSymbolizer('polygon');
 const checkPolPatternSym = TangramReference.checkSymbolizer('polygon-pattern');

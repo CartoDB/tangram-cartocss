@@ -19,7 +19,7 @@ import R from 'ramda';
 	INTERNAL DEPENDENCIES
  */
 
-import ReferenceHelper from './reference-helpers';
+import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getPropertyFnSafe, getEitherProp } from './reference-helpers';
 import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
 
@@ -28,15 +28,6 @@ const PR = TangramReference.getPoint(null); // Point reference
 /*
 	INTERNAL MARKER FUNCTIONS
  */
-const getPropertyFnSafe = ReferenceHelper.getPropertyFnSafe;
-
-const getPropertyOrDefFn = ReferenceHelper.getPropertyOrDefFn;
-
-const getEitherProp = ReferenceHelper.getEitherProp;
-
-const getExecutedFn = ReferenceHelper.getExecutedFn;
-
-const getBlendFn = ReferenceHelper.getBlendFn;
 
 const checkMarkerSym = TangramReference.checkSymbolizer('markers');
 

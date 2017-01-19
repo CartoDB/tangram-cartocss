@@ -90,7 +90,7 @@ const getBlendFn = R.curry((ref, c3ss) => R.compose(
   getExecutedFn('comp-op')
 )(ref, c3ss));
 
-var ReferenceHelper = {
+export {
   generateDefaultFromRef,
   defaultAlpha,
   defaultColor,
@@ -104,5 +104,3 @@ var ReferenceHelper = {
   getExecutedFn,
   getBlendFn
 };
-
-export default ReferenceHelper;

@@ -20,7 +20,7 @@ import R from 'ramda';
 	INTERNAL DEPENDENCIES
  */
 
-import ReferenceHelper from './reference-helpers';
+import { getExecutedFn, getPropertyOrDefFn, getBlendFn } from './reference-helpers';
 import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
 import Geom from '../utils/geom';
@@ -29,12 +29,6 @@ const LR = TangramReference.getLine(null); // Line reference
 /*
 	INTERNAL LINE FUNCTIONS
  */
-
-const getExecutedFn = ReferenceHelper.getExecutedFn;
-
-const getPropertyOrDefFn = ReferenceHelper.getPropertyOrDefFn;
-
-const getBlendFn = ReferenceHelper.getBlendFn;
 
 const checkLineSym = TangramReference.checkSymbolizer('line');
 
