@@ -158,7 +158,8 @@ Line.getStyle = function(c3ss, id) {
   style['lines_' + id] = {
     base: 'lines',
     blend: getBlending(c3ss),
-    dash: getDashed(c3ss)
+    dash: getDashed(c3ss),
+    blend_order: 2
   };
 
   return style;
