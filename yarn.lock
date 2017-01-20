@@ -1139,9 +1139,9 @@ camelcase@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-3.0.0.tgz#32fc4b9fcdaf845fcdf7e73bb97cac2261f0ab0a"
 
-carto@CartoDB/carto#f17aea8657ea27f2a660db15dd13b57127e823f9:
+carto@CartoDB/carto#master:
   version "0.15.1-cdb1"
-  resolved "https://codeload.github.com/CartoDB/carto/tar.gz/f17aea8657ea27f2a660db15dd13b57127e823f9"
+  resolved "https://codeload.github.com/CartoDB/carto/tar.gz/4f792fbeadd883479bee7b5350893ca63b1cdd99"
   dependencies:
     mapnik-reference "~6.0.2"
     optimist "~0.6.0"
@@ -4274,11 +4274,11 @@ tangram-cartocss@^0.1.0:
     babel-runtime "6.11.6"
     vue "^2.0.3"
 
-tangram-reference@1.0.11:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/tangram-reference/-/tangram-reference-1.0.11.tgz#15dec47ac50bb956100de01292f8f6f6ce4a868f"
+tangram-reference@1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/tangram-reference/-/tangram-reference-1.0.14.tgz#93a4845852f53923e12ec9dbb90364ca5e61c69f"
 
-"tangram@github:tangrams/tangram#master", tangram@tangrams/tangram#master:
+tangram@tangrams/tangram#master:
   version "0.11.6"
   resolved "https://codeload.github.com/tangrams/tangram/tar.gz/6356ecc29ebcb98f70df9ca92a6a41489486b3b8"
   dependencies:
