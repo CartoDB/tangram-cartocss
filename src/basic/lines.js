@@ -25,6 +25,8 @@ import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
 import Geom from '../utils/geom';
 
+const notEq = R.curry(R.compose(R.complement, R.equals));
+
 const LR = TangramReference.getLine(null); // Line reference
 /*
 	INTERNAL LINE FUNCTIONS
@@ -106,11 +108,13 @@ const getBlending = getBlendFn(LR);
  * @param   {object} c3ss compiled carto css
  * @returns {string} with dash value Ex: [2, 1]
  */
-const getDashed = c3ss => {
-  let val = getExecutedFn('stroke-dasharray', LR, c3ss);
 
-  return val === 'none' ? void 0 : val;
-};
+const getDashed = R.compose(
+  R.cond([
+    [notEq('none'), val => val]
+  ]),
+  getExecutedFn('stroke-dasharray', LR)
+);
 
 /**
  * Basic Line

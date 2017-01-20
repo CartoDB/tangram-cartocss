@@ -168,23 +168,20 @@ Point.getStyle = function(c3ss, id) {
   };
 
 	if (checkMarkerSym(c3ss)) {
-		Object.assign(
-        style['points_' + id],
-        getTexture(c3ss),
-        getBlending(c3ss)
-      );
+    let p = style['points_' + id];
+    p.texture = getTextureFile(c3ss) !== 'none' ? getTexture(c3ss) : void 0;
+    p.blend = getBlending(c3ss);
 	}
 
 	return style;
 };
 
 Point.getTextures = function(c3ss) {
+  let tex = {};
 	if (checkMarkerSym(c3ss)) {
 		let texture = getTextureFile(c3ss);
-		let tex = {};
 
-		if (texture) {
-
+		if (texture !== 'none') {
 			tex[MD5(texture)] = {url: texture};
 		}
 

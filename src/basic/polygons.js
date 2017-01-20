@@ -31,12 +31,6 @@ const PPR = TangramReference.getPolygonPattern(null);
 	INTERNAL POLYGONS FUNCTIONS
  */
 
-// const getExecutedFn = ReferenceHelper.getExecutedFn;
-
-// const getPropertyOrDefFn = ReferenceHelper.getPropertyOrDefFn;
-
-// const getBlendFn = ReferenceHelper.getBlendFn;
-
 const checkPolygonSym = TangramReference.checkSymbolizer('polygon');
 const checkPolPatternSym = TangramReference.checkSymbolizer('polygon-pattern');
 
