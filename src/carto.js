@@ -37,7 +37,7 @@ const extractFeatures = function (ccss) {
         Lines.getStyle(ly, id)
       );
   }
-  console.log(textures);
+
   return {textures, draw, styles};
 };
 
