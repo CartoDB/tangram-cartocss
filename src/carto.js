@@ -2,6 +2,7 @@ import Carto from 'carto';
 import Points from './basic/points';
 import Polygons from './basic/polygons';
 import Lines from './basic/lines';
+import TextPoints from './basic/text';
 import MD5 from 'md5';
 
 const CartoCSSRenderer = new Carto.RendererJS();
@@ -21,7 +22,8 @@ const extractFeatures = function (ccss) {
         draw,
         Points.getDraw(ly, id),
         Polygons.getDraw(ly, id),
-        Lines.getDraw(ly, id)
+        Lines.getDraw(ly, id),
+        TextPoints.getDraw(ly, id)
       );
 
     Object.assign(
@@ -34,7 +36,8 @@ const extractFeatures = function (ccss) {
         styles,
         Points.getStyle(ly, id),
         Polygons.getStyle(ly, id),
-        Lines.getStyle(ly, id)
+        Lines.getStyle(ly, id),
+        TextPoints.getStyle(ly, id)
       );
   }
 
