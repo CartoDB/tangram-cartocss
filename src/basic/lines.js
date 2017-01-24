@@ -20,9 +20,8 @@ import R from 'ramda';
 	INTERNAL DEPENDENCIES
  */
 
-import { getExecutedFn, getPropertyOrDefFn, getBlendFn } from './reference-helpers';
+import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getColorFn } from './reference-helpers';
 import TangramReference from '../utils/reference';
-import Colors from '../style/colors';
 import Geom from '../utils/geom';
 
 const notEq = R.curry(R.compose(R.complement, R.equals));
@@ -59,12 +58,7 @@ const getBaseColor = getPropertyOrDefFn('stroke', LR);
  * @returns {object} with a function that contain the conditions to return a color with alpha channel
  */
 
-const getColor = function(c3ss) {
-	const color = getBaseColor(c3ss);
-	const alpha = getAlpha(c3ss);
-
-	return Colors.getAlphaColor(color, alpha);
-};
+const getColor = getColorFn(getBaseColor, getAlpha);
 
 /**
  * Function for getting the width in meters dynamically by zoom
@@ -111,7 +105,7 @@ const getBlending = getBlendFn(LR);
 
 const getDashed = R.compose(
   R.cond([
-    [notEq('none'), val => val]
+    [notEq('none'), R.identity]
   ]),
   getExecutedFn('stroke-dasharray', LR)
 );

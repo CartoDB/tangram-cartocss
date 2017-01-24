@@ -19,9 +19,8 @@ import R from 'ramda';
 	INTERNAL DEPENDENCIES
  */
 
-import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getPropertyFnSafe, getEitherProp } from './reference-helpers';
+import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getPropertyFnSafe, getEitherProp, getColorFn } from './reference-helpers';
 import TangramReference from '../utils/reference';
-import Colors from '../style/colors';
 
 const PR = TangramReference.getPoint(null); // Point reference
 
@@ -32,44 +31,19 @@ const PR = TangramReference.getPoint(null); // Point reference
 const checkMarkerSym = TangramReference.checkSymbolizer('markers');
 
 /**
- * get the internals marker alpha rules global alpha predomines above local alpha's
- * @param  {object} c3ss compiled carto css
- * @return {object}      object with the alpha extracted (global or local)
- */
-
-const getMarkerFillAlpha = getEitherProp('fill-opacity', 'opacity', PR);
-
-const getMarkerStrokeAlpha = getEitherProp('stroke-opacity', 'opacity', PR);
-
-/**
- * get marker c3ss colors
- * @param  {object} c3ss compiled carto css
- * @return {object}      object with the colors
- */
-const getMarkerFillColor = getPropertyOrDefFn('fill', PR);
-
-const getMarkerStrokeColor = getPropertyFnSafe('stroke', PR);
-
-/**
  * get colors from cartocss with the alpha channel applied
  * @param  {object} c3ss compiled carto css
  * @return {object}      draw object with color and border_color
  */
 
-const getColor = R.compose(
-  (color) => Colors.getAlphaColor(color.fill, color.alpha),
-  R.applySpec({
-    fill: getMarkerFillColor,
-    alpha: getMarkerFillAlpha
-  })
+const getColor = getColorFn(
+  getPropertyOrDefFn('fill', PR),
+  getEitherProp('fill-opacity', 'opacity', PR)
 );
 
-const getOutlineColor = R.compose(
-  (color) => Colors.getAlphaColor(color.stroke, color.alpha),
-  R.applySpec({
-    stroke: getMarkerStrokeColor,
-    alpha: getMarkerStrokeAlpha
-  })
+const getOutlineColor = getColorFn(
+  getPropertyFnSafe('stroke', PR),
+  getEitherProp('stroke-opacity', 'opacity', PR)
 );
 
 const getColors = R.compose(

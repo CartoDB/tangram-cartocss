@@ -20,9 +20,8 @@ import R from 'ramda';
 	INTERNAL DEPENDENCIES
  */
 
-import { getExecutedFn, getPropertyOrDefFn, getBlendFn } from './reference-helpers';
+import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getColorFn } from './reference-helpers';
 import TangramReference from '../utils/reference';
-import Colors from '../style/colors';
 
 const PR = TangramReference.getPolygon(null); // Polygon reference
 const PPR = TangramReference.getPolygonPattern(null);
@@ -58,12 +57,7 @@ const getBaseColor = getPropertyOrDefFn('fill', PR);
  * @param   {object} c3ss compiled carto css
  * @returns {object} with a function that contain the conditions to return a color with alpha channel
  */
-const getColor = function (c3ss) {
-	const color = getBaseColor(c3ss);
-	const alpha = getAlpha(c3ss);
-
-	return Colors.getAlphaColor(color, alpha);
-};
+const getColor = getColorFn(getBaseColor, getAlpha);
 
 const getTextureFile = getExecutedFn('file', PPR);
 

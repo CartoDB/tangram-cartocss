@@ -14,18 +14,14 @@
   EXTERNAL DEPENDENCIES
 */
 
-import R from 'ramda';
-
 /*
   INTERNAL DEPENDENCIES
 */
 
-import { getPropertyFnSafe, getPropertyOrDefFn } from './reference-helpers';
+import { getPropertyFnSafe, getPropertyOrDefFn, getColorFn } from './reference-helpers';
 import TangramReference from '../utils/reference';
-import Colors from '../style/colors';
 
 const TR = TangramReference.getText(null);
-// const arrPropFnSafe = R.compose(R.of, getPropertyFnSafe);
 
 /*
   INTERNAL POLYGONS FUNCTIONS
@@ -37,20 +33,10 @@ const getTextName = getPropertyFnSafe('name', TR);
 
 const getSize = getPropertyFnSafe('size', TR);
 
-const getFill = getPropertyFnSafe('fill', TR);
-
-const getOpacity = getPropertyOrDefFn('opacity', TR);
-
-const getColor = R.compose(
-  R.apply(Colors.getAlphaColor),
-  R.values,
-  R.applySpec({
-    color: getFill,
-    opacity: getOpacity
-  })
+const getColor = getColorFn(
+  getPropertyFnSafe('fill', TR),
+  getPropertyOrDefFn('opacity', TR)
 );
-
-// const getBlend = getBlendFn(TR);
 
 var TextPoint = {};
 
@@ -69,7 +55,7 @@ TextPoint.getDraw = (c3ss, id) => {
           size: getSize(c3ss),
           fill: getColor(c3ss)
         },
-        optional: true
+        optional: false
       }
     };
   }
