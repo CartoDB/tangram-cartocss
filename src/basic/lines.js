@@ -34,31 +34,16 @@ const LR = TangramReference.getLine(null); // Line reference
 const checkLineSym = TangramReference.checkSymbolizer('line');
 
 /**
- * Function to get the alpha channel of a line
- *
- * @param   {object} c3ss compiled carto css
- * @returns {function} function with the conditions to return alpha value
- */
-
-const getAlpha = getPropertyOrDefFn('stroke-opacity', LR);
-
-/**
- * Function to get the compiled carto css for the color property
- *
- * @param   {object} c3ss compiled carto css
- * @returns {object} with the compiled carto css for the color property
- */
-
-const getBaseColor = getPropertyOrDefFn('stroke', LR);
-
-/**
  * Function for getting the color in rgba
  *
  * @param   {object} c3ss compiled carto css
  * @returns {object} with a function that contain the conditions to return a color with alpha channel
  */
 
-const getColor = getColorFn(getBaseColor, getAlpha);
+const getColor = getColorFn(
+  getPropertyOrDefFn('stroke', LR),
+  getPropertyOrDefFn('stroke-opacity', LR)
+);
 
 /**
  * Function for getting the width in meters dynamically by zoom

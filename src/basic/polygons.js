@@ -34,30 +34,15 @@ const checkPolygonSym = TangramReference.checkSymbolizer('polygon');
 const checkPolPatternSym = TangramReference.checkSymbolizer('polygon-pattern');
 
 /**
- * function tha returns the alpha from a polygon
- *
- * @param   {object} c3ss compiled carto css
- * @returns {function} function that returns an alpha value
- */
-
-const getAlpha = getPropertyOrDefFn('fill-opacity', PR);
-
-/**
- * Function to get the compiled carto css for the color property
- *
- * @param   {object} c3ss compiled carto css
- * @returns {object} with the compiled carto css for the color property
- */
-
-const getBaseColor = getPropertyOrDefFn('fill', PR);
-
-/**
  * Function for getting the color in rgba
  *
  * @param   {object} c3ss compiled carto css
  * @returns {object} with a function that contain the conditions to return a color with alpha channel
  */
-const getColor = getColorFn(getBaseColor, getAlpha);
+const getColor = getColorFn(
+  getPropertyOrDefFn('fill', PR),
+  getPropertyOrDefFn('fill-opacity', PR)
+);
 
 const getTextureFile = getExecutedFn('file', PPR);
 

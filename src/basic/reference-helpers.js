@@ -10,7 +10,6 @@ import Colors from '../style/colors';
 
 const curryComp = Utils.curryCompose3;
 
-
 /*
   REFERENCE HELPER
  */
@@ -76,7 +75,7 @@ const getColorFn = (fill, alpha) => {
       alpha: alpha
     })
   );
-}
+};
 
 export {
   generateDefaultFromRef,
