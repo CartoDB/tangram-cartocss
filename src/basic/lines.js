@@ -20,7 +20,7 @@ import R from 'ramda';
 	INTERNAL DEPENDENCIES
  */
 
-import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getColorFn } from './reference-helpers';
+import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getColorFn } from '../utils/reference-helpers';
 import TangramReference from '../utils/reference';
 import Geom from '../utils/geom';
 

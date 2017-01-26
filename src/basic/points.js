@@ -19,7 +19,7 @@ import R from 'ramda';
 	INTERNAL DEPENDENCIES
  */
 
-import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getPropertyFnSafe, getEitherProp, getColorFn } from './reference-helpers';
+import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getPropertyFnSafe, getEitherProp, getColorFn } from '../utils/reference-helpers';
 import TangramReference from '../utils/reference';
 
 const PR = TangramReference.getPoint(null); // Point reference

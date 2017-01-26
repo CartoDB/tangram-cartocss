@@ -4,7 +4,7 @@
   \|___ \  \_\ \   __/|   \ \  \/  / ||___ \  \_|
       \ \  \ \ \  \_|/__  \ \    / /     \ \  \
         \ \  \ \ \  \_|\ \  /     \/       \ \  \
-        \ \__\ \ \_______\/  /\   \        \ \__\
+        \ \__\ \ \_______\/  /\   \         \ \__\
           \|__|  \|_______/__/ /\ __\        \|__|
                           |__|/ \|__|
 
@@ -18,7 +18,7 @@
   INTERNAL DEPENDENCIES
 */
 
-import { getPropertyFnSafe, getPropertyOrDefFn, getColorFn } from './reference-helpers';
+import { getPropertyFnSafe, getPropertyOrDefFn, getColorFn } from '../utils/reference-helpers';
 import TangramReference from '../utils/reference';
 
 const TR = TangramReference.getText(null);
