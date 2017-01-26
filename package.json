@@ -25,6 +25,7 @@
     "test-ci": "npm run lint && npm run build-test && npm run test-remote",
     "test-remote": "./node_modules/karma/bin/karma start --browsers Chrome_travis_ci --single-run",
     "test-local": "./node_modules/karma/bin/karma start --browsers Chrome --single-run",
+    "test-local-debug": "./node_modules/karma/bin/karma start --browsers Chrome --single-run=false --debug",
     "karma-start": "./node_modules/karma/bin/karma start --browsers Chrome --no-watch",
     "karma-run": "./node_modules/karma/bin/karma run --browsers Chrome",
     "lint": "$(npm bin)/jshint src/ && jshint test/",
@@ -53,7 +54,7 @@
     "carto": "CartoDB/carto#master",
     "md5": "2.2.1",
     "ramda": "^0.23.0",
-    "tangram-reference": "1.0.15"
+    "tangram-reference": "1.0.16"
   },
   "devDependencies": {
     "Cartogram-Utils": "0.1.0",

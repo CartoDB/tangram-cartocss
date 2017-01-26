@@ -12,7 +12,7 @@ let textCCSS =
   #layer {
     text-fill: #F00;
     text-size: 15px;
-
+    text-name: 'Hola';
     [height > 10] {
       text-size: 20px;
       text-opacity: 0.6;
@@ -32,7 +32,6 @@ describe('Text', () => {
 
   describe('.getDraw()', () => {
     let text = TextPoint.getDraw(c3ss, id)['text_' + id].text;
-
 
     it('should have font', () => {
       assert.property(text, 'font');
