@@ -25,7 +25,7 @@ import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
 import Geom from '../utils/geom';
 
-const notEq = R.curry(R.compose(R.complement, R.equals));
+const notEq = R.curry(R.compose(R.not, R.equals));
 
 const LR = TangramReference.getLine(null); // Line reference
 /*
@@ -111,7 +111,7 @@ const getBlending = getBlendFn(LR);
 
 const getDashed = R.compose(
   R.cond([
-    [notEq('none'), val => val]
+    [notEq('none'), val => {console.log(val); return val;}]
   ]),
   getExecutedFn('stroke-dasharray', LR)
 );
