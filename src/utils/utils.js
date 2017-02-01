@@ -6,6 +6,12 @@ export default Utils;
 
 const replace = R.curry(R.replace);
 
+const geometries = {
+  '1': '"point"',
+  '2': '"line"',
+  '3': '"polygon"'
+}
+
 Utils.curryCompose3 = function (compose) {
   return R.curry((a,b,c) => compose(a,b,c));
 };
@@ -41,7 +47,9 @@ Utils.functionString = function(fn) {
 Utils.transpile2Tangram = R.compose(
   replace(/ctx.zoom/g, '$zoom'),
   replace(/data\[/g, 'feature['),
-  replace(/&& data\['mapnik::geometry_type'\] === \d/g, '')
+  replace(/data\['mapnik::geometry_type'\] === (\d)/g, ($0, $1) => {
+    return '$geometry === ' + geometries[$1];
+  })
 );
 
 Utils.buildCCSSFn = function(js, attr) {
