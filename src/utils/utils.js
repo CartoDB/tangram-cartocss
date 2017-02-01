@@ -10,7 +10,7 @@ const geometries = {
   '1': '"point"',
   '2': '"line"',
   '3': '"polygon"'
-}
+};
 
 Utils.curryCompose3 = function (compose) {
   return R.curry((a,b,c) => compose(a,b,c));
