@@ -1,0 +1,12 @@
+{
+  "presets": [
+    ["env", {
+      "modules": false,
+      "targets": {
+        "chrome": 56,
+        "node": "current"
+      }
+    }]
+  ],
+  "plugins": ["ramda"]
+}

@@ -1,13 +1,13 @@
-import R from 'ramda';
+import { curry, compose, replace, reduce, split }from 'ramda';
 
 var Utils = {};
 
 export default Utils;
 
-const replace = R.curry(R.replace);
+const repl = curry(replace);
 
 Utils.curryCompose3 = function (compose) {
-  return R.curry((a,b,c) => compose(a,b,c));
+  return curry((a,b,c) => compose(a,b,c));
 };
 
 Utils.wrapCodeInFunction = function(innerCode, attr = [' ']) {
@@ -38,10 +38,10 @@ Utils.functionString = function(fn) {
 };
 
 
-Utils.transpile2Tangram = R.compose(
-  replace(/ctx.zoom/g, '$zoom'),
-  replace(/data\[/g, 'feature['),
-  replace(/&& data\['mapnik::geometry_type'\] === \d/g, '')
+Utils.transpile2Tangram = compose(
+  repl(/ctx.zoom/g, '$zoom'),
+  repl(/data\[/g, 'feature['),
+  repl(/&& data\['mapnik::geometry_type'\] === \d/g, '')
 );
 
 Utils.buildCCSSFn = function(js, attr) {
@@ -62,8 +62,8 @@ Utils.generateDefault = function(val) {
 	return `return ${val};`;
 };
 
-Utils.pick = R.curry((path, obj) => {
-  return R.reduce((accumulator, key) => {
+Utils.pick = curry((path, obj) => {
+  return reduce((accumulator, key) => {
     return accumulator[key];
-  }, obj, R.split('.', path));
+  }, obj, split('.', path));
 });

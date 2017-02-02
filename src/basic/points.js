@@ -13,7 +13,7 @@
 	EXTERNAL DEPENDENCIES
  */
 import MD5 from 'md5';
-import R from 'ramda';
+import {compose, pickBy, not, isNil, applySpec} from 'ramda';
 
 /*
 	INTERNAL DEPENDENCIES
@@ -46,9 +46,9 @@ const getOutlineColor = getColorFn(
   getEitherProp('stroke-opacity', 'opacity', PR)
 );
 
-const getColors = R.compose(
-  R.pickBy(R.compose(R.not,R.isNil)),
-  R.applySpec({
+const getColors = compose(
+  pickBy(compose(not,isNil)),
+  applySpec({
     color: getColor,
     outline_color: getOutlineColor
   })
@@ -64,9 +64,9 @@ const getMarkerWidth = getPropertyFnSafe('width', PR);
 
 const getOutlineWidth = getPropertyFnSafe('stroke-width', PR);
 
-const getWidths = R.compose(
-  R.pickBy(R.compose(R.not, R.isNil)),
-  R.applySpec({
+const getWidths = compose(
+  pickBy(compose(not, isNil)),
+  applySpec({
     size: getMarkerWidth,
     outline_width: getOutlineWidth
   })
@@ -87,7 +87,7 @@ const getTextureFile = getExecutedFn('file', PR);
  * @param  {object} c3ss compiled carto css
  * @return {object}      return draw object with a non-dynamic texture.
  */
-const getTexture = R.compose(
+const getTexture = compose(
   MD5,
   getTextureFile
 );

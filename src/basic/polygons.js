@@ -14,7 +14,7 @@
 	EXTERNAL DEPENDENCIES
  */
 import MD5 from 'md5';
-import R from 'ramda';
+import { compose } from 'ramda';
 
 /*
 	INTERNAL DEPENDENCIES
@@ -46,7 +46,7 @@ const getColor = getColorFn(
 
 const getTextureFile = getExecutedFn('file', PPR);
 
-const getTexture = R.compose(
+const getTexture = compose(
   MD5,
   getTextureFile
 );
