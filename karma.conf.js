@@ -27,13 +27,7 @@ module.exports = function (config) {
         basePath: '',
         frameworks: ['browserify', 'mocha', 'sinon'],
         files: [
-            'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js',
-            {
-                pattern: 'test/fixtures/*',
-                watched: false,
-                included: false,
-                served: true
-															},
+            'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.js',
             'dist/tangram-cartocss.test.js',
             'test/**/*.js'
         ],

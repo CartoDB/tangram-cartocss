@@ -1,6 +1,7 @@
 import R from 'ramda';
 import Utils from '../utils/utils';
 import TangramReference from '../utils/reference';
+import Colors from '../style/colors';
 
 
 /*
@@ -9,37 +10,12 @@ import TangramReference from '../utils/reference';
 
 const curryComp = Utils.curryCompose3;
 
-
 /*
   REFERENCE HELPER
  */
 
-// NOTE: to be removed ////
-const OPACITY = {
-	line: 'stroke-opacity',
-	point: 'fill-opacity',
-	border: 'stroke-opacity',
-	global: 'opacity',
-	polygon: 'fill-opacity'
-};
-
-const COLOR = {
-	line: 'stroke',
-	point: 'fill',
-	polygon: 'fill'
-};
-///////////////////////////
-
 const generateDefaultFromRef = function(Ref, prop) {
 	return { js: Utils.generateDefault(`"${Ref[prop]['default-value']}"`) };
-};
-
-const defaultAlpha = function(Ref, type) {
-	return generateDefaultFromRef(Ref, OPACITY[type]);
-};
-
-const defaultColor = function(Ref, type) {
-	return generateDefaultFromRef(Ref, COLOR[type]);
 };
 
 const getDefProp = R.curry((prop, ref) => {
@@ -90,10 +66,19 @@ const getBlendFn = R.curry((ref, c3ss) => R.compose(
   getExecutedFn('comp-op')
 )(ref, c3ss));
 
+const getColorFn = (fill, alpha) => {
+  return R.compose(
+    R.apply(Colors.getAlphaColor),
+    R.values,
+    R.applySpec({
+      fill: fill,
+      alpha: alpha
+    })
+  );
+};
+
 export {
   generateDefaultFromRef,
-  defaultAlpha,
-  defaultColor,
   getDefProp,
   getProp,
   getPropOrDef,
@@ -102,5 +87,6 @@ export {
   getPropertyOrDefFn,
   getEitherProp,
   getExecutedFn,
-  getBlendFn
+  getBlendFn,
+  getColorFn
 };
