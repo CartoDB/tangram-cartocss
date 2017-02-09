@@ -64,15 +64,16 @@ Colors.getAlphaColorFn = Utils.functionString(
 	`function (color, opacity) {
 		// TODO: review this fallback to 'black' color.
 		color = color || '#000';
+    var toRGBA = ${C.toRGBA};
 		if ( ${C._isRGBA}(color) ) {
 			return color;
 		}
 		else {
 			if ( ${C._isHex}(color) ) {
-				return ${C.toRGBA}( ${C.toRGB}( ${C.toSixHex}(color) ), opacity );
+				return toRGBA( ${C.toRGB}( ${C.toSixHex}(color) ), opacity );
 			}
 			else if ( ${C._isRGB}(color) ) {
-				return ${C.toRGBA}(color);
+				return toRGBA(color);
 			}
 		}
 	}`
@@ -82,7 +83,8 @@ Colors.getAlphaColor = function (color, opacity) {
 	if (color && typeof opacity !== 'number') {
 		return Utils.functionString(
 				`function () {
-					return ${C.getAlphaColorFn}(${color}(), ${opacity}() || 1);
+          var op = ${opacity}();
+					return ${C.getAlphaColorFn}(${color}(), isFinite(op) ? op : 1);
 				}`
 			);
 	}
