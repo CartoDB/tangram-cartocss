@@ -1,6 +1,6 @@
 {
   "name": "tangram-cartocss",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Transform cartocss into a draw tangram object.",
   "repository": {
     "type": "git",
@@ -54,7 +54,7 @@
     "carto": "CartoDB/carto#master",
     "md5": "2.2.1",
     "ramda": "^0.23.0",
-    "tangram-reference": "1.0.16"
+    "tangram-reference": "1.0.17"
   },
   "devDependencies": {
     "Cartogram-Utils": "0.1.0",
