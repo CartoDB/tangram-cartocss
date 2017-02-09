@@ -51,7 +51,7 @@ var app = new Vue({
 
 						self.layers.push(layer);
 						TH.addLayer(window.sceneLayer, layer);
-						TH.setLayerDraw(window.sceneLayer, layer);
+						TH.setLayerDraw(window.sceneLayer, layer, (i + 1));
 					}
 				});
 

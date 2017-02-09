@@ -84,7 +84,7 @@ Colors.getAlphaColor = function (color, opacity) {
 		return Utils.functionString(
 				`function () {
           var op = ${opacity}();
-					return ${C.getAlphaColorFn}(${color}(), isFinite(op) ? op : 1);
+					return ${C.getAlphaColorFn}(${color}(), typeof op === "number" ? op : 1);
 				}`
 			);
 	}
