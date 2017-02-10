@@ -3,8 +3,8 @@
 ```sh
 me$ git clone $repo_url
 cd into_folder
-yarn
-yarn start
+npm
+npm start
 ```
 
 It will print the dev url to try the demos.

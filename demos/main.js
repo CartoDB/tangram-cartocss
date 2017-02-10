@@ -5,7 +5,7 @@ import Utils from './lib/utils';
 var map = window.L.map( 'map' );
 
 window.L.tileLayer( 'http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
-    attribution: '<a href="http://carto.com">CARTO</a> © 2016',
+    attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>',
     maxZoom: 18
 } ).addTo( map );
 
@@ -14,7 +14,9 @@ window.sceneLayer = TH.startTangram(map);
 var app = new Vue({
 	el: '#gui',
 	data: {
-		uri: 'https://flopez2.carto.com/builder/27a982d0-bdea-11e6-8daa-0e05a8b3e3d7/embed',
+    // uri: 'https://eschbacher.carto.com/api/v3/viz/2ebfd01c-1d2f-11e6-85b7-0e31c9be1b51/viz.json?callback=_cdbc_73909',
+		uri: 'https://eduardorodes.carto.com/builder/2c212118-b711-11e6-9e07-0ef7f98ade21/embed',
+    // uri: 'https://flopez2.carto.com/builder/27a982d0-bdea-11e6-8daa-0e05a8b3e3d7/',
 		layers: [
 		]
 	},
@@ -49,7 +51,7 @@ var app = new Vue({
 
 						self.layers.push(layer);
 						TH.addLayer(window.sceneLayer, layer);
-						TH.setLayerDraw(window.sceneLayer, layer);
+						TH.setLayerDraw(window.sceneLayer, layer, (i + 1));
 					}
 				});
 
