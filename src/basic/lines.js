@@ -136,7 +136,7 @@ Line.getStyle = function(c3ss, id, ord) {
     base: 'lines',
     blend: getBlending(c3ss),
     dash: getDashed(c3ss),
-    blend_order: isFinite(ord) ? ord + 1 : 1
+    blend_order: typeof ord === 'number' ? ord + 1 : 1
   };
 
   return style;
