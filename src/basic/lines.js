@@ -14,7 +14,7 @@
 	EXTERNAL DEPENDENCIES
  */
 
-import R from 'ramda';
+import {curry, compose, not, equals, identity, cond} from 'ramda';
 
 /*
 	INTERNAL DEPENDENCIES
@@ -24,7 +24,7 @@ import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getColorFn } from '../ut
 import TangramReference from '../utils/reference';
 import Geom from '../utils/geom';
 
-const notEq = R.curry(R.compose(R.not, R.equals));
+const notEq = curry(compose(not, equals));
 
 const LR = TangramReference.getLine(null); // Line reference
 /*
@@ -52,7 +52,7 @@ const getColor = getColorFn(
  * @returns {object} witha a function with the conditions to return width value
  */
 
-const getWidth = R.compose(
+const getWidth = compose(
   Geom.px2Meters,
   getPropertyOrDefFn('stroke-width', LR)
 );
@@ -88,9 +88,9 @@ const getBlending = getBlendFn(LR);
  * @returns {string} with dash value Ex: [2, 1]
  */
 
-const getDashed = R.compose(
-  R.cond([
-    [notEq('none'), R.identity]
+const getDashed = compose(
+  cond([
+    [notEq('none'), identity]
   ]),
   getExecutedFn('stroke-dasharray', LR)
 );
@@ -129,14 +129,14 @@ Line.getDraw = (c3ss, id) => {
  *
  * @returns default style configuration for lines
  */
-Line.getStyle = function(c3ss, id) {
+Line.getStyle = function(c3ss, id, ord) {
   let style = {};
 
   style['lines_' + id] = {
     base: 'lines',
     blend: getBlending(c3ss),
     dash: getDashed(c3ss),
-    blend_order: 2
+    blend_order: typeof ord === 'number' ? ord + 1 : 1
   };
 
   return style;

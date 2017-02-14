@@ -7,7 +7,7 @@ import MD5 from 'md5';
 
 const CartoCSSRenderer = new Carto.RendererJS();
 
-const extractFeatures = function (ccss) {
+const extractFeatures = function (ccss, index) {
   let layers = CartoCSSRenderer.render(ccss).getLayers(),
       id = MD5(ccss),
       draw = {},
@@ -34,10 +34,10 @@ const extractFeatures = function (ccss) {
 
     Object.assign(
         styles,
-        Points.getStyle(ly, id),
-        Polygons.getStyle(ly, id),
-        Lines.getStyle(ly, id),
-        TextPoints.getStyle(ly, id)
+        Points.getStyle(ly, id, index),
+        Polygons.getStyle(ly, id, index),
+        Lines.getStyle(ly, id, index),
+        TextPoints.getStyle(ly, id, index)
       );
   }
 
