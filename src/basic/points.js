@@ -50,7 +50,9 @@ const getColors = compose(
   pickBy(compose(not,isNil)),
   applySpec({
     color: getColor,
-    outline_color: getOutlineColor
+    outline: {
+      color: getOutlineColor
+    }
   })
 );
 
@@ -68,7 +70,9 @@ const getWidths = compose(
   pickBy(compose(not, isNil)),
   applySpec({
     size: getMarkerWidth,
-    outline_width: getOutlineWidth
+    outline: {
+      width: getOutlineWidth
+    }
   })
 );
 
