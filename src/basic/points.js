@@ -13,7 +13,7 @@
 	EXTERNAL DEPENDENCIES
  */
 import MD5 from 'md5';
-import {compose, pickBy, not, isNil, applySpec} from 'ramda';
+import {compose, pickBy, not, isNil, applySpec, merge, mergeWith} from 'ramda';
 
 /*
 	INTERNAL DEPENDENCIES
@@ -118,10 +118,10 @@ Point.getDraw = function(c3ss, id) {
 
 	if (checkMarkerSym(c3ss)) {
 
-		Object.assign(
-				point,
-				getColors(c3ss),
-				getWidths(c3ss)
+		point = mergeWith(
+        merge,
+				getWidths(c3ss),
+				getColors(c3ss)
 			);
 
     point.collide = !getCollide(c3ss);
