@@ -74,39 +74,41 @@ describe( 'Point', () => {
       });
     });
 
-    it('should have outline_width', () => {
-      assert.property(point, 'outline_width');
+    it('should have outline.width', () => {
+      assert.property(point, 'outline');
+      assert.property(point.outline, 'width');
     });
 
-    describe('.outline_width: ', () => {
+    describe('.outline.width: ', () => {
       it('should be 2', () => {
-        assert.equal(Utils.eval(point.outline_width)({}, 10), '2');
+        assert.equal(Utils.eval(point.outline.width)({}, 10), '2');
       });
 
       it('should be 4 with height > 10', () => {
-        assert.equal(Utils.eval(point.outline_width)({height: 11}, 10), '4');
+        assert.equal(Utils.eval(point.outline.width)({height: 11}, 10), '4');
       });
 
       it('should be 6 with height > 15', () => {
-        assert.equal(Utils.eval(point.outline_width)({height: 16}, 10), '6');
+        assert.equal(Utils.eval(point.outline.width)({height: 16}, 10), '6');
       });
     });
 
-    it('should have outline_color', () => {
-      assert.property(point, 'outline_color');
+    it('should have outline.color', () => {
+      assert.property(point, 'outline');
+      assert.property(point.outline, 'color');
     });
 
-    describe('.outline_color: ', () => {
+    describe('.outline.color: ', () => {
       it('should be rgba(0, 0, 255, 1)', () => {
-        assert.equal(Utils.eval(point.outline_color)({}, 10), 'rgba(0, 0, 255, 1)');
+        assert.equal(Utils.eval(point.outline.color)({}, 10), 'rgba(0, 0, 255, 1)');
       });
 
       it('should be rgba(0, 0, 255, 0.6) with height > 10', () => {
-        assert.equal(Utils.eval(point.outline_color)({height: 11}, 10), 'rgba(0, 0, 255, 0.6)');
+        assert.equal(Utils.eval(point.outline.color)({height: 11}, 10), 'rgba(0, 0, 255, 0.6)');
       });
 
       it('should be rgba(0, 0, 255, 0.3) with height > 15', () => {
-        assert.equal(Utils.eval(point.outline_color)({height: 16}, 10), 'rgba(0, 0, 255, 0.3)');
+        assert.equal(Utils.eval(point.outline.color)({height: 16}, 10), 'rgba(0, 0, 255, 0.3)');
       });
     });
 

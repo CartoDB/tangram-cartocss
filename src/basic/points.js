@@ -13,7 +13,7 @@
 	EXTERNAL DEPENDENCIES
  */
 import MD5 from 'md5';
-import {compose, pickBy, not, isNil, applySpec} from 'ramda';
+import {compose, pickBy, not, isNil, applySpec, merge, mergeWith} from 'ramda';
 
 /*
 	INTERNAL DEPENDENCIES
@@ -50,7 +50,9 @@ const getColors = compose(
   pickBy(compose(not,isNil)),
   applySpec({
     color: getColor,
-    outline_color: getOutlineColor
+    outline: {
+      color: getOutlineColor
+    }
   })
 );
 
@@ -68,7 +70,9 @@ const getWidths = compose(
   pickBy(compose(not, isNil)),
   applySpec({
     size: getMarkerWidth,
-    outline_width: getOutlineWidth
+    outline: {
+      width: getOutlineWidth
+    }
   })
 );
 
@@ -114,10 +118,10 @@ Point.getDraw = function(c3ss, id) {
 
 	if (checkMarkerSym(c3ss)) {
 
-		Object.assign(
-				point,
-				getColors(c3ss),
-				getWidths(c3ss)
+		point = mergeWith(
+        merge,
+				getWidths(c3ss),
+				getColors(c3ss)
 			);
 
     point.collide = !getCollide(c3ss);
