@@ -64,13 +64,13 @@ TextPoint.getDraw = (c3ss, id) => {
 };
 
 
-TextPoint.getStyle = (c3ss, id) => {
+TextPoint.getStyle = (c3ss, id, ord) => {
   let style = {};
 
   style['text_' + id] = {
     base: 'points',
     blend: 'overlay',
-    blend_order: 4
+    blend_order: ord || 1
   };
 
   return style;

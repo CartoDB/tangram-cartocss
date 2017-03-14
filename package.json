@@ -1,6 +1,6 @@
 {
   "name": "tangram-cartocss",
-  "version": "0.4.0",
+  "version": "0.4.3",
   "description": "Transform cartocss into a draw tangram object.",
   "repository": {
     "type": "git",
@@ -55,10 +55,9 @@
     "carto": "cartodb/carto#master",
     "md5": "2.2.1",
     "ramda": "^0.23.0",
-    "tangram-reference": "1.0.16"
+    "tangram-reference": "1.0.17"
   },
   "devDependencies": {
-    "Cartogram-Utils": "0.1.0",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
     "babel-plugin-istanbul": "^3.1.2",
@@ -67,9 +66,6 @@
     "babel-preset-es2015": "^6.22.0",
     "babelify": "7.3.0",
     "brfs": "^1.4.3",
-    "browserify": "14.0.0",
-    "browserify-derequire": "0.9.4",
-    "browserify-istanbul": "^2.0.0",
     "budo": "9.4.5",
     "chai": "3.5.0",
     "chai-as-promised": "6.0.0",
@@ -86,7 +82,7 @@
     "karma-sinon": "1.0.4",
     "mocha": "3.2.0",
     "sinon": "1.17.6",
-    "tangram": "tangrams/tangram#master",
+    "tangram": "cartodb/tangram-1#master",
     "uglify-js": "2.7.5",
     "vue": "^2.1.3",
     "webpack": "^2.2.1",

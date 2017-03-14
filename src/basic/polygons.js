@@ -84,12 +84,13 @@ Polygon.getDraw = (c3ss, id) => {
  *
  * @returns default style configuration for polygon
  */
-Polygon.getStyle = function(c3ss, id) {
+Polygon.getStyle = function(c3ss, id, ord) {
   let style = {};
 
   style['polygons_' + id] = {
     base: 'polygons',
     blend: getBlending(c3ss),
+    blend_order: ord || 1
   };
 
   if (checkPolPatternSym(c3ss)) {
