@@ -57,7 +57,6 @@
     "tangram-reference": "1.0.17"
   },
   "devDependencies": {
-    "Cartogram-Utils": "0.1.0",
     "babel-plugin-transform-runtime": "6.22.0",
     "babel-preset-es2015": "6.22.0",
     "babelify": "7.3.0",
@@ -79,7 +78,7 @@
     "karma-sinon": "1.0.4",
     "mocha": "3.2.0",
     "sinon": "1.17.6",
-    "tangram": "cartodb/tangram-1#race-cond",
+    "tangram": "cartodb/tangram-1#master",
     "uglify-js": "2.7.5",
     "vue": "^2.1.3",
     "yargs": "6.6.0"
