@@ -15,13 +15,14 @@ const CartoCSSRenderer = new Carto.RendererJS({
 const extractFeatures = function (ccss, index) {
   let layers = CartoCSSRenderer.render(ccss).getLayers(),
       id = MD5(ccss),
-      draw = {},
-      styles = {},
-      textures = {};
+      tLy = [];
 
   // NOTE: this is wrong, we have to separate the layers.
   for (var i = 0; i < layers.length; i++) {
-		let ly = layers[i].shader;
+		let ly = layers[i].shader,
+        draw = {},
+        textures = {},
+        styles = {};
 
     Object.assign(
         draw,
@@ -44,9 +45,11 @@ const extractFeatures = function (ccss, index) {
         Lines.getStyle(ly, id, index),
         TextPoints.getStyle(ly, id, index)
       );
+
+    tLy.push({textures, draw, styles, name:ly.attachment});
   }
 
-  return {textures, draw, styles};
+  return tLy;
 };
 
 var C2T;

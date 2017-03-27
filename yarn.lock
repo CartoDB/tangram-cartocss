@@ -148,7 +148,7 @@ are-we-there-yet@~1.1.2:
     delegates "^1.0.0"
     readable-stream "^2.0.0 || ^1.1.13"
 
-argparse@^1.0.2, argparse@^1.0.7:
+argparse@^1.0.2:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.9.tgz#73d83bc263f86e97f8cc4f6bae1b0e90a7d22c86"
   dependencies:
@@ -1256,7 +1256,7 @@ carto@cartodb/carto#master:
   dependencies:
     mapnik-reference "~6.0.2"
     optimist "~0.6.0"
-    underscore "1.8.3"
+    underscore "~1.6.0"
 
 caseless@~0.11.0:
   version "0.11.0"
