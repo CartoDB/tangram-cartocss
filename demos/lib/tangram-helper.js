@@ -13,9 +13,14 @@ TH.startTangram = function (map) {
 
 TH.setLayerDraw = function (scene, layer, index) {
   let draw = CCSS.carto2Draw(layer.cartocss, index);
-  scene.config.layers[layer.id].draw = draw.draw;
-  Object.assign(scene.config.textures, draw.textures);
-  Object.assign(scene.config.styles, draw.styles);
+  scene.config.layers[layer.id].draw = {};
+
+  draw.forEach(l => {
+    Object.assign(scene.config.layers[layer.id].draw, l.draw);
+    Object.assign(scene.config.textures, l.textures);
+    Object.assign(scene.config.styles, l.styles);
+  });
+
   scene.updateConfig();
 };
 
