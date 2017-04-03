@@ -63,7 +63,11 @@ Utils.buildCCSSFn = function(js, attr) {
 };
 
 Utils.buildAndExecuteFn =  function (js) {
-  return Utils.buildCCSSFn(js, ['$zoom'])(10);
+  return Utils.buildCCSSFn(
+    R.map(
+      replace(/data\['mapnik::geometry_type'\] === (\d)/g, 'true'), js),
+      ['$zoom']
+    )(10);
 };
 
 Utils.generateDefault = function(val) {
