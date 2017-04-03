@@ -35,8 +35,6 @@ var app = new Vue({
 						jpUri = Carto.generateJSONPUri(viz),
 						jsonP = yield Carto.getJSONP(jpUri);
 
-				console.log(viz, jsonP);
-
 				TH.addSource(window.sceneLayer, Carto.generateSource(viz.datasource));
 				let jpLayers = jsonP.metadata.layers;
 
