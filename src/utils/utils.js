@@ -62,13 +62,15 @@ Utils.buildCCSSFn = function(js, attr) {
 	return Utils.functionString(Utils.wrapCodeInFunction(fn, attr));
 };
 
+Utils.cleanForExecuting = R.compose(
+        replace(/data\['.*'\] (===|>|<|>=|<=) ('?(.+)(?='|\)| &&))/g, 'true'),
+        replace(/data\['mapnik::geometry_type'\] === (\d)/g, 'true')
+        );
+
 Utils.buildAndExecuteFn =  function (js) {
   return Utils.buildCCSSFn(
     R.map(
-      R.compose(
-        replace(/data\['.*'\] (===|>|<|>=|<=) ('?(.+)(?='|\)| &&))/g, 'true'),
-        replace(/data\['mapnik::geometry_type'\] === (\d)/g, 'true')
-        ),
+      Utils.cleanForExecuting,
       js
       ),
       ['$zoom']
