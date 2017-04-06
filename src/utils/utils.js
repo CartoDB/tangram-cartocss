@@ -67,7 +67,9 @@ Utils.buildAndExecuteFn =  function (js) {
     R.map(
       R.compose(
         replace(/data\['.*'\] (===|>|<|>=|<=) ('?(.+)(?='|\)| &&))/g, 'true'),
-        replace(/data\['mapnik::geometry_type'\] === (\d)/g, 'true'), js)
+        replace(/data\['mapnik::geometry_type'\] === (\d)/g, 'true')
+        ),
+      js
       ),
       ['$zoom']
     )(10);
