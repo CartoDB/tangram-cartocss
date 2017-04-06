@@ -65,7 +65,10 @@ Utils.buildCCSSFn = function(js, attr) {
 Utils.buildAndExecuteFn =  function (js) {
   return Utils.buildCCSSFn(
     R.map(
-      replace(/data\['mapnik::geometry_type'\] === (\d)/g, 'true'), js),
+      R.compose(
+        replace(/data\['.*'\] (===|>|<|>=|<=) ('?(.+)(?='|\)| &&))/g, 'true'),
+        replace(/data\['mapnik::geometry_type'\] === (\d)/g, 'true'), js)
+      ),
       ['$zoom']
     )(10);
 };
