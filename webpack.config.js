@@ -3,30 +3,23 @@ const webpack = require('webpack');
 module.exports = {
   entry: './src/module.js',
   output: {
-    path: './wpdist/',
-    filename: 'tangram-cartocss.bundle.js'
+    path: __dirname + '/dist/',
+    filename: 'tangram-cartocss.debug.js'
   },
-  externals: [
-    'fs'
-  ],
+  node: {
+    fs: "empty"
+  },
+  externals: {
+    './torque-reference': 'window'
+  },
   module: {
     loaders: [{
       // test: /\.js$/,
       exclude: /node_modules/,
       loader: 'babel-loader',
       query: {
-        presets: ['es2015']
+        presets: ['es2015', 'stage-0']
       }
     }]
-  },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      },
-      output: {
-        comments: false,
-      },
-    }),
-  ]
+  }
 };

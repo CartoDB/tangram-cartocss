@@ -1,10 +1,8 @@
-import { curry, compose, replace, reduce, split }from 'ramda';
+import { curry, compose, replace, reduce, split, map } from 'ramda';
 
 var Utils = {};
 
 export default Utils;
-
-const repl = curry(replace);
 
 const geometries = {
   '1': '"point"',
@@ -43,7 +41,7 @@ Utils.functionString = function(fn) {
 	return func;
 };
 
-Utils.transpile2Tangram = R.compose(
+Utils.transpile2Tangram = compose(
   replace(/ctx.zoom/g, '$zoom'),
   replace(/data\[/g, 'feature['),
   replace(/data\['mapnik::geometry_type'\] === (\d)/g, ($0, $1) => {
@@ -65,7 +63,7 @@ Utils.cleanForExecuting = replace(/data\['.*'\] (===|>|<|>=|<=) ('?(.+)(?='|\)| 
 
 Utils.buildAndExecuteFn =  function (js) {
   return Utils.buildCCSSFn(
-    R.map(
+    map(
       Utils.cleanForExecuting,
       js
       ),

@@ -1,12 +1,13 @@
 {
   "presets": [
-    ["env", {
-      "modules": false,
-      "targets": {
-        "chrome": 56,
-        "node": "current"
-      }
-    }]
+    "es2015",
+    "stage-0"
   ],
-  "plugins": ["ramda"]
+  "plugins": [
+      "ramda",
+      ["transform-runtime", {
+        "polyfill": false,
+        "regenerator": true
+      }]
+    ]
 }
