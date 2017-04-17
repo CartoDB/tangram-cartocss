@@ -61,8 +61,16 @@ Utils.buildCCSSFn = function(js, attr) {
 	return Utils.functionString(Utils.wrapCodeInFunction(fn, attr));
 };
 
+Utils.cleanForExecuting = replace(/data\['.*'\] (===|>|<|>=|<=) ('?(.+)(?='|\)| &&))/g, 'true');
+
 Utils.buildAndExecuteFn =  function (js) {
-  return Utils.buildCCSSFn(js, ['$zoom'])(10);
+  return Utils.buildCCSSFn(
+    R.map(
+      Utils.cleanForExecuting,
+      js
+      ),
+      ['$zoom']
+    )(10);
 };
 
 Utils.generateDefault = function(val) {
