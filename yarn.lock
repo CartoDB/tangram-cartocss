@@ -1122,7 +1122,7 @@ carto@CartoDB/carto#master:
   dependencies:
     mapnik-reference "~6.0.2"
     optimist "~0.6.0"
-    underscore "~1.6.0"
+    underscore "1.8.3"
 
 caseless@~0.11.0:
   version "0.11.0"
@@ -4444,9 +4444,9 @@ underscore.string@~3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/underscore.string/-/underscore.string-3.0.3.tgz#4617b8c1a250cf6e5064fbbb363d0fa96cf14552"
 
-underscore@1.8.3:
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
+underscore@~1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.6.0.tgz#8b38b10cacdef63337b8b24e4ff86d45aea529a8"
 
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
