@@ -28,7 +28,7 @@ module.exports = function (config) {
         frameworks: ['browserify', 'mocha', 'sinon'],
         files: [
             'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.js',
-            'dist/tangram-cartocss.test.js',
+            'dist/tangram-cartocss.debug.js',
             'test/**/*.js'
         ],
 

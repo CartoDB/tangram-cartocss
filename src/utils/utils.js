@@ -1,10 +1,8 @@
-import R from 'ramda';
+import { curry, compose, replace, reduce, split, map } from 'ramda';
 
 var Utils = {};
 
 export default Utils;
-
-const replace = R.curry(R.replace);
 
 const geometries = {
   '1': '"point"',
@@ -13,7 +11,7 @@ const geometries = {
 };
 
 Utils.curryCompose3 = function (compose) {
-  return R.curry((a,b,c) => compose(a,b,c));
+  return curry((a,b,c) => compose(a,b,c));
 };
 
 Utils.wrapCodeInFunction = function(innerCode, attr = [' ']) {
@@ -43,8 +41,7 @@ Utils.functionString = function(fn) {
 	return func;
 };
 
-
-Utils.transpile2Tangram = R.compose(
+Utils.transpile2Tangram = compose(
   replace(/ctx.zoom/g, '$zoom'),
   replace(/data\[/g, 'feature['),
   replace(/data\['mapnik::geometry_type'\] === (\d)/g, ($0, $1) => {
@@ -66,7 +63,7 @@ Utils.cleanForExecuting = replace(/data\['.*'\] (===|>|<|>=|<=) ('?(.+)(?='|\)| 
 
 Utils.buildAndExecuteFn =  function (js) {
   return Utils.buildCCSSFn(
-    R.map(
+    map(
       Utils.cleanForExecuting,
       js
       ),
@@ -78,8 +75,8 @@ Utils.generateDefault = function(val) {
 	return `return ${val};`;
 };
 
-Utils.pick = R.curry((path, obj) => {
-  return R.reduce((accumulator, key) => {
+Utils.pick = curry((path, obj) => {
+  return reduce((accumulator, key) => {
     return accumulator[key];
-  }, obj, R.split('.', path));
+  }, obj, split('.', path));
 });
