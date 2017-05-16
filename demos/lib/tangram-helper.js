@@ -7,7 +7,15 @@ export default TH;
 TH.startTangram = function (map) {
   return Tangram.leafletLayer({
     scene: '../demos/scene.yaml',
-    logLevel: 'debug'
+    logLevel: 'debug',
+    events: {
+      hover: function (e) {
+        console.log('Hover', e);
+      },
+      click: function (e) {
+        console.log('click', e);
+      }
+    }
   }).addTo(map).scene;
 };
 
