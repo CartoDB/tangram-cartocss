@@ -1,5 +1,3 @@
-const webpack = require('webpack');
-
 module.exports = {
   entry: './src/module.js',
   output: {
@@ -11,6 +9,11 @@ module.exports = {
   },
   externals: {
     './torque-reference': 'window'
+  },
+  resolve: {
+    alias: {
+      'tangram-cartocss': './src/module.js'
+    }
   },
   module: {
     loaders: [{
