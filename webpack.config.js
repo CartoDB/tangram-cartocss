@@ -2,18 +2,14 @@ module.exports = {
   entry: './src/module.js',
   output: {
     path: __dirname + '/dist/',
-    filename: 'tangram-cartocss.debug.js'
+    filename: 'tangram-cartocss.debug.js',
+    libraryTarget: "this"
   },
   node: {
     fs: "empty"
   },
   externals: {
     './torque-reference': 'window'
-  },
-  resolve: {
-    alias: {
-      'tangram-cartocss': './src/module.js'
-    }
   },
   module: {
     loaders: [{
