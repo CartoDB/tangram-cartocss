@@ -44,6 +44,22 @@ const getColor = getColorFn(
   getPropertyOrDefFn('fill-opacity', PR)
 );
 
+/**
+ * Function for getting the extrude of a polygon
+ *
+ * @param   {object} c3ss compiled carto css
+ * @returns {object} with a function that contain the conditions to return an extrude value
+ */
+
+const getExtrude = getPropertyOrDefFn('tg-polygon-extrude');
+
+/**
+ * Function for getting the texture as string
+ *
+ * @param   {object} c3ss compiled carto css
+ * @returns {string} with the path of texture
+ */
+
 const getTextureFile = getExecutedFn('file', PPR);
 
 const getTexture = compose(
@@ -72,7 +88,8 @@ Polygon.getDraw = (c3ss, id) => {
 
   if (checkPolygonSym(c3ss)) {
     draw['polygons_' + id] = {
-      color: getColor(c3ss)
+      color: getColor(c3ss),
+      extruede: getExtrude(c3ss)
     };
   }
 
