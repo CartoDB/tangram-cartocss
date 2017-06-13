@@ -10,7 +10,7 @@ Carto.generateVizUri = function (url) {
       lan = url.indexOf('.lan') + 4,
       domain = com !== 3 ? url.substring(0, com) : url.substring( 0, lan) + ':3000';
       console.log(domain);
-  return domain + '/api/v3/viz/' + /\/([\w*\-A-z0-9]*\-[A-z0-9]*)\//g.exec( url )[ 1 ] + '/viz.json';
+  return domain + '/api/v3/viz/' + /\/([\w*\-A-z0-9]*\-[A-z0-9]*)\//g.exec( url )[ 1 ] + '/viz.json?config={"buffersize":{"mvt": 0}}';
 }
 
 Carto.getVizJSON = function (url) {
@@ -31,7 +31,7 @@ Carto.getVizJSON = function (url) {
 Carto.generateJSONPUri = function (vizJSON) {
   let source = Carto.generateSource(vizJSON.datasource);
 
-  return source.substring(0, source.indexOf('mapnik')).replace(/-/g, '_') + 'jsonp?stat_tag=' + vizJSON.datasource.stat_tag;
+  return source.substring(0, source.indexOf('mapnik')).replace(/-/g, '_') + 'jsonp?&stat_tag=' + vizJSON.datasource.stat_tag;
 }
 
 Carto.getJSONP = function (url) {
