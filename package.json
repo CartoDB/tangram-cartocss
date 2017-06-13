@@ -52,7 +52,7 @@
     "carto": "cartodb/carto#master",
     "md5": "2.2.1",
     "ramda": "^0.23.0",
-    "tangram-reference": "1.0.17"
+    "tangram-reference": "^1.0.18"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
