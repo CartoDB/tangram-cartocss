@@ -88,8 +88,7 @@ Polygon.getDraw = (c3ss, id) => {
 
   if (checkPolygonSym(c3ss)) {
     draw['polygons_' + id] = {
-      color: getColor(c3ss),
-      extrude: getExtrude(c3ss)
+      color: getColor(c3ss)
     };
   }
 

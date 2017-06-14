@@ -126,8 +126,7 @@ Line.getDraw = (c3ss, id) => {
       color: getColor(c3ss),
       width: getWidth(c3ss),
       cap: getCap(c3ss),
-      join: getJoin(c3ss),
-      extrude: getExtrude(c3ss)
+      join: getJoin(c3ss)
     };
   }
 

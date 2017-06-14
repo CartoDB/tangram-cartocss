@@ -33,7 +33,7 @@
     "build": "npm run build-debug && npm run build-minify",
     "build-minify": "$(npm bin)/uglifyjs dist/tangram-cartocss.debug.js -c warnings=false -m -o dist/tangram-cartocss.min.js && npm run build-size",
     "build-size": "gzip dist/tangram-cartocss.min.js -c | wc -c | awk '{kb=$1/1024; print kb}' OFMT='%.0fk minified+gzipped'",
-    "watch": "$(npm bin)/webpack-dev-server --inline demos/main.js"
+    "watch": "$(npm bin)/webpack-dev-server -d --inline demos/main.js"
   },
   "author": {
     "name": "Carto",
