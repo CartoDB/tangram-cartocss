@@ -46,15 +46,6 @@ const getColor = getColorFn(
 );
 
 /**
- * Function for getting extrude property
- *
- * @param   {object} c3ss compiled carto css
- * @returns {object} with a function that contain the conditions to return the extrude
- */
-
-const getExtrude = getPropertyOrDefFn('tg-stroke-extrude');
-
-/**
  * Function for getting the width in meters dynamically by zoom
  *
  * @param   {object} c3ss compiled carto css

@@ -45,15 +45,6 @@ const getColor = getColorFn(
 );
 
 /**
- * Function for getting the extrude of a polygon
- *
- * @param   {object} c3ss compiled carto css
- * @returns {object} with a function that contain the conditions to return an extrude value
- */
-
-const getExtrude = getPropertyOrDefFn('tg-polygon-extrude');
-
-/**
  * Function for getting the texture as string
  *
  * @param   {object} c3ss compiled carto css

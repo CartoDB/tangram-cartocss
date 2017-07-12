@@ -148,7 +148,7 @@ are-we-there-yet@~1.1.2:
     delegates "^1.0.0"
     readable-stream "^2.0.6"
 
-argparse@^1.0.2, argparse@^1.0.7:
+argparse@^1.0.2:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.9.tgz#73d83bc263f86e97f8cc4f6bae1b0e90a7d22c86"
   dependencies:
@@ -2164,10 +2164,6 @@ esprima@2.7.x, esprima@^2.6.0, esprima@^2.7.1:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"
 
-esprima@^3.1.1:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/esprima/-/esprima-3.1.3.tgz#fdca51cee6133895e3c88d535ce49dbff62a4633"
-
 esprima@~1.0.2:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-1.0.4.tgz#9f557e08fc3b4d26ece9dd34f8fbf476b62585ad"
@@ -3136,14 +3132,7 @@ js-tokens@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.1.tgz#08e9f132484a2c45a30907e9dc4d5567b7f114d7"
 
-js-yaml@3.x:
-  version "3.8.4"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.8.4.tgz#520b4564f86573ba96662af85a8cafa7b4b5a6f6"
-  dependencies:
-    argparse "^1.0.7"
-    esprima "^3.1.1"
-
-js-yaml@tangrams/js-yaml#read-only:
+js-yaml@3.x, js-yaml@tangrams/js-yaml#read-only:
   version "3.5.3"
   resolved "https://codeload.github.com/tangrams/js-yaml/tar.gz/1637976c6f593bed33ed088aedb6d01390a947c0"
   dependencies:
@@ -5055,9 +5044,9 @@ syntax-error@^1.1.1:
   dependencies:
     acorn "^4.0.3"
 
-tangram-reference@^1.0.18:
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/tangram-reference/-/tangram-reference-1.0.18.tgz#5fb9f63668846590cf39324558f1bdc5f55d421c"
+tangram-reference@cartodb/tangram-reference#dot-properties:
+  version "1.0.19"
+  resolved "https://codeload.github.com/cartodb/tangram-reference/tar.gz/c6ec48a64bb573347206f29f3ff0bda38eb1a89e"
 
 tangram@tangrams/tangram#master:
   version "0.12.5"
