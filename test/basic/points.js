@@ -31,7 +31,7 @@ let pointCCSS =
   }
 `;
 
-describe( 'Point', () => {
+describe('Point', () => {
   const c3ss = Utils.getShader(pointCCSS);
   const id = MD5(pointCCSS);
 
@@ -115,8 +115,6 @@ describe( 'Point', () => {
     it('should not have collide', () => {
       assert.equal(point.collide, false);
     });
-
-
   });
 
   describe('.getStyle()', () => {

@@ -1,5 +1,6 @@
 import Carto from 'carto';
 import Points from './basic/points';
+// import Dots from './basic/dots';
 import Polygons from './basic/polygons';
 import Lines from './basic/lines';
 import TextPoints from './basic/text';
@@ -27,6 +28,7 @@ const extractFeatures = function (ccss, index) {
     Object.assign(
         draw,
         Points.getDraw(ly, id),
+        // Dots.getDraw(ly, id),
         Polygons.getDraw(ly, id),
         Lines.getDraw(ly, id),
         TextPoints.getDraw(ly, id)
@@ -41,6 +43,7 @@ const extractFeatures = function (ccss, index) {
     Object.assign(
         styles,
         Points.getStyle(ly, id, index),
+        // Dots.getStyle(ly, id, index),
         Polygons.getStyle(ly, id, index),
         Lines.getStyle(ly, id, index),
         TextPoints.getStyle(ly, id, index)

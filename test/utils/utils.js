@@ -1,4 +1,6 @@
 import Carto from 'carto';
+import tangramReference from 'tangram-reference';
+const ref = tangramReference.load('1.0.0');
 
 var Utils = {};
 
@@ -18,8 +20,9 @@ Utils.eval = function (fns) {
 };
 
 Utils.getShader = function (ccss) {
-  return new Carto.RendererJS()
-    .render(ccss).getLayers()[0].shader;
+  return new Carto.RendererJS({
+    reference: ref
+  }).render(ccss).getLayers()[0].shader;
 };
 
 export default Utils;

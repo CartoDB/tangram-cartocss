@@ -2,10 +2,8 @@ import TangramReference from '../utils/reference';
 import {compose, pickBy, not, isNil, applySpec, merge, mergeWith} from 'ramda';
 import { getPropertyOrDefFn, getColorFn, getPropertyFnSafe } from '../utils/reference-helpers';
 
-const DR = TangramReference.getPoint(null); // Dot reference
-const checkDotSym = TangramReference.checkSymbolizer('dots');
-
-console.log(checkDotSym);
+const DR = TangramReference.getDot(null); // Dot reference
+const checkDotSym = TangramReference.checkSymbolizer('dot');
 
 /**
  * get colors from cartocss with the alpha channel applied
@@ -14,7 +12,8 @@ console.log(checkDotSym);
  */
 
 const getColor = getColorFn(
-  getPropertyOrDefFn('fill', DR)
+  getPropertyOrDefFn('fill', DR),
+  getPropertyOrDefFn('opacity', DR)
 );
 
 const getColors = compose(
@@ -40,25 +39,12 @@ const getWidths = compose(
 );
 
 /**
- * getHeight for the dot
- * @param  {object} c3ss compiled carto css
- * @return {object} size
- */
-
-const getDotHeight = getPropertyFnSafe('height', DR);
-
-const getHeights = compose(
-  pickBy(compose(not, isNil)),
-  applySpec({
-    size: getDotHeight
-  })
-);
-
-/**
  * Basic Dot
  */
 
-var Dot = {};
+let Dots = {};
+
+export default Dots;
 
 /**
  * Get the draw (for tangram) object of a dot from compiled carto css
@@ -66,7 +52,7 @@ var Dot = {};
  * @return {object} object with the draw types and their properties
  */
 
-Dot.getDraw = function (c3ss, id) {
+Dots.getDraw = function (c3ss, id) {
   let dot = {};
   let draw = {};
 
@@ -74,7 +60,6 @@ Dot.getDraw = function (c3ss, id) {
     dot = mergeWith(
       merge,
       getWidths(c3ss),
-      getHeights(c3ss),
       getColors(c3ss)
     );
   }
@@ -90,15 +75,13 @@ Dot.getDraw = function (c3ss, id) {
  * @returns default style configuration for dots
  */
 
-Dot.getStyle = function (c3ss, id, ord) {
+Dots.getStyle = function (c3ss, id, ord) {
   let style = {};
-  style['points_' + id] = {
-    base: 'points',
+  style['dots_' + id] = {
+    base: 'dots',
     blend: 'overlay',
     blend_order: ord || 1
   };
 
   return style;
 };
-
-export default Dot;

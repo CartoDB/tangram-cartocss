@@ -7,7 +7,8 @@ export default Utils;
 const geometries = {
   '1': '"point"',
   '2': '"line"',
-  '3': '"polygon"'
+  '3': '"polygon"',
+  '4': '"dot"'
 };
 
 Utils.curryCompose3 = function (compose) {
@@ -18,10 +19,10 @@ Utils.wrapCodeInFunction = function (innerCode, attr = [' ']) {
   attr = attr.join(',');
 
   return `function (${attr}) {
-        var _value = null;
-        ${innerCode}
-        return _value;
-      }`.replace(/(\t)/g, '');
+var _value = null;
+${innerCode}
+return _value;
+}`.replace(/(\t)/g, '');
 };
 
 Utils.functionString = function (fn) {

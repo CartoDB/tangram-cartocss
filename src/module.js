@@ -1,5 +1,5 @@
 import CCSS from './carto';
 
 module.exports = {
-  carto2Draw: CCSS.extractFeatures,
+  carto2Draw: CCSS.extractFeatures
 };

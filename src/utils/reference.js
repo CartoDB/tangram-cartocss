@@ -22,6 +22,8 @@ TangramReference.getText = getProperty('text');
 
 TangramReference.getPolygonPattern = getProperty('polygon-pattern');
 
+TangramReference.getDot = getProperty('dot');
+
 TangramReference.checkSymbolizer = curry(function (sym, c3ss) {
   return c3ss.symbolizers.indexOf(sym) !== -1 ? c3ss : null;
 });
