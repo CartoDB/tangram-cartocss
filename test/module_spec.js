@@ -7,76 +7,72 @@ let assert = chai.assert;
 import CCSS from '../src/module';
 
 describe('CCSS', () => {
-	const CartoCSS = `
-	#layer {
-	  polygon-fill: #ffa000;
-	  [height<20] {
-	    polygon-fill: #bb55ff;
-	  }
-	  [height>20] {
-	    polygon-fill: #f50;
-	  }
-	}`;
+  const CartoCSS = `
+  #layer {
+    polygon-fill: #ffa000;
+    [height<20] {
+      polygon-fill: #bb55ff;
+    }
+    [height>20] {
+      polygon-fill: #f50;
+    }
+  }`;
 
-	let configs = CCSS.carto2Draw(CartoCSS);
+  let configs = CCSS.carto2Draw(CartoCSS);
   const id = MD5(CartoCSS);
   configs.forEach(conf => {
     describe('.carto2Draw', () => {
+      it('should transfrom CCSS into a conf object with styles, textures and draw properties', () => {
 
-        it('should transfrom CCSS into a conf object with styles, textures and draw properties', () => {
-
-          assert.property(conf, 'styles');
-          assert.property(conf, 'textures');
-          assert.property(conf, 'draw');
-        });
-
-        it('should have an empty textures object', () => {
-          assert.notStrictEqual(conf.textures, {});
+        assert.property(conf, 'styles');
+        assert.property(conf, 'textures');
+        assert.property(conf, 'draw');
       });
 
-        describe('.draw', () => {
+      it('should have an empty textures object', () => {
+        assert.notStrictEqual(conf.textures, {});
+      });
 
-          it('should have a polygons_id property', () => {
-            assert.property(conf.draw, 'polygons_' + id);
+      describe('.draw', () => {
+        it('should have a polygons_id property', () => {
+          assert.property(conf.draw, 'polygons_' + id);
+        });
+
+        describe('.polygons_blend', () => {
+          let pb = conf.draw['polygons_' + id];
+          it('should have a color property', () => {
+            assert.property(pb, 'color');
           });
 
-
-          describe('.polygons_blend', () => {
-            let pb = conf.draw['polygons_' + id];
-            it('should have a color property', () => {
-              assert.property(pb, 'color');
-            });
-
-            it('should not have a size property', () => {
-              assert.notProperty(pb, 'size');
-            });
-
-            it('should not have a collide property', () => {
-              assert.notProperty(pb, 'collide');
-            });
+          it('should not have a size property', () => {
+            assert.notProperty(pb, 'size');
           });
 
-          it('should not have a lines_blend property', () => {
-            assert.notProperty(conf.draw, 'lines_blend');
-          });
-
-          describe('.lines_blend', () => {
-            it('should have an empty lines_blend object', () => {
-              assert.notStrictEqual(conf.draw.lines_blend, {});
-            });
-          });
-
-          it('should not have a points_blend property', () => {
-            assert.notProperty(conf.draw, 'points_blend');
-          });
-
-          describe('.points_blend', () => {
-            it('should have an empty points_blend object', () => {
-              assert.notStrictEqual(conf.draw.points_blend, {});
-            });
+          it('should not have a collide property', () => {
+            assert.notProperty(pb, 'collide');
           });
         });
 
+        it('should not have a lines_blend property', () => {
+          assert.notProperty(conf.draw, 'lines_blend');
+        });
+
+        describe('.lines_blend', () => {
+          it('should have an empty lines_blend object', () => {
+            assert.notStrictEqual(conf.draw.lines_blend, {});
+          });
+        });
+
+        it('should not have a points_blend property', () => {
+          assert.notProperty(conf.draw, 'points_blend');
+        });
+
+        describe('.points_blend', () => {
+          it('should have an empty points_blend object', () => {
+            assert.notStrictEqual(conf.draw.points_blend, {});
+          });
+        });
+      });
     });
 
     describe('.color porperty', () => {

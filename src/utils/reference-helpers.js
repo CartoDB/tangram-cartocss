@@ -3,7 +3,6 @@ import Utils from '../utils/utils';
 import TangramReference from '../utils/reference';
 import Colors from '../style/colors';
 
-
 /*
   INTERNAL REFERENCE FUNCTIONS
  */
@@ -14,8 +13,8 @@ const curryComp = Utils.curryCompose3;
   REFERENCE HELPER
  */
 
-const generateDefaultFromRef = function(Ref, prop) {
-	return { js: Utils.generateDefault(`"${Ref[prop]['default-value']}"`) };
+const generateDefaultFromRef = function (Ref, prop) {
+  return { js: Utils.generateDefault(`"${Ref[prop]['default-value']}"`) };
 };
 
 const getDefProp = curry((prop, ref) => {
@@ -29,7 +28,6 @@ const getProp = curry((prop, ref, c3ss) => {
 });
 
 const getPropOrDef = either(getProp, getDefProp);
-
 
 const getPropertyFn = curryComp(compose(
   Utils.buildCCSSFn,

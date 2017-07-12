@@ -22,7 +22,6 @@ let lineCCSS =
       line-width: 30px;
       line-opacity: 0.3;
     }
-
   }
 `;
 
@@ -32,7 +31,6 @@ describe('Line', () => {
 
   describe('.getDraw()', () => {
     let line = Line.getDraw(c3ss, id)['lines_' + id];
-
 
     it('should have color', () => {
       assert.property(line, 'color');
@@ -81,7 +79,6 @@ describe('Line', () => {
         }, 10), '150000');
       });
     });
-
   });
 
   describe('.getStyle()', () => {

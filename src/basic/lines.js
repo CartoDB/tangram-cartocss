@@ -1,23 +1,23 @@
 /*
-	 ___       ___  ________   _______   ________
-	|\  \     |\  \|\   ___  \|\  ___ \ |\   ____\
-	\ \  \    \ \  \ \  \\ \  \ \   __/|\ \  \___|_
-	 \ \  \    \ \  \ \  \\ \  \ \  \_|/_\ \_____  \
-	  \ \  \____\ \  \ \  \\ \  \ \  \_|\ \|____|\  \
-	   \ \_______\ \__\ \__\\ \__\ \_______\____\_\  \
-	    \|_______|\|__|\|__| \|__|\|_______|\_________\
-	                                       \|_________|
+   ___       ___  ________   _______   ________
+  |\  \     |\  \|\   ___  \|\  ___ \ |\   ____\
+  \ \  \    \ \  \ \  \\ \  \ \   __/|\ \  \___|_
+   \ \  \    \ \  \ \  \\ \  \ \  \_|/_\ \_____  \
+    \ \  \____\ \  \ \  \\ \  \ \  \_|\ \|____|\  \
+     \ \_______\ \__\ \__\\ \__\ \_______\____\_\  \
+      \|_______|\|__|\|__| \|__|\|_______|\_________\
+                                         \|_________|
 
  */
 
 /*
-	EXTERNAL DEPENDENCIES
+  EXTERNAL DEPENDENCIES
  */
 
 import {curry, compose, not, equals, identity, cond} from 'ramda';
 
 /*
-	INTERNAL DEPENDENCIES
+  INTERNAL DEPENDENCIES
  */
 
 import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getColorFn } from '../utils/reference-helpers';
@@ -28,7 +28,7 @@ const notEq = curry(compose(not, equals));
 
 const LR = TangramReference.getLine(null); // Line reference
 /*
-	INTERNAL LINE FUNCTIONS
+  INTERNAL LINE FUNCTIONS
  */
 
 const checkLineSym = TangramReference.checkSymbolizer('line');
@@ -138,7 +138,7 @@ Line.getDraw = (c3ss, id) => {
  *
  * @returns default style configuration for lines
  */
-Line.getStyle = function(c3ss, id, ord) {
+Line.getStyle = function (c3ss, id, ord) {
   let style = {};
 
   style['lines_' + id] = {

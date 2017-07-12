@@ -9,7 +9,6 @@ describe('Utils', () => {
   });
 
   describe('.transpile2Tangram()', () => {
-
     it('should transpile a ctx.zoom property into a $zoom variable and data into feature.', () => {
       const jsLine = 'if((8388607 & (1 << ctx.zoom)) && data[\'calificacion\'] === \'GRAVE\'){_value = true;}';
       const validTangramJS = 'if((8388607 & (1 << $zoom)) && feature[\'calificacion\'] === \'GRAVE\'){_value = true;}';
@@ -115,6 +114,4 @@ describe('Utils', () => {
       assert.equal(Utils.buildAndExecuteFn(jsLines), false);
     });
   });
-
-
 });

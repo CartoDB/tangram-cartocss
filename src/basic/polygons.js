@@ -11,13 +11,13 @@
  */
 
 /*
-	EXTERNAL DEPENDENCIES
+  EXTERNAL DEPENDENCIES
  */
 import MD5 from 'md5';
 import { compose } from 'ramda';
 
 /*
-	INTERNAL DEPENDENCIES
+  INTERNAL DEPENDENCIES
  */
 
 import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getColorFn } from '../utils/reference-helpers';
@@ -27,7 +27,7 @@ const PR = TangramReference.getPolygon(null); // Polygon reference
 const PPR = TangramReference.getPolygonPattern(null);
 
 /*
-	INTERNAL POLYGONS FUNCTIONS
+  INTERNAL POLYGONS FUNCTIONS
  */
 
 const checkPolygonSym = TangramReference.checkSymbolizer('polygon');
@@ -100,7 +100,7 @@ Polygon.getDraw = (c3ss, id) => {
  *
  * @returns default style configuration for polygon
  */
-Polygon.getStyle = function(c3ss, id, ord) {
+Polygon.getStyle = function (c3ss, id, ord) {
   let style = {};
 
   style['polygons_' + id] = {
@@ -118,7 +118,7 @@ Polygon.getStyle = function(c3ss, id, ord) {
     };
   }
 
-	return style;
+  return style;
 };
 
 Polygon.getTextures = c3ss => {
