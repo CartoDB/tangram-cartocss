@@ -63,15 +63,16 @@ TextPoint.getDraw = (c3ss, id) => {
   return draw;
 };
 
-
 TextPoint.getStyle = (c3ss, id, ord) => {
   let style = {};
 
-  style['text_' + id] = {
-    base: 'points',
-    blend: 'overlay',
-    blend_order: ord || 1
-  };
+  if (checkTextSym(c3ss)) {
+    style['text_' + id] = {
+      base: 'points',
+      blend: 'overlay',
+      blend_order: ord || 1
+    };
+  }
 
   return style;
 };

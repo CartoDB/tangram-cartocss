@@ -62,9 +62,9 @@ Dots.getDraw = function (c3ss, id) {
       getWidths(c3ss),
       getColors(c3ss)
     );
-  }
 
-  draw['dots_' + id] = dot;
+    draw['dots_' + id] = dot;
+  }
 
   return draw;
 };
@@ -77,11 +77,14 @@ Dots.getDraw = function (c3ss, id) {
 
 Dots.getStyle = function (c3ss, id, ord) {
   let style = {};
-  style['dots_' + id] = {
-    base: 'dots',
-    blend: 'overlay',
-    blend_order: ord || 1
-  };
+
+  if (checkDotSym(c3ss)) {
+    style['dots_' + id] = {
+      base: 'points',
+      blend: 'overlay',
+      blend_order: ord || 1
+    };
+  }
 
   return style;
 };

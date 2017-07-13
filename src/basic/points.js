@@ -123,9 +123,8 @@ Point.getDraw = function (c3ss, id) {
       );
 
     point.collide = !getCollide(c3ss);
+    draw['points_' + id] = point;
   }
-
-  draw['points_' + id] = point;
 
   return draw;
 };
@@ -138,13 +137,14 @@ Point.getDraw = function (c3ss, id) {
  */
 Point.getStyle = function (c3ss, id, ord) {
   let style = {};
-  style['points_' + id] = {
-    base: 'points',
-    blend: 'overlay',
-    blend_order: ord || 1
-  };
 
   if (checkMarkerSym(c3ss)) {
+    style['points_' + id] = {
+      base: 'points',
+      blend: 'overlay',
+      blend_order: ord || 1
+    };
+
     let p = style['points_' + id];
     p.texture = getTextureFile(c3ss) !== 'none' ? getTexture(c3ss) : void 0;
     p.blend = getBlending(c3ss);

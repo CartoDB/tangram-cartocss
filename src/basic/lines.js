@@ -132,12 +132,14 @@ Line.getDraw = (c3ss, id) => {
 Line.getStyle = function (c3ss, id, ord) {
   let style = {};
 
-  style['lines_' + id] = {
-    base: 'lines',
-    blend: getBlending(c3ss),
-    dash: getDashed(c3ss),
-    blend_order: typeof ord === 'number' ? ord + 1 : 1
-  };
+  if (checkLineSym(c3ss)) {
+    style['lines_' + id] = {
+      base: 'lines',
+      blend: getBlending(c3ss),
+      dash: getDashed(c3ss),
+      blend_order: typeof ord === 'number' ? ord + 1 : 1
+    };
+  }
 
   return style;
 };
