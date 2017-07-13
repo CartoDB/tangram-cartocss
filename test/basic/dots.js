@@ -87,8 +87,8 @@ describe('Dot', () => {
         assert.property(dot_blend, 'blend');
       });
 
-      it('should have base property equal to dots', () => {
-        assert.equal(dot_blend.base, 'dots');
+      it('should have base property equal to points', () => {
+        assert.equal(dot_blend.base, 'points');
       });
 
       it('should have blend property equal to overlay', () => {

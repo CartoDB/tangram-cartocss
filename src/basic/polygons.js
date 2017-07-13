@@ -94,19 +94,21 @@ Polygon.getDraw = (c3ss, id) => {
 Polygon.getStyle = function (c3ss, id, ord) {
   let style = {};
 
-  if (checkPolPatternSym(c3ss)) {
+  if (checkPolygonSym(c3ss)) {
     style['polygons_' + id] = {
       base: 'polygons',
       blend: getBlending(c3ss),
       blend_order: ord || 1
     };
 
-    style['polygons_' + id].material = {
-      diffuse: {
-        texture: getTexture(c3ss),
-        mapping: 'uv'
-      }
-    };
+    if (checkPolPatternSym(c3ss)) {
+      style['polygons_' + id].material = {
+        diffuse: {
+          texture: getTexture(c3ss),
+          mapping: 'uv'
+        }
+      };
+    }
   }
 
   return style;
@@ -120,7 +122,7 @@ Polygon.getTextures = c3ss => {
     if (texture) {
       tex[MD5(texture)] = {url: texture};
     }
-  }
 
+  }
   return tex;
 };
