@@ -1,10 +1,10 @@
-var Carto = require('carto');
-var Points = require('./basic/points');
-var Polygons = require('./basic/polygons');
-var Lines = require('./basic/lines');
-var TextPoints = require('./basic/text');
-var tangramReference = require('tangram-reference');
-var MD5 = require('md5');
+const Carto = require('carto');
+const Points = require('./basic/points');
+const Polygons = require('./basic/polygons');
+const Lines = require('./basic/lines');
+const TextPoints = require('./basic/text');
+const tangramReference = require('tangram-reference');
+const MD5 = require('md5');
 
 const ref = tangramReference.load('1.0.0');
 const CartoCSSRenderer = new Carto.RendererJS({

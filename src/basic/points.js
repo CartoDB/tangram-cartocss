@@ -12,29 +12,29 @@
 /*
 	EXTERNAL DEPENDENCIES
  */
-var MD5 = require('md5');
-var ramda = require('ramda');
+const MD5 = require('md5');
+const ramda = require('ramda');
 
-var compose = ramda.compose;
-var pickBy = ramda.pickBy;
-var not = ramda.not;
+const compose = ramda.compose;
+const pickBy = ramda.pickBy;
+const not = ramda.not;
 
-var isNil = ramda.isNil;
-var applySpec = ramda.applySpec;
-var merge = ramda.merge;
-var mergeWith = ramda.mergeWith;
+const isNil = ramda.isNil;
+const applySpec = ramda.applySpec;
+const merge = ramda.merge;
+const mergeWith = ramda.mergeWith;
 
 /*
 	INTERNAL DEPENDENCIES
  */
-var referenceHelpers = require('../utils/reference-helpers.js');
-var getExecutedFn = referenceHelpers.getExecutedFn;
-var getPropertyOrDefFn = referenceHelpers.getPropertyOrDefFn;
-var getBlendFn = referenceHelpers.getBlendFn;
-var getPropertyFnSafe = referenceHelpers.getPropertyFnSafe;
-var getEitherProp = referenceHelpers.getEitherProp;
-var getColorFn = referenceHelpers.getColorFn;
-var TangramReference = require('../utils/reference');
+const referenceHelpers = require('../utils/reference-helpers.js');
+const getExecutedFn = referenceHelpers.getExecutedFn;
+const getPropertyOrDefFn = referenceHelpers.getPropertyOrDefFn;
+const getBlendFn = referenceHelpers.getBlendFn;
+const getPropertyFnSafe = referenceHelpers.getPropertyFnSafe;
+const getEitherProp = referenceHelpers.getEitherProp;
+const getColorFn = referenceHelpers.getColorFn;
+const TangramReference = require('../utils/reference');
 
 const PR = TangramReference.getPoint(null); // Point reference
 
@@ -160,6 +160,7 @@ Point.getStyle = function(c3ss, id, ord) {
 
 	if (checkMarkerSym(c3ss)) {
     let p = style['points_' + id];
+    // Textures are not supported
     p.texture = getTextureFile(c3ss) !== 'none' ? getTexture(c3ss) : void 0;
     p.blend = getBlending(c3ss);
 	}

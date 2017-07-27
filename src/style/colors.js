@@ -1,4 +1,4 @@
-var Utils = require('../utils/utils');
+const Utils = require('../utils/utils');
 var Colors = {};
 let C = Colors;
 

@@ -1,10 +1,10 @@
-var ramda = require('ramda');
-var curry = ramda.curry;
-var compose = ramda.compose;
-var replace = ramda.replace;
-var reduce = ramda.reduce;
-var split = ramda.split;
-var map = ramda.map;
+const ramda = require('ramda');
+const curry = ramda.curry;
+const compose = ramda.compose;
+const replace = ramda.replace;
+const reduce = ramda.reduce;
+const split = ramda.split;
+const map = ramda.map;
 
 var Utils = {};
 

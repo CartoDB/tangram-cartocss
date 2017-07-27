@@ -1,9 +1,9 @@
-var curry = require('ramda').curry;
-var reference = require('tangram-reference');
+const curry = require('ramda').curry;
+const reference = require('tangram-reference');
 
 const Ref = reference.load('1.0.0');
 
-var TangramReference = {};
+const TangramReference = {};
 
 
 const getProperty = curry(function (type, prop) {

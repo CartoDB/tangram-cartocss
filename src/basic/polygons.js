@@ -13,19 +13,19 @@
 /*
 	EXTERNAL DEPENDENCIES
  */
-var MD5 = require('md5');
-var compose = require('ramda').compose;
+const MD5 = require('md5');
+const compose = require('ramda').compose;
 
 /*
 	INTERNAL DEPENDENCIES
  */
 
-var referenceHelpers = require('../utils/reference-helpers.js');
-var getExecutedFn = referenceHelpers.getExecutedFn;
-var getPropertyOrDefFn = referenceHelpers.getPropertyOrDefFn;
-var getBlendFn = referenceHelpers.getBlendFn;
-var getColorFn = referenceHelpers.getColorFn;
-var TangramReference = require('../utils/reference');
+const referenceHelpers = require('../utils/reference-helpers.js');
+const getExecutedFn = referenceHelpers.getExecutedFn;
+const getPropertyOrDefFn = referenceHelpers.getPropertyOrDefFn;
+const getBlendFn = referenceHelpers.getBlendFn;
+const getColorFn = referenceHelpers.getColorFn;
+const TangramReference = require('../utils/reference');
 
 const PR = TangramReference.getPolygon(null); // Polygon reference
 const PPR = TangramReference.getPolygonPattern(null);

@@ -17,11 +17,11 @@
 /*
   INTERNAL DEPENDENCIES
 */
-var referenceHelpers = require('../utils/reference-helpers.js');
-var getPropertyOrDefFn = referenceHelpers.getPropertyOrDefFn;
-var getPropertyFnSafe = referenceHelpers.getPropertyFnSafe;
-var getColorFn = referenceHelpers.getColorFn;
-var TangramReference = require('../utils/reference');
+const referenceHelpers = require('../utils/reference-helpers.js');
+const getPropertyOrDefFn = referenceHelpers.getPropertyOrDefFn;
+const getPropertyFnSafe = referenceHelpers.getPropertyFnSafe;
+const getColorFn = referenceHelpers.getColorFn;
+const TangramReference = require('../utils/reference');
 
 const TR = TangramReference.getText(null);
 

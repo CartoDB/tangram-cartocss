@@ -14,25 +14,25 @@
 	EXTERNAL DEPENDENCIES
  */
 
-var ramda = require('ramda');
-var not = ramda.not;
-var curry = ramda.curry;
-var compose = ramda.compose;
-var equals = ramda.equals;
-var identity = ramda.identity;
-var cond = ramda.cond;
+const ramda = require('ramda');
+const not = ramda.not;
+const curry = ramda.curry;
+const compose = ramda.compose;
+const equals = ramda.equals;
+const identity = ramda.identity;
+const cond = ramda.cond;
 
 /*
 	INTERNAL DEPENDENCIES
  */
-var referenceHelpers = require('../utils/reference-helpers.js');
-var getExecutedFn = referenceHelpers.getExecutedFn;
-var getPropertyOrDefFn = referenceHelpers.getPropertyOrDefFn;
-var getBlendFn = referenceHelpers.getBlendFn;
-var getColorFn = referenceHelpers.getColorFn;
-var TangramReference = require('../utils/reference');
+const referenceHelpers = require('../utils/reference-helpers.js');
+const getExecutedFn = referenceHelpers.getExecutedFn;
+const getPropertyOrDefFn = referenceHelpers.getPropertyOrDefFn;
+const getBlendFn = referenceHelpers.getBlendFn;
+const getColorFn = referenceHelpers.getColorFn;
+const TangramReference = require('../utils/reference');
 
-var Geom = require('../utils/geom');
+const Geom = require('../utils/geom');
 
 const notEq = curry(compose(not, equals));
 

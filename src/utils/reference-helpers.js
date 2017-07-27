@@ -1,17 +1,17 @@
-var ramda = require('ramda');
-var either = ramda.either;
-var prop = ramda.prop;
-var defaultTo = ramda.defaultTo;
-var apply = ramda.apply;
-var values = ramda.values;
-var ifElse = ramda.ifElse;
-var applySpec = ramda.applySpec;
-var curry = ramda.curry;
-var compose = ramda.compose;
+const ramda = require('ramda');
+const either = ramda.either;
+const prop = ramda.prop;
+const defaultTo = ramda.defaultTo;
+const apply = ramda.apply;
+const values = ramda.values;
+const ifElse = ramda.ifElse;
+const applySpec = ramda.applySpec;
+const curry = ramda.curry;
+const compose = ramda.compose;
 
-var Utils = require('../utils/utils');
-var TangramReference = require('../utils/reference');
-var Colors = require('../style/colors');
+const Utils = require('../utils/utils');
+const TangramReference = require('../utils/reference');
+const Colors = require('../style/colors');
 
 /*
   INTERNAL REFERENCE FUNCTIONS
