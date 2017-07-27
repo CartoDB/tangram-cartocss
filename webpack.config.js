@@ -3,13 +3,10 @@ module.exports = {
   output: {
     path: __dirname + '/dist/',
     filename: 'tangram-cartocss.debug.js',
-    libraryTarget: "this"
+    libraryTarget: "umd"
   },
   node: {
     fs: "empty"
-  },
-  externals: {
-    './torque-reference': 'window'
   },
   module: {
     loaders: [{
