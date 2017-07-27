@@ -13,15 +13,19 @@
 /*
 	EXTERNAL DEPENDENCIES
  */
-import MD5 from 'md5';
-import { compose } from 'ramda';
+var MD5 = require('md5');
+var compose = require('ramda').compose;
 
 /*
 	INTERNAL DEPENDENCIES
  */
 
-import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getColorFn } from '../utils/reference-helpers';
-import TangramReference from '../utils/reference';
+var referenceHelpers = require('../utils/reference-helpers.js');
+var getExecutedFn = referenceHelpers.getExecutedFn;
+var getPropertyOrDefFn = referenceHelpers.getPropertyOrDefFn;
+var getBlendFn = referenceHelpers.getBlendFn;
+var getColorFn = referenceHelpers.getColorFn;
+var TangramReference = require('../utils/reference');
 
 const PR = TangramReference.getPolygon(null); // Polygon reference
 const PPR = TangramReference.getPolygonPattern(null);
@@ -45,15 +49,6 @@ const getColor = getColorFn(
 );
 
 /**
- * Function for getting the extrude of a polygon
- *
- * @param   {object} c3ss compiled carto css
- * @returns {object} with a function that contain the conditions to return an extrude value
- */
-
-const getExtrude = getPropertyOrDefFn('tg-polygon-extrude');
-
-/**
  * Function for getting the texture as string
  *
  * @param   {object} c3ss compiled carto css
@@ -74,8 +69,6 @@ const getBlending = getBlendFn(PR);
  */
 
 var Polygon = {};
-
-export default Polygon;
 
 /**
  * Function to get the draw object of a polygon.
@@ -133,3 +126,5 @@ Polygon.getTextures = c3ss => {
   }
   return tex;
 };
+
+module.exports = Polygon;

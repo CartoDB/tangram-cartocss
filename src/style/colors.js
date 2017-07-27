@@ -1,8 +1,5 @@
-import Utils from '../utils/utils';
+var Utils = require('../utils/utils');
 var Colors = {};
-
-export default Colors;
-
 let C = Colors;
 
 Colors._isHex = Utils.functionString(
@@ -91,3 +88,5 @@ Colors.getAlphaColor = function (color, opacity) {
 
   return color;
 };
+
+module.exports = Colors;

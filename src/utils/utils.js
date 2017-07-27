@@ -1,8 +1,13 @@
-import { curry, compose, replace, reduce, split, map } from 'ramda';
+var ramda = require('ramda');
+var curry = ramda.curry;
+var compose = ramda.compose;
+var replace = ramda.replace;
+var reduce = ramda.reduce;
+var split = ramda.split;
+var map = ramda.map;
 
 var Utils = {};
 
-export default Utils;
 
 const geometries = {
   '1': '"point"',
@@ -80,3 +85,5 @@ Utils.pick = curry((path, obj) => {
     return accumulator[key];
   }, obj, split('.', path));
 });
+
+module.exports = Utils;
