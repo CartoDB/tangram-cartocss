@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "start": "npm run watch",
-    "test": "npm run lint && npm run build-debug && npm run test-local",
+    "test": "npm run build-debug && npm run test-local && npm run lint",
     "test-ci": "npm run lint && npm run build-debug && npm run test-remote",
     "test-remote": "./node_modules/karma/bin/karma start --browsers Chrome_travis_ci --single-run",
     "test-local": "./node_modules/karma/bin/karma start --browsers Chrome --single-run",
