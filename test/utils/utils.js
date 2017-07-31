@@ -1,4 +1,4 @@
-const Carto = require('carto');
+import Carto from 'carto';
 
 var Utils = {};
 
@@ -22,5 +22,4 @@ Utils.getShader = function (ccss) {
     .render(ccss).getLayers()[0].shader;
 };
 
-module.exports = Utils;
-
+export default Utils;
