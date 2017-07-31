@@ -160,7 +160,6 @@ Point.getStyle = function(c3ss, id, ord) {
 
 	if (checkMarkerSym(c3ss)) {
     let p = style['points_' + id];
-    // Textures are not supported
     p.texture = getTextureFile(c3ss) !== 'none' ? getTexture(c3ss) : void 0;
     p.blend = getBlending(c3ss);
 	}
