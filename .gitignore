@@ -2,8 +2,7 @@
 
 # build & test artifacts
 node_modules
-dist/tangram-cartocss.test.js
-dist/tangram-cartocss.test-worker.js
+dist
 
 # a make target for npm install
 .npm
