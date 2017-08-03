@@ -1,11 +1,11 @@
-import Carto from 'carto';
-import Points from './basic/points';
-import Dots from './basic/dots';
-import Polygons from './basic/polygons';
-import Lines from './basic/lines';
-import TextPoints from './basic/text';
-import tangramReference from 'tangram-reference';
-import MD5 from 'md5';
+const Carto = require('carto');
+const Points = require('./basic/points');
+const Dots = require('./basic/dots');
+const Polygons = require('./basic/polygons');
+const Lines = require('./basic/lines');
+const TextPoints = require('./basic/text');
+const tangramReference = require('tangram-reference');
+const MD5 = require('md5');
 
 const ref = tangramReference.load('1.0.0');
 const CartoCSSRenderer = new Carto.RendererJS({
@@ -13,10 +13,10 @@ const CartoCSSRenderer = new Carto.RendererJS({
   strict: true
 });
 
-const extractFeatures = function (ccss, index) {
-  let layers = CartoCSSRenderer.render(ccss).getLayers();
-  let id = MD5(ccss);
-  let tLy = [];
+const carto2Draw = function (ccss, index) {
+  let layers = CartoCSSRenderer.render(ccss).getLayers(),
+      id = MD5(ccss),
+      tLy = [];
 
   // NOTE: this is wrong, we have to separate the layers.
   for (var i = 0; i < layers.length; i++) {
@@ -55,6 +55,6 @@ const extractFeatures = function (ccss, index) {
   return tLy;
 };
 
-export default {
-  extractFeatures
+module.exports = {
+  carto2Draw: carto2Draw,
 };

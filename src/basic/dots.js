@@ -1,6 +1,21 @@
-import TangramReference from '../utils/reference';
-import {compose, pickBy, not, isNil, applySpec, merge, mergeWith} from 'ramda';
-import { getPropertyOrDefFn, getColorFn, getPropertyFnSafe } from '../utils/reference-helpers';
+const TangramReference = require('../utils/reference');
+const ramda = require('ramda');
+
+const compose = ramda.compose;
+const pickBy = ramda.pickBy;
+const not = ramda.not;
+const isNil = ramda.isNil;
+const applySpec = ramda.applySpec;
+const merge = ramda.merge;
+const mergeWith = ramda.mergeWith;
+
+/*
+ * INTERNAL DEPENDENCIES
+ */
+const referenceHelpers = require('../utils/reference-helpers.js');
+const getPropertyOrDefFn = referenceHelpers.getPropertyOrDefFn;
+const getPropertyFnSafe = referenceHelpers.getPropertyFnSafe;
+const getColorFn = referenceHelpers.getColorFn;
 
 const DR = TangramReference.getDot(null); // Dot reference
 const checkDotSym = TangramReference.checkSymbolizer('dot');

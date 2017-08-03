@@ -1,11 +1,10 @@
-import { curry } from 'ramda';
-import reference from 'tangram-reference';
+const curry = require('ramda').curry;
+const reference = require('tangram-reference');
 
 const Ref = reference.load('1.0.0');
 
-var TangramReference = {};
+const TangramReference = {};
 
-export default TangramReference;
 
 const getProperty = curry(function (type, prop) {
   const obj = Ref.symbolizers[type];
@@ -31,3 +30,5 @@ TangramReference.checkSymbolizer = curry(function (sym, c3ss) {
 TangramReference.checkType = curry(function (ref, val) {
   return ref.type.indexOf(val) !== -1 ? val : null;
 });
+
+module.exports = TangramReference;

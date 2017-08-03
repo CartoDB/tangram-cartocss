@@ -14,19 +14,30 @@
   EXTERNAL DEPENDENCIES
  */
 
-import {curry, compose, not, equals, identity, cond} from 'ramda';
+const ramda = require('ramda');
+const not = ramda.not;
+const curry = ramda.curry;
+const compose = ramda.compose;
+const equals = ramda.equals;
+const identity = ramda.identity;
+const cond = ramda.cond;
 
 /*
   INTERNAL DEPENDENCIES
  */
+const referenceHelpers = require('../utils/reference-helpers.js');
+const getExecutedFn = referenceHelpers.getExecutedFn;
+const getPropertyOrDefFn = referenceHelpers.getPropertyOrDefFn;
+const getBlendFn = referenceHelpers.getBlendFn;
+const getColorFn = referenceHelpers.getColorFn;
+const TangramReference = require('../utils/reference');
 
-import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getColorFn } from '../utils/reference-helpers';
-import TangramReference from '../utils/reference';
-import Geom from '../utils/geom';
+const Geom = require('../utils/geom');
 
 const notEq = curry(compose(not, equals));
 
 const LR = TangramReference.getLine(null); // Line reference
+
 /*
   INTERNAL LINE FUNCTIONS
  */
@@ -101,8 +112,6 @@ const getDashed = compose(
 
 var Line = {};
 
-export default Line;
-
 /**
  * Function to get the draw object of a line.
  *
@@ -143,3 +152,5 @@ Line.getStyle = function (c3ss, id, ord) {
 
   return style;
 };
+
+module.exports = Line;
