@@ -126,7 +126,7 @@ Point.getDraw = function(c3ss, id) {
 
     point.collide = !getCollide(c3ss);
 	}
-
+  point.order = 0;
   draw['points_' + id] = point;
 
   return draw;
