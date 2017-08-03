@@ -1,13 +1,10 @@
 {
   "presets": [
-    "es2015",
-    "stage-0"
+    [
+      "es2015"
+    ]
   ],
   "plugins": [
-      "ramda",
-      ["transform-runtime", {
-        "polyfill": false,
-        "regenerator": true
-      }]
-    ]
+    "transform-runtime"
+  ]
 }

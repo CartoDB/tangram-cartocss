@@ -1,21 +1,12 @@
+var path = require('path');
+
 module.exports = {
   entry: './src/module.js',
   output: {
-    path: __dirname + '/dist/',
-    filename: 'tangram-cartocss.debug.js',
-    libraryTarget: "umd"
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'tangram-cartocss.js',
   },
   node: {
-    fs: "empty"
-  },
-  module: {
-    loaders: [{
-      // test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-      query: {
-        presets: ['es2015', 'stage-0']
-      }
-    }]
+    fs: 'empty', // carto library was originally designed to run in nodejs
   }
 };

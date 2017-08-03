@@ -54,3 +54,29 @@ map.setView( [ 40.7, -74.009 ], 14 );
   scene_layer.scene.updateConfig();
 });
 ```
+
+
+## Testing
+
+```bash
+yarn test
+# Or
+npm run test
+```
+
+## Linting
+
+```bash
+yarn lint
+# Or
+npm run lint
+```
+
+## Building
+This generates a bundle under the `/dist` folder that can be loaded on a web browser.
+
+```bash
+yarn build
+# Or
+npm run build
+```
