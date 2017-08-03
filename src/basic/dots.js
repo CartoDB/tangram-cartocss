@@ -59,8 +59,6 @@ const getWidths = compose(
 
 let Dots = {};
 
-export default Dots;
-
 /**
  * Get the draw (for tangram) object of a dot from compiled carto css
  * @param  {object} c3ss compiled carto @class
@@ -103,3 +101,5 @@ Dots.getStyle = function (c3ss, id, ord) {
 
   return style;
 };
+
+module.exports = Dots;
