@@ -116,6 +116,9 @@ describe( 'Point', () => {
       assert.equal(point.collide, false);
     });
 
+    it('should have order 0 by default', () => {
+      assert.equal(point.order, 0);
+    });
 
   });
 
