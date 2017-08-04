@@ -32,6 +32,10 @@ describe('Dot', () => {
   describe('.getDraw()', () => {
     let dot = Dots.getDraw(c3ss, id)['dots_' + id];
 
+    it('should not have collide', () => {
+      assert.equal(dot.collide, false);
+    });
+
     describe('width ', () => {
       it('should have size', () => {
         assert.property(dot, 'size');

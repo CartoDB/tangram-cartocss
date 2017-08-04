@@ -76,6 +76,8 @@ Dots.getDraw = function (c3ss, id) {
       getColors(c3ss)
     );
 
+    dot.collide = false;
+
     draw['dots_' + id] = dot;
   }
 
