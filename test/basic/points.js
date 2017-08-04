@@ -115,6 +115,11 @@ describe('Point', () => {
     it('should not have collide', () => {
       assert.equal(point.collide, false);
     });
+
+    it('should have order 0 by default', () => {
+      assert.equal(point.order, 0);
+    });
+
   });
 
   describe('.getStyle()', () => {
