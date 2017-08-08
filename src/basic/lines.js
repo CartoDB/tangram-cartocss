@@ -52,7 +52,7 @@ const getColor = getColorFn(
  * @returns {object} with a function that contain the conditions to return the extrude
  */
 
-const getExtrude = getPropertyOrDefFn('tg-stroke-extrude');
+// const getExtrude = getPropertyOrDefFn('tg-stroke-extrude');
 
 /**
  * Function for getting the width in meters dynamically by zoom

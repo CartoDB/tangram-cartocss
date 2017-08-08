@@ -51,7 +51,7 @@ const getColor = getColorFn(
  * @returns {object} with a function that contain the conditions to return an extrude value
  */
 
-const getExtrude = getPropertyOrDefFn('tg-polygon-extrude');
+// const getExtrude = getPropertyOrDefFn('tg-polygon-extrude');
 
 /**
  * Function for getting the texture as string
