@@ -17,11 +17,9 @@
 /*
   INTERNAL DEPENDENCIES
 */
-const referenceHelpers = require('../utils/reference-helpers.js');
-const getPropertyOrDefFn = referenceHelpers.getPropertyOrDefFn;
-const getPropertyFnSafe = referenceHelpers.getPropertyFnSafe;
-const getColorFn = referenceHelpers.getColorFn;
-const TangramReference = require('../utils/reference');
+
+import { getPropertyFnSafe, getPropertyOrDefFn, getColorFn } from '../utils/reference-helpers';
+import TangramReference from '../utils/reference';
 
 const TR = TangramReference.getText(null);
 
@@ -41,6 +39,8 @@ const getColor = getColorFn(
 );
 
 var TextPoint = {};
+
+export default TextPoint;
 
 TextPoint.getDraw = (c3ss, id) => {
   let draw = {};
@@ -75,5 +75,3 @@ TextPoint.getStyle = (c3ss, id, ord) => {
 
   return style;
 };
-
-module.exports = TextPoint;

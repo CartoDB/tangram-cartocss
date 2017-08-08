@@ -7,8 +7,6 @@
     "url": "git://github.com/cartodb/tangram-cartocss.git"
   },
   "main": "dist/tangram-cartocss.debug.js",
-  "module" : "src/module.js",
-  "jsnext:main" : "src/module.js",
   "homepage": "https://github.com/cartodb/tangram-cartocss",
   "keywords": [
     "maps",
@@ -31,7 +29,7 @@
     "karma-start": "./node_modules/karma/bin/karma start --browsers Chrome --no-watch",
     "karma-run": "./node_modules/karma/bin/karma run --browsers Chrome",
     "lint": "$(npm bin)/jshint src/ && jshint test/",
-    "build-debug": "$(npm bin)/webpack",
+    "build-debug": "$(npm bin)/webpack -d",
     "build": "npm run build-debug && npm run build-minify",
     "build-minify": "$(npm bin)/uglifyjs dist/tangram-cartocss.debug.js -c warnings=false -m -o dist/tangram-cartocss.min.js && npm run build-size",
     "build-size": "gzip dist/tangram-cartocss.min.js -c | wc -c | awk '{kb=$1/1024; print kb}' OFMT='%.0fk minified+gzipped'",

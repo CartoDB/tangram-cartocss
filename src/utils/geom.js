@@ -1,5 +1,6 @@
 var Geom = {};
 
+export default Geom;
 
 Geom.px2Meters = function (fn) {
   return `function () {
@@ -7,5 +8,3 @@ Geom.px2Meters = function (fn) {
   		return val * $meters_per_pixel;
   	}`.replace(/(\t)/g, '');
 };
-
-module.exports = Geom;
