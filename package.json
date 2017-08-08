@@ -6,7 +6,9 @@
     "type": "git",
     "url": "git://github.com/cartodb/tangram-cartocss.git"
   },
-  "main": "src/index.js",
+  "main": "dist/tangram-cartocss.debug.js",
+  "module" : "src/module.js",
+  "jsnext:main" : "src/module.js",
   "homepage": "https://github.com/cartodb/tangram-cartocss",
   "keywords": [
     "maps",

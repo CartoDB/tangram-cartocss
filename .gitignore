@@ -2,7 +2,6 @@
 
 # build & test artifacts
 node_modules
-dist
 
 # a make target for npm install
 .npm
