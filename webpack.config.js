@@ -1,9 +1,10 @@
 module.exports = {
-  entry: './src/module.js',
+  entry: './src/index.js',
   output: {
     path: __dirname + '/dist/',
     filename: 'tangram-cartocss.debug.js',
-    libraryTarget: "umd"
+    libraryTarget: 'umd',
+    library: 'CCSS',
   },
   node: {
     fs: "empty"

@@ -3,10 +3,10 @@
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
-	else {
-		var a = factory();
-		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
-	}
+	else if(typeof exports === 'object')
+		exports["CCSS"] = factory();
+	else
+		root["CCSS"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -11090,11 +11090,11 @@ module.exports = TextPoint;
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-// Required for testing
-exports.default = __webpack_require__(158);
+var CCSS = __webpack_require__(158);
+
+module.exports = {
+  carto2Draw: CCSS.carto2Draw
+};
 
 /***/ }),
 /* 165 */
