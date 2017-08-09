@@ -1,17 +1,8 @@
-const ramda = require('ramda');
-const either = ramda.either;
-const prop = ramda.prop;
-const defaultTo = ramda.defaultTo;
-const apply = ramda.apply;
-const values = ramda.values;
-const ifElse = ramda.ifElse;
-const applySpec = ramda.applySpec;
-const curry = ramda.curry;
-const compose = ramda.compose;
+import { compose, curry, either, prop, defaultTo, apply, values, ifElse, applySpec } from 'ramda';
+import Utils from '../utils/utils';
+import TangramReference from '../utils/reference';
+import Colors from '../style/colors';
 
-const Utils = require('../utils/utils');
-const TangramReference = require('../utils/reference');
-const Colors = require('../style/colors');
 
 /*
   INTERNAL REFERENCE FUNCTIONS
@@ -86,7 +77,7 @@ const getColorFn = (fill, alpha) => {
   );
 };
 
-module.exports = {
+export {
   generateDefaultFromRef,
   getDefProp,
   getProp,

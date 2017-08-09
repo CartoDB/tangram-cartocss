@@ -1,13 +1,15 @@
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/module.js',
   output: {
     path: __dirname + '/dist/',
     filename: 'tangram-cartocss.debug.js',
-    libraryTarget: 'umd',
-    library: 'CCSS',
+    libraryTarget: "this"
   },
   node: {
     fs: "empty"
+  },
+  externals: {
+    './torque-reference': 'window'
   },
   module: {
     loaders: [{

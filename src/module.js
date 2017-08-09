@@ -1,2 +1,5 @@
-// Required for testing
-export default require('./carto.js');
+import CCSS from './carto';
+
+module.exports = {
+  carto2Draw: CCSS.extractFeatures,
+};

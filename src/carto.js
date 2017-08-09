@@ -1,10 +1,10 @@
-const Carto = require('carto');
-const Points = require('./basic/points');
-const Polygons = require('./basic/polygons');
-const Lines = require('./basic/lines');
-const TextPoints = require('./basic/text');
-const tangramReference = require('tangram-reference');
-const MD5 = require('md5');
+import Carto from 'carto';
+import Points from './basic/points';
+import Polygons from './basic/polygons';
+import Lines from './basic/lines';
+import TextPoints from './basic/text';
+import tangramReference from 'tangram-reference';
+import MD5 from 'md5';
 
 const ref = tangramReference.load('1.0.0');
 const CartoCSSRenderer = new Carto.RendererJS({
@@ -12,7 +12,7 @@ const CartoCSSRenderer = new Carto.RendererJS({
   strict: true
 });
 
-const carto2Draw = function (ccss, index) {
+const extractFeatures = function (ccss, index) {
   let layers = CartoCSSRenderer.render(ccss).getLayers(),
       id = MD5(ccss),
       tLy = [];
@@ -52,6 +52,8 @@ const carto2Draw = function (ccss, index) {
   return tLy;
 };
 
-module.exports = {
-  carto2Draw: carto2Draw,
+var C2T;
+
+export default C2T = {
+  extractFeatures
 };

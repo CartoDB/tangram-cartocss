@@ -12,29 +12,15 @@
 /*
 	EXTERNAL DEPENDENCIES
  */
-const MD5 = require('md5');
-const ramda = require('ramda');
-
-const compose = ramda.compose;
-const pickBy = ramda.pickBy;
-const not = ramda.not;
-
-const isNil = ramda.isNil;
-const applySpec = ramda.applySpec;
-const merge = ramda.merge;
-const mergeWith = ramda.mergeWith;
+import MD5 from 'md5';
+import {compose, pickBy, not, isNil, applySpec, merge, mergeWith} from 'ramda';
 
 /*
 	INTERNAL DEPENDENCIES
  */
-const referenceHelpers = require('../utils/reference-helpers.js');
-const getExecutedFn = referenceHelpers.getExecutedFn;
-const getPropertyOrDefFn = referenceHelpers.getPropertyOrDefFn;
-const getBlendFn = referenceHelpers.getBlendFn;
-const getPropertyFnSafe = referenceHelpers.getPropertyFnSafe;
-const getEitherProp = referenceHelpers.getEitherProp;
-const getColorFn = referenceHelpers.getColorFn;
-const TangramReference = require('../utils/reference');
+
+import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getPropertyFnSafe, getEitherProp, getColorFn } from '../utils/reference-helpers';
+import TangramReference from '../utils/reference';
 
 const PR = TangramReference.getPoint(null); // Point reference
 
@@ -118,6 +104,8 @@ const getBlending = getBlendFn(PR);
 
 var Point = {};
 
+export default Point;
+
 
 /**
  * Get the draw (for tangram) object of a point from compiled carto css
@@ -179,5 +167,3 @@ Point.getTextures = function(c3ss) {
 		return tex;
 	}
 };
-
-module.exports = Point;
