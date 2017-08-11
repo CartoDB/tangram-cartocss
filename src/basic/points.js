@@ -81,7 +81,7 @@ const getWidths = compose(
  * @return {object}      return draw object with a non-dynamic collide option
  */
 
-const getCollide = getExecutedFn('allow-overlap', PR);
+export const getCollide = getExecutedFn('allow-overlap', PR);
 
 const getBlending = getBlendFn(PR);
 
