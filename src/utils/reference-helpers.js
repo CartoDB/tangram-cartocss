@@ -24,6 +24,13 @@ const getDefProp = curry((prop, ref) => {
 
 // ref = 'stroke-opacity' -> get {stroke-opacity: {css: 'line-opacity'}} -> line-opacity;
 // ref['line-opacity'];
+
+/**
+ * Get the value of a property from a c3ss object.
+ *
+ * First obtain the name of the property from the reference
+ * and then return the value of the property from the c3ss;
+ */
 const getProp = curry((prop, ref, c3ss) => {
   return Utils.pick(Utils.pick(prop + '.css', ref), c3ss);
 });

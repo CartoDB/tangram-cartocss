@@ -75,6 +75,20 @@ Utils.generateDefault = function(val) {
 	return `return ${val};`;
 };
 
+/**
+ * Get the value from an object given the value path.
+ *
+ * let user = {
+ *   name : {
+ *    first: 'John',
+ *    last: 'Doe
+ *   },
+ *   age: 20,
+ * }
+ *
+ * Utils.pick('name.last', user) // Doe
+ * Utils.pick('age', user) // 20
+ */
 Utils.pick = curry((path, obj) => {
   return reduce((accumulator, key) => {
     return accumulator[key];
