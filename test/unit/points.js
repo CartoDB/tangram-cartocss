@@ -1,7 +1,6 @@
-/* globals describe, it */
+/* globals describe, it, xit */
 import Utils from '../utils/utils';
 import chai from 'chai';
-import MD5 from 'md5';
 let expect = chai.expect;
 
 import { getCollide } from '../../src/basic/points';
