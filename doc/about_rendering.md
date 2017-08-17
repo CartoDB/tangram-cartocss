@@ -54,6 +54,7 @@ This means that you cannot change the `marker-allow-overlap` based on some rules
     ...
   }
 }
+```
 
 ```less
 #cities {
