@@ -2,7 +2,7 @@
 
 ## Limitations
 
-### Marker-width should always have a value.
+### Marker-width should always have a value.
 
 Imagine we want a map where only cities with populatioin bigger than 100000 must be shown.
 
@@ -43,7 +43,7 @@ This means that if you want the markers to be invisible you have to set a 0 size
 }
 ``` 
 
-### Dynamic marker-allow-overlap is not supported.
+### Dynamic marker-allow-overlap is not supported.
 
 This means that you cannot change the `marker-allow-overlap` based on some rules, you can only set the default value for the layer.
 
