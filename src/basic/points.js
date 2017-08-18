@@ -18,7 +18,7 @@ import {compose, pickBy, not, isNil, applySpec, merge, mergeWith} from 'ramda';
 	INTERNAL DEPENDENCIES
  */
 
-import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getPropertyFnSafe, getEitherProp, getColorFn } from '../utils/reference-helpers';
+import { getPropertyOrDefFn, getBlendFn, getPropertyFnSafe, getEitherProp, getColorFn } from '../utils/reference-helpers';
 import TangramReference from '../utils/reference';
 
 const PR = TangramReference.getPoint(null); // Point reference
@@ -78,10 +78,20 @@ const getWidths = compose(
 /**
  * Get collide from allow-overlap in cartocss [NON-DYNAMIC]
  * @param  {object} c3ss compiled carto css
- * @return {object}      return draw object with a non-dynamic collide option
+ * @return {bolean}      return evaluated collide option
  */
-
-export const getCollide = getExecutedFn('allow-overlap', PR);
+export function getCollide(c3ss) {
+  let property = c3ss['marker-allow-overlap'];
+  if (!property) {
+    return PR['allow-overlap']['default-value'];
+  }
+  // We dont support filtered marker-allow-overlap
+  if (property.filtered) {
+    throw new Error('marker-allow-overlap is not supported inside filters');
+  }
+  // Since this property is not-dynamic must be evaluated.
+  return property.style({}, { zoom: 10 });
+}
 
 const getBlending = getBlendFn(PR);
 
