@@ -20,14 +20,19 @@ describe('Points', () => {
       const c3ss = Utils.getShader('#layer { marker-allow-overlap: false; }');
       expect(getCollide(c3ss)).to.equal(false);
     });
-    // Should this cases thow an error? Functions are not supported by tangram
-    xit('TBD', () => {
-      const c3ss = Utils.getShader('#layer [zoom <= 5] {marker-allow-overlap: true;}');
-      expect(getCollide(c3ss)).to.equal(false);
-    });
-    xit('TBD', () => {
-      const c3ss = Utils.getShader('#layer [zoom <= 5] {marker-allow-overlap: false;}');
-      expect(getCollide(c3ss)).to.equal(false);
+    describe('Should throw an error when marker-allow-overlap is filtered', () => {
+      it('Case 0', () => {
+        const c3ss = Utils.getShader('#layer { marker-fill: red; [foo > 100]{ marker-allow-overlap: true; }}');
+        expect(() => getCollide(c3ss)).to.throw(/marker-allow-overlap is not supported inside filters/);
+      });
+      it('Case 1', () => {
+        const c3ss = Utils.getShader('#layer { marker-allow-overlap: false; [foo > 100]{ marker-allow-overlap: true; }}');
+        expect(() => getCollide(c3ss)).to.throw(/marker-allow-overlap is not supported inside filters/);
+      });
+      it('Case 2', () => {
+        const c3ss = Utils.getShader('#layer [foo > 100]{ marker-allow-overlap: true; }');
+        expect(() => getCollide(c3ss)).to.throw(/marker-allow-overlap is not supported inside filters/);
+      });
     });
   });
 });

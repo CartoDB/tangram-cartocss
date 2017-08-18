@@ -112,8 +112,8 @@ describe( 'Point', () => {
       });
     });
 
-    it('should not have collide', () => {
-      assert.equal(point.collide, false);
+    it('should collide true by default', () => {
+      assert.equal(point.collide, true);
     });
 
     it('should have order 0 by default', () => {
