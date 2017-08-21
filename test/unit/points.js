@@ -14,11 +14,11 @@ describe('Points', () => {
     });
     it('Should return true when marker-allow-overlap is true', () => {
       const c3ss = Utils.getShader('#layer { marker-allow-overlap: true; }');
-      expect(getCollide(c3ss)).to.equal(false);
+      expect(getCollide(c3ss)).to.equal(true);
     });
     it('Should return false when marker-allow-overlap is false', () => {
       const c3ss = Utils.getShader('#layer { marker-allow-overlap: false; }');
-      expect(getCollide(c3ss)).to.equal(true);
+      expect(getCollide(c3ss)).to.equal(false);
     });
     describe('Should throw an error when marker-allow-overlap is filtered', () => {
       it('Case 0', () => {
