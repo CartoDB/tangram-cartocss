@@ -81,16 +81,19 @@ const getWidths = compose(
  * @return {bolean}      return evaluated collide option
  */
 export function getCollide(c3ss) {
+  let allowOverlap = PR['allow-overlap']['default-value'];
   let property = c3ss['marker-allow-overlap'];
-  if (!property) {
-    return PR['allow-overlap']['default-value'];
+  if (property) {
+
+    // We dont support filtered marker-allow-overlap
+    if (property.filtered) {
+      throw new Error('marker-allow-overlap is not supported inside filters');
+    }
+
+    // Since this property is not-dynamic must be evaluated.
+    allowOverlap = property.style({}, { zoom: 10 });
   }
-  // We dont support filtered marker-allow-overlap
-  if (property.filtered) {
-    throw new Error('marker-allow-overlap is not supported inside filters');
-  }
-  // Since this property is not-dynamic must be evaluated.
-  return property.style({}, { zoom: 10 });
+  return !allowOverlap;
 }
 
 const getBlending = getBlendFn(PR);
@@ -102,7 +105,6 @@ const getBlending = getBlendFn(PR);
 var Point = {};
 
 export default Point;
-
 
 /**
  * Get the draw (for tangram) object of a point from compiled carto css
@@ -121,7 +123,7 @@ Point.getDraw = function(c3ss, id) {
 				getColors(c3ss)
 			);
 
-    point.collide = !getCollide(c3ss);
+    point.collide = getCollide(c3ss);
 	}
   point.order = 0;
   draw['points_' + id] = point;
