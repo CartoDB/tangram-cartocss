@@ -1,4 +1,4 @@
-/* globals describe, it, xit */
+/* globals describe, it */
 import Utils from '../utils/utils';
 import chai from 'chai';
 let expect = chai.expect;
@@ -8,17 +8,17 @@ import { getCollide } from '../../src/basic/points';
 
 describe('Points', () => {
   describe('.getCollide', () => {
-    xit('Should return false when marker-allow-overlap is not defined', () => {
+    it('Should return false when marker-allow-overlap is not defined', () => {
       const c3ss = Utils.getShader('#layer {  marker-line-color: #FFF; }');
       expect(getCollide(c3ss)).to.equal(false);
     });
-    it('Should return false when marker-allow-overlap is true', () => {
+    it('Should return true when marker-allow-overlap is true', () => {
       const c3ss = Utils.getShader('#layer { marker-allow-overlap: true; }');
-      expect(getCollide(c3ss)).to.equal(true);
+      expect(getCollide(c3ss)).to.equal(false);
     });
     it('Should return false when marker-allow-overlap is false', () => {
       const c3ss = Utils.getShader('#layer { marker-allow-overlap: false; }');
-      expect(getCollide(c3ss)).to.equal(false);
+      expect(getCollide(c3ss)).to.equal(true);
     });
     describe('Should throw an error when marker-allow-overlap is filtered', () => {
       it('Case 0', () => {

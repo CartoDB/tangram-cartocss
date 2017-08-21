@@ -112,7 +112,7 @@ describe( 'Point', () => {
       });
     });
 
-    it('should collide true by default', () => {
+    it('should have a true collide property by default', () => {
       assert.equal(point.collide, true);
     });
 
