@@ -56,9 +56,82 @@ describe( 'Point', () => {
       });
     });
 
-    it('should have size', () => {
-      assert.property(point, 'size');
+    describe('size', ()=>{
+      function _generatePoint(style) {
+        let c3ss = Utils.getShader(style);
+        let id = MD5(style);
+        return Point.getDraw(c3ss, id)['points_' + id];
+      }
+
+      it('should be 0 when the marker symbolizer is not active', () => {
+        let style = `
+          #layer {
+            [property > 100] {
+              marker-width: 100;
+            }
+          }`;
+        let point = _generatePoint(style);
+        let actual = Utils.eval(point.size)({ property: 50 }, 10);
+        let expected = 0;
+        assert.equal(actual, expected);
+      });
+
+      xit('should be 10 (default value) when the marker symbolizer is active and marker-with is not present', () => {
+        let style = `
+          #layer {
+            marker-fill: red;
+          }`;
+        let point = _generatePoint(style);
+        let actual = Utils.eval(point.size)({}, 10); // point.size is not a function!
+        let expected = 10; // default
+        assert.equal(actual, expected);
+      });
+
+      xit('should be 10 (default value) when the marker symbolizer is active and marker-with is present inside a different filter', () => {
+        let style = `
+          #layer {
+            marker-fill: red;
+            [property > 100] {
+              marker-width: 100;
+            }
+          }`;
+        let point = _generatePoint(style);
+        let actual = Utils.eval(point.size)({ property: 50 }, 10);
+        let expected = 10;
+        assert.equal(actual, expected);
+      });
+
+      it('should be equal to the given marker-width (20) when the property filter is not applied', () => {
+        let style = `
+          #layer {
+            marker-fill: red;
+            marker-width: 20;
+            [property > 100] {
+              marker-width: 100;
+            }
+          }`;
+        let point = _generatePoint(style);
+        let actual = Utils.eval(point.size)({ property: 50 }, 10);
+        let expected = 20;
+        assert.equal(actual, expected);
+      });
+
+      it('should be equal to the given marker-width (100) when the property filter is applied', () => {
+        let style = `
+          #layer {
+            marker-fill: red;
+            marker-width: 20;
+            [property > 100] {
+              marker-width: 100;
+            }
+          }`;
+        let point = _generatePoint(style);
+        let actual = Utils.eval(point.size)({ property: 150 }, 10);
+        let expected = 100;
+        assert.equal(actual, expected);
+      });
     });
+
 
     describe('.size: ', () => {
       it('should be 15', () => {
