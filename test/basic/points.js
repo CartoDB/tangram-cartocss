@@ -76,17 +76,22 @@ describe( 'Point', () => {
         assert.equal(actual, expected);
       });
 
-      xit('should be 10 (default value) when the marker symbolizer is active and marker-with is not present', () => {
+      it('should be 10 (default value) when the marker symbolizer is active and marker-with is not present', () => {
         let style = `
           #layer {
             marker-fill: red;
           }`;
         let point = _generatePoint(style);
-        let actual = Utils.eval(point.size)({}, 10); // point.size is not a function!
-        let expected = 10; // default
+        let actual = point.size;
+        let expected = 10;
         assert.equal(actual, expected);
       });
 
+      /**
+       * This test is failing because getMarkerWidth is returning 0 (null value), but
+       * it should be returning 10 (default value) because the symbolizer is active
+       * in the "global" context.
+       */
       xit('should be 10 (default value) when the marker symbolizer is active and marker-with is present inside a different filter', () => {
         let style = `
           #layer {

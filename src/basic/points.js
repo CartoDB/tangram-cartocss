@@ -61,12 +61,15 @@ const getColors = compose(
  * Return a function used by tangram to calculate the point.size at runtime
  */
 function getMarkerWidth(c3ss) {
-  let defaultValue = 0;
+  const NULL_VALUE = 0;
   let property = getProp('width', PR, c3ss);
   if (property) {
-    return buildCCSSFn(property.js, undefined, defaultValue);
+    return buildCCSSFn(property.js, undefined, NULL_VALUE);
   }
-  return () => void 0;
+  if (c3ss.symbolizers.includes('markers')) {
+    return PR.width['default-value'];
+  }
+  return () => undefined;
 }
 
 const getOutlineWidth = getPropertyFnSafe('stroke-width', PR);
