@@ -18,7 +18,8 @@ import {compose, pickBy, not, isNil, applySpec, merge, mergeWith} from 'ramda';
 	INTERNAL DEPENDENCIES
  */
 
-import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getPropertyFnSafe, getEitherProp, getColorFn } from '../utils/reference-helpers';
+import { getExecutedFn, getPropertyOrDefFn, getBlendFn, getPropertyFnSafe, getEitherProp, getColorFn, getProp } from '../utils/reference-helpers';
+import { buildCCSSFn } from '../utils/utils';
 import TangramReference from '../utils/reference';
 
 const PR = TangramReference.getPoint(null); // Point reference
@@ -55,13 +56,18 @@ const getColors = compose(
   })
 );
 
-/**
- * getWidth for the marker and his border
- * @param  {object} c3ss compiled carto css
- * @return {object}      size and border_width
- */
 
-const getMarkerWidth = getPropertyFnSafe('width', PR);
+/**
+ * Return a function used by tangram to calculate the point.size at runtime
+ */
+function getMarkerWidth(c3ss) {
+  let defaultValue = 0;
+  let property = getProp('width', PR, c3ss);
+  if (property) {
+    return buildCCSSFn(property.js, undefined, defaultValue);
+  }
+  return () => void 0;
+}
 
 const getOutlineWidth = getPropertyFnSafe('stroke-width', PR);
 

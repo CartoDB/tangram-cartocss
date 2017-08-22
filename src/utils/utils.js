@@ -14,11 +14,11 @@ Utils.curryCompose3 = function (compose) {
   return curry((a,b,c) => compose(a,b,c));
 };
 
-Utils.wrapCodeInFunction = function(innerCode, attr = [' ']) {
+Utils.wrapCodeInFunction = function(innerCode, attr = [' '], defaultValue = null) {
 	attr = attr.join(',');
 
 	return `function (${attr}) {
-				var _value = null;
+				var _value = ${defaultValue};
 				${innerCode}
 				return _value;
 			}`.replace(/(\t)/g, '');
@@ -49,15 +49,17 @@ Utils.transpile2Tangram = compose(
   })
 );
 
-Utils.buildCCSSFn = function(js, attr) {
+export function buildCCSSFn(js, attr, defaultValue = null) {
 	let fn = '';
 
 	for (var i = 0; i < js.length; i++) {
 		fn += Utils.transpile2Tangram(js[i]);
 	}
 
-	return Utils.functionString(Utils.wrapCodeInFunction(fn, attr));
-};
+	return Utils.functionString(Utils.wrapCodeInFunction(fn, attr, defaultValue));
+}
+
+Utils.buildCCSSFn = buildCCSSFn;
 
 Utils.cleanForExecuting = replace(/data\['.*'\] (===|>|<|>=|<=) ('?(.+)(?='|\)| &&))/g, 'true');
 
