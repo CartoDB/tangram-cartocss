@@ -91,6 +91,17 @@ describe( 'Point', () => {
        * This test is failing because getMarkerWidth is returning 0 (null value), but
        * it should be returning 10 (default value) because the symbolizer is active
        * in the "global" context.
+       *
+       * function size() {
+       *   let value = 0;
+       *   if (markerSymbolizerisActive) {
+       *     value = 10;
+       *   }
+       *   if (feature['property'] > 100) {
+       *     value = 100;
+       *   }
+       *   return value;
+       * }
        */
       xit('should be 10 (default value) when the marker symbolizer is active and marker-with is present inside a different filter', () => {
         let style = `
