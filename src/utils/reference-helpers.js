@@ -26,10 +26,12 @@ const getDefProp = curry((prop, ref) => {
 // ref['line-opacity'];
 
 /**
- * Get the value of a property from a c3ss object.
+ * Get the value of a property from a c3ss object given the name
+ * of the property as it appears in the given reference.
  *
- * First obtain the name of the property from the reference
- * and then return the value of the property from the c3ss;
+ * First obtain the name of the CartoCSS property from the
+ * given reference and then return the value of the property
+ * from the c3ss;
  */
 const getProp = curry((prop, ref, c3ss) => {
   return Utils.pick(Utils.pick(prop + '.css', ref), c3ss);
