@@ -63,7 +63,7 @@ describe( 'Point', () => {
         return Point.getDraw(c3ss, id)['points_' + id];
       }
 
-      it('should be 0 when the marker symbolizer is not active', () => {
+      xit('should be 0 when the marker symbolizer is not active', () => {
         let style = `
           #layer {
             [property > 100] {
@@ -103,7 +103,7 @@ describe( 'Point', () => {
        *   return value;
        * }
        */
-      xit('should be 10 (default value) when the marker symbolizer is active and marker-with is present inside a different filter', () => {
+      it('should be 10 (default value) when the marker symbolizer is active and marker-with is present inside a different filter', () => {
         let style = `
           #layer {
             marker-fill: red;

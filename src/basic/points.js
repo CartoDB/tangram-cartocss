@@ -61,7 +61,7 @@ const getColors = compose(
  * Return a function used by tangram to calculate the point.size at runtime
  */
 function getMarkerWidth(c3ss) {
-  const NULL_VALUE = 0;
+  const NULL_VALUE = 10;
   let property = getProp('width', PR, c3ss);
   if (property) {
     return buildCCSSFn(property.js, undefined, NULL_VALUE);
