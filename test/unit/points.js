@@ -3,7 +3,7 @@ import Utils from '../utils/utils';
 import chai from 'chai';
 let expect = chai.expect;
 
-import { getCollide } from '../../src/basic/points';
+import { getCollide, getBlending } from '../../src/basic/points';
 
 describe('Points', () => {
   describe('.getCollide', () => {
@@ -32,6 +32,25 @@ describe('Points', () => {
         const c3ss = Utils.getShader('#layer [foo > 100]{ marker-allow-overlap: true; }');
         expect(() => getCollide(c3ss)).to.throw(/marker-allow-overlap is not supported inside filters/);
       });
+    });
+  });
+  describe('.getBlending', () => {
+    it('Should return "overlay" (default value) when marker-comp-op is not defined', () => {
+      const c3ss = Utils.getShader('#layer {  marker-line-color: #FFF; }');
+      expect(getBlending(c3ss)).to.equal('overlay');
+    });
+    it('Should return "multiply" when marker-comp-op is "multiply"', () => {
+      const c3ss = Utils.getShader('#layer {  marker-comp-op: multiply; }');
+      expect(getBlending(c3ss)).to.equal('multiply');
+    });
+    // This test fails because a bug in the tangram-reference.
+    xit('Should return "add" when marker-comp-op is "plus"', () => {
+      const c3ss = Utils.getShader('#layer {  marker-comp-op: plus; }');
+      expect(getBlending(c3ss)).to.equal('add');
+    });
+    it('Should throw an error when marker-comp-op is filtered', () => {
+      const c3ss = Utils.getShader('#layer { marker-fill: red; [foo > 100]{ marker-comp-op: multiply; }}');
+      expect(() => getBlending(c3ss)).to.throw(/marker-comp-op is not supported inside filters/);
     });
   });
 });
