@@ -43,7 +43,7 @@ describe('Points', () => {
       const c3ss = Utils.getShader('#layer {  marker-comp-op: multiply; }');
       expect(getBlending(c3ss)).to.equal('multiply');
     });
-    // This test fails because a bug in the tangram-reference.
+    // This test fails because a bug in the tangram-reference. https://github.com/CartoDB/tangram-reference/pull/6
     xit('Should return "add" when marker-comp-op is "plus"', () => {
       const c3ss = Utils.getShader('#layer {  marker-comp-op: plus; }');
       expect(getBlending(c3ss)).to.equal('add');
