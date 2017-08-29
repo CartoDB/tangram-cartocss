@@ -12,13 +12,13 @@
 /*
 	EXTERNAL DEPENDENCIES
  */
-import {compose, pickBy, not, isNil, applySpec, merge, mergeWith} from 'ramda';
+import { compose, pickBy, not, isNil, applySpec, merge, mergeWith } from 'ramda';
 
 /*
 	INTERNAL DEPENDENCIES
  */
 
-import { getPropertyOrDefFn, getBlendFn, getPropertyFnSafe, getEitherProp, getColorFn, getProp } from '../utils/reference-helpers';
+import { getPropertyOrDefFn, getPropertyFnSafe, getEitherProp, getColorFn, getProp } from '../utils/reference-helpers';
 import { buildCCSSFn } from '../utils/utils';
 import TangramReference from '../utils/reference';
 
@@ -47,7 +47,7 @@ const getOutlineColor = getColorFn(
 );
 
 const getColors = compose(
-  pickBy(compose(not,isNil)),
+  pickBy(compose(not, isNil)),
   applySpec({
     color: getColor,
     outline: {
@@ -105,7 +105,40 @@ export function getCollide(c3ss) {
   return !allowOverlap;
 }
 
-const getBlending = getBlendFn(PR);
+/**
+ * Helper function used to translate mapnik comp-ops to tangram.
+ */
+function _transpileCompOp(propertyName) {
+  switch (propertyName) {
+    case 'src-over':
+      return 'overlay';
+    case 'multiply':
+      return 'multiply';
+    case 'plus':
+      return 'add';
+    default:
+      throw new Error('Invalid marker-comp-op value: ' + propertyName);
+  }
+}
+
+/**
+ * Get the blending mode for the marker.
+ * @param {*} c3ss compiled cartocss.
+ * @return {string} Tangram render mode:
+ */
+export function getBlending(c3ss) {
+  let defaultValue = PR['comp-op']['default-value'];
+  let compOp = c3ss['marker-comp-op'];
+  if (!compOp) {
+    return _transpileCompOp(defaultValue);
+  }
+  // We dont support filtered marker-comp-op
+  if (compOp.filtered) {
+    throw new Error('marker-comp-op is not supported inside filters');
+  }
+  // Since this property is not-dynamic must be evaluated.
+  return _transpileCompOp(compOp.style({}, { zoom: 10 }));
+}
 
 /**
  * Basic point
@@ -120,20 +153,20 @@ export default Point;
  * @param  {object} c3ss compiled carto @class
  * @return {object}      object with the draw types and their properties
  */
-Point.getDraw = function(c3ss, id) {
-	var point = {},
-      draw = {};
+Point.getDraw = function (c3ss, id) {
+  var point = {},
+    draw = {};
 
-	if (checkMarkerSym(c3ss)) {
+  if (checkMarkerSym(c3ss)) {
 
-		point = mergeWith(
-        merge,
-				getWidths(c3ss),
-				getColors(c3ss)
-			);
+    point = mergeWith(
+      merge,
+      getWidths(c3ss),
+      getColors(c3ss)
+    );
 
     point.collide = getCollide(c3ss);
-	}
+  }
   point.order = 0;
   draw['points_' + id] = point;
 
@@ -146,7 +179,7 @@ Point.getDraw = function(c3ss, id) {
  * @param  {[type]} c3ss  [description]
  * @return {[type]}       [description]
  */
-Point.getStyle = function(c3ss, id, ord) {
+Point.getStyle = function (c3ss, id, ord) {
   let style = {};
   style['points_' + id] = {
     base: 'points',
@@ -154,10 +187,10 @@ Point.getStyle = function(c3ss, id, ord) {
     blend_order: ord || 1
   };
 
-	if (checkMarkerSym(c3ss)) {
+  if (checkMarkerSym(c3ss)) {
     let p = style['points_' + id];
     p.blend = getBlending(c3ss);
-	}
+  }
 
-	return style;
+  return style;
 };
