@@ -44,6 +44,7 @@ function getOverridedColorFromLiteral(yamlDrawGroup, colorLiteral, isFill) {
         } else {
             const c = color.unmarshall(colorLiteral, tangramReference);
             return wrapFn('return \'rgba(' + c.r + ',' + c.g + ',' + c.b + ',\'+' + opacity + '()+\')\';');
+            return wrapFn(`return \'rgba(${c.r},${c.g},${c.b},${opacity}());`);            
         }
     } else {
         return colorLiteral;
@@ -159,7 +160,7 @@ function layerToYAML(layer, layerOrder = 0) {
         styles: {},
         textures: {}
     };
-    console.log('\nlayerToYAML:\n', JSON.stringify(layer, null, 4));
+    //console.log('\nlayerToYAML:\n', JSON.stringify(layer, null, 4));
     {//TODO: for each symbolizer
         //Add draw group
         yaml.filter = getFilterFn(layer, 'markers');
@@ -178,15 +179,16 @@ function layerToYAML(layer, layerOrder = 0) {
         defProperty(yaml.draw.points, layer, 'marker-line-color', 'outline:color');
         defProperty(yaml.draw.points, layer, 'marker-line-width', 'outline:width');
 
-        //delete yaml.draw.points._hidden;
+        delete yaml.draw.points._hidden;
     }
     return yaml;
 }
 module.exports.layerToYAML = layerToYAML;
 
+/*
 
-
-const exampleCCSS = `
+const exampleCCSS = '#layer{}';
+`
 #layer {
   marker-fill: #ffa000;
   marker-width: 30px;
@@ -262,3 +264,5 @@ const CartoCSSRenderer = new Carto.RendererJS({
 });
 
 console.log('\nlayerToYAML:\n', JSON.stringify(layerToYAML(CartoCSSRenderer.render(exampleCCSS).getLayers()[0]), null, 4));
+
+*/
