@@ -1,91 +1,17 @@
 {
-  "name": "tangram-cartocss",
-  "version": "0.6.0",
-  "description": "Transform cartocss into a draw tangram object.",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/cartodb/tangram-cartocss.git"
-  },
-  "main": "dist/tangram-cartocss.debug.js",
-  "homepage": "https://github.com/cartodb/tangram-cartocss",
-  "keywords": [
-    "maps",
-    "graphics",
-    "rendering",
-    "visualization",
-    "WebGL",
-    "OpenStreetMap",
-    "cartocss",
-    "carto",
-    "yaml"
-  ],
-  "scripts": {
-    "start": "npm run watch",
-    "test": "npm run build-debug && npm run test-local && npm run lint",
-    "test-ci": "npm run lint && npm run build-debug && npm run test-remote",
-    "test-remote": "./node_modules/karma/bin/karma start --browsers Chrome_travis_ci --single-run",
-    "test-local": "./node_modules/karma/bin/karma start --browsers Chrome --single-run",
-    "test-local-debug": "./node_modules/karma/bin/karma start --browsers Chrome --single-run=false --debug",
-    "karma-start": "./node_modules/karma/bin/karma start --browsers Chrome --no-watch",
-    "karma-run": "./node_modules/karma/bin/karma run --browsers Chrome",
-    "lint": "$(npm bin)/jshint src/ && jshint test/",
-    "build-debug": "$(npm bin)/webpack -d",
-    "build": "npm run build-debug && npm run build-minify",
-    "build-minify": "$(npm bin)/uglifyjs dist/tangram-cartocss.debug.js -c warnings=false -m -o dist/tangram-cartocss.min.js && npm run build-size",
-    "build-size": "gzip dist/tangram-cartocss.min.js -c | wc -c | awk '{kb=$1/1024; print kb}' OFMT='%.0fk minified+gzipped'",
-    "watch": "$(npm bin)/webpack-dev-server -d --inline demos/main.js"
-  },
-  "author": {
-    "name": "Carto",
-    "email": "support@carto.com"
-  },
-  "contributors": [
-    {
-      "name": "Francisco López",
-      "email": "donflopez@gmail.com"
-    }
-  ],
-  "license": "MIT",
+  "name": "tc2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
   "dependencies": {
-    "babel-preset-env": "^1.4.0",
-    "babel-runtime": "6.23.0",
-    "carto": "cartodb/carto#master",
-    "md5": "2.2.1",
-    "ramda": "^0.23.0",
-    "tangram-reference": "^1.0.18"
+    "carto": "github:cartodb/carto#master",
+    "tangram-reference": "github:cartodb/tangram-reference#master"   
   },
-  "devDependencies": {
-    "babel-core": "^6.24.1",
-    "babel-loader": "^6.4.1",
-    "babel-plugin-istanbul": "^4.1.1",
-    "babel-plugin-ramda": "^1.2.0",
-    "babel-plugin-transform-runtime": "6.23.0",
-    "babel-polyfill": "^6.23.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "babelify": "7.3.0",
-    "brfs": "^1.4.3",
-    "budo": "9.4.5",
-    "chai": "3.5.0",
-    "chai-as-promised": "6.0.0",
-    "docdown": "^0.7.2",
-    "glob": "7.1.1",
-    "jshint": "2.9.4",
-    "karma": "1.6.0",
-    "karma-browserify": "5.1.1",
-    "karma-chrome-launcher": "2.0.0",
-    "karma-coverage": "^1.1.1",
-    "karma-mocha": "1.3.0",
-    "karma-mocha-reporter": "2.2.3",
-    "karma-sauce-launcher": "tangrams/karma-sauce-launcher#firefox-profiles",
-    "karma-sinon": "1.0.5",
-    "mocha": "3.2.0",
-    "sinon": "1.17.6",
-    "tangram": "tangrams/tangram#master",
-    "uglify-js": "2.7.5",
-    "vue": "^2.1.3",
-    "webpack": "^2.4.1",
-    "webpack-dev-server": "^2.4.2",
-    "yargs": "6.6.0"
-  }
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
