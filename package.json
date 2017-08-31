@@ -2,7 +2,7 @@
   "name": "tc2",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "src/index.js",
   "dependencies": {
     "carto": "github:cartodb/carto#master",
     "eslint-config-standard": "^10.2.1",
@@ -19,6 +19,8 @@
   },
   "scripts": {
     "test": "mocha",
+    "tdd": "mocha -w",
+    "test:watch": "mocha -w",
     "lint": "$(npm bin)/eslint src test"
   },
   "keywords": [],
