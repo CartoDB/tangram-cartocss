@@ -1,19 +1,45 @@
 {
-  "name": "tc2",
+  "name": "tangram-cartocss",
   "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
+  "description": "Transform cartocss into a draw tangram object.",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cartodb/tangram-cartocss.git"
+  },
   "dependencies": {
     "carto": "github:cartodb/carto#master",
     "tangram-reference": "github:cartodb/tangram-reference#inconsistency-fix"
   },
   "devDependencies": {
+    "jshint": "^2.9.5",
     "mocha": "^3.5.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "test:watch": "mocha -w",
+    "lint": "$(npm bin)/jshint src/ test/"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "keywords": [
+    "maps",
+    "graphics",
+    "rendering",
+    "visualization",
+    "WebGL",
+    "OpenStreetMap",
+    "cartocss",
+    "carto",
+    "yaml"
+  ],
+  "author": {
+    "name": "CARTO",
+    "email": "support@carto.com"
+  },
+  "contributors": [
+    {
+      "name": "Francisco López",
+      "email": "donflopez@gmail.com"
+    }
+  ],
+  "license": "BSD-3-Clause"
 }
