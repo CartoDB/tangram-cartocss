@@ -46,8 +46,7 @@ function getOverridedColorFromLiteral(yamlDrawGroup, colorLiteral, isFill) {
             return color.marshall(c);
         } else {
             const c = color.unmarshall(colorLiteral, tangramReference);
-            return wrapFn('return \'rgba(' + c.r + ',' + c.g + ',' + c.b + ',\'+' + opacity + '()+\')\';');
-            return wrapFn(`return \'rgba(${c.r},${c.g},${c.b},${opacity}());`);
+            return wrapFn(`return 'rgba(${c.r},${c.g},${c.b},'+${opacity}()+')';`);
         }
     } else {
         return color.marshall(c);
