@@ -232,8 +232,8 @@ function layerToYAML(layer, layerOrder) {
         textures: {}
     };
     //TODO: what to do if multiple symbolizers are active for the same layer??
-    const drawGroupName = "drawGroup" + layerOrder;
-    const styleName = "style" + layerOrder;
+    const drawGroupName = `drawGroup${layerOrder}`;
+    const styleName = `style${layerOrder}`;
     processPoints(yaml, layer, drawGroupName);
     processLines(yaml, layer, drawGroupName);
     processPolys(yaml, layer, drawGroupName);
