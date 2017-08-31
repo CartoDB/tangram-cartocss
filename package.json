@@ -11,7 +11,9 @@
     "mocha": "^3.5.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "test:watch": "mocha -w",
+    "lint": "$(npm bin)/jshint src/ test/"
   },
   "keywords": [],
   "author": "",
