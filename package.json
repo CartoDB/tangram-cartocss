@@ -12,6 +12,7 @@
     "tangram-reference": "github:cartodb/tangram-reference#inconsistency-fix"
   },
   "devDependencies": {
+    "jshint": "^2.9.5",
     "mocha": "^3.5.0"
   },
   "scripts": {
