@@ -42,4 +42,10 @@ describe('Markers', function () {
             });
         });
     });
+    it('should be empty when symbolizer is not active', function(){
+        const ccss='#layer{}';
+        const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0]);
+        console.log(output);
+        assert.ok(output.draw.points===undefined);
+    });
 });

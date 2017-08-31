@@ -154,15 +154,8 @@ function getFilterFn(layer, symbolizer) {
     return wrapFn(fn);
 }
 
-function layerToYAML(layer, layerOrder = 0) {
-    var yaml = {
-        draw: {},
-        styles: {},
-        textures: {}
-    };
-    //console.log('\nlayerToYAML:\n', JSON.stringify(layer, null, 4));
-    {//TODO: for each symbolizer
-        //Add draw group
+function processPoints(yaml, layer) {
+    if (layer.shader.symbolizers.indexOf('markers') >= 0) {
         yaml.filter = getFilterFn(layer, 'markers');
 
         yaml.draw.points = { _hidden: {} };
@@ -181,6 +174,18 @@ function layerToYAML(layer, layerOrder = 0) {
 
         delete yaml.draw.points._hidden;
     }
+}
+
+function layerToYAML(layer, layerOrder = 0) {
+    var yaml = {
+        draw: {},
+        styles: {},
+        textures: {}
+    };
+    //console.log('\nlayerToYAML:\n', JSON.stringify(layer, null, 4));
+    //TODO: for each symbolizer
+    processPoints(yaml, layer);
+
     return yaml;
 }
 module.exports.layerToYAML = layerToYAML;
