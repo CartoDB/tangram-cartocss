@@ -22,7 +22,10 @@ function getReferenceDefault(property) {
     return referenceCSS[property]['default-value'];
 }
 function getLiteralFromShaderValue(shaderValue) {
+    // jshint ignore:start
+    // required within the eval context
     const ctx = { zoom: 10 };
+    // jshint ignore:end
     var _value = null;
     shaderValue.js.forEach(function (code) {
         eval(code);
