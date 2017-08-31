@@ -35,9 +35,9 @@ module.exports = [
             outlineColor: 'rgba(0,0,0,0.5)',
             outlineSize: getReferenceDefaultMarkerValue('stroke-width')
         }
-    }
+    },
 
-    ,
+
     {
         name: 'color literal, opacity callback',
         ccss: `
@@ -59,8 +59,8 @@ module.exports = [
             outlineColor: 'rgba(0,0,0,0.5)',
             outlineSize: getReferenceDefaultMarkerValue('stroke-width')
         }
-    }
-    ,
+    },
+
     {
         name: 'color literal, opacity callback',
         ccss: `
@@ -82,9 +82,9 @@ module.exports = [
             outlineColor: 'rgba(0,0,0,0.1)',
             outlineSize: getReferenceDefaultMarkerValue('stroke-width')
         }
-    }
+    },
 
-    ,
+
     {
         name: 'color callback, opacity literal',
         ccss: `
@@ -128,9 +128,9 @@ module.exports = [
             outlineColor: 'rgba(0,0,0,0.5)',
             outlineSize: getReferenceDefaultMarkerValue('stroke-width')
         }
-    }
+    },
 
-    ,
+
     {
         name: 'color callback, opacity callback',
         ccss: `
@@ -155,9 +155,9 @@ module.exports = [
             outlineColor: 'rgba(0,0,0,0.5)',
             outlineSize: getReferenceDefaultMarkerValue('stroke-width')
         }
-    }
+    },
 
-    ,
+
     {
         name: 'marker-line-opacity',
         ccss: `
@@ -173,8 +173,7 @@ module.exports = [
             outlineColor: 'rgba(0,0,0,0.2)',
             outlineSize: getReferenceDefaultMarkerValue('stroke-width')
         }
-    }
-    ,
+    },
     {
         name: 'marker-fill-opacity',
         ccss: `
@@ -230,8 +229,7 @@ module.exports = [
             outlineColor: 'rgba(0,0,0,0.7)',
             outlineSize: getReferenceDefaultMarkerValue('stroke-width')
         }
-    }
-    ,
+    },
     {
         name: 'additive blending',
         ccss: `

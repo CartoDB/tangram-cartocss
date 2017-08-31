@@ -30,6 +30,20 @@ function getLiteralFromShaderValue(shaderValue) {
     return _value;
 }
 
+//Returns the final opacity override selecting between fill-opacity and outline-opacity.
+//Returned value can be a float or a function string to be called at Tangram's runtime if the override is active
+//A falseable value will be returned if the override is not active
+function getOpacityOverride(yamlDrawGroup, isFill) {
+    var opacity;
+    if (isFill) {
+        opacity = yamlDrawGroup._hidden['opacity:fill'];
+    } else {
+        opacity = yamlDrawGroup._hidden['opacity:outline'];
+    }
+    opacity = yamlDrawGroup._hidden['opacity:general'] || opacity;
+    return opacity;
+}
+
 function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
@@ -107,20 +121,6 @@ function setYAMLProperty(yamlDrawGroup, tangramName, value) {
     } else {
         yamlDrawGroup[tangramName] = value;
     }
-}
-
-//Returns the final opacity override selecting between fill-opacity and outline-opacity.
-//Returned value can be a float or a function string to be called at Tangram's runtime if the override is active
-//A falseable value will be returned if the override is not active
-function getOpacityOverride(yamlDrawGroup, isFill) {
-    var opacity;
-    if (isFill) {
-        opacity = yamlDrawGroup._hidden['opacity:fill'];
-    } else {
-        opacity = yamlDrawGroup._hidden['opacity:outline'];
-    }
-    opacity = yamlDrawGroup._hidden['opacity:general'] || opacity;
-    return opacity;
 }
 
 //Define a YAML draw style property originally contained in layer, named ccssName (in referenceCSS), with the related tangramName
