@@ -8,6 +8,7 @@ dist/tangram-cartocss.test-worker.js
 # a make target for npm install
 .npm
 .vscode
+npm-debug.log
 yarn.lock
 
 # OS misc
