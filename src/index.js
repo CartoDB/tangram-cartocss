@@ -155,86 +155,104 @@ function getFilterFn(layer, symbolizer) {
     return wrapFn(`var _value = null; ${fn} return _value !== null;`);
 }
 
-function processPoints(yaml, layer) {
+function processPoints(yaml, layer, drawGroupName) {
     if (layer.shader.symbolizers.indexOf('markers') >= 0) {
         yaml.filter = getFilterFn(layer, 'markers');
 
-        yaml.draw.points = { _hidden: {} };
+        yaml.draw[drawGroupName] = { _hidden: {} };
+        const drawGroup = yaml.draw[drawGroupName];
         //for each yaml property
         //opacity *must* be processed first
-        defProperty(yaml.draw.points, layer, 'marker-opacity', 'opacity:general');
-        defProperty(yaml.draw.points, layer, 'marker-line-opacity', 'opacity:outline');
-        defProperty(yaml.draw.points, layer, 'marker-fill-opacity', 'opacity:fill');
+        defProperty(drawGroup, layer, 'marker-opacity', 'opacity:general');
+        defProperty(drawGroup, layer, 'marker-line-opacity', 'opacity:outline');
+        defProperty(drawGroup, layer, 'marker-fill-opacity', 'opacity:fill');
 
-        defProperty(yaml.draw.points, layer, 'marker-fill', 'color');
-        defProperty(yaml.draw.points, layer, 'marker-allow-overlap', 'collide');
-        defProperty(yaml.draw.points, layer, 'marker-width', 'size');
-        defProperty(yaml.draw.points, layer, 'marker-comp-op', 'blend');
-        defProperty(yaml.draw.points, layer, 'marker-line-color', 'outline:color');
-        defProperty(yaml.draw.points, layer, 'marker-line-width', 'outline:width');
+        defProperty(drawGroup, layer, 'marker-fill', 'color');
+        defProperty(drawGroup, layer, 'marker-allow-overlap', 'collide');
+        defProperty(drawGroup, layer, 'marker-width', 'size');
+        defProperty(drawGroup, layer, 'marker-comp-op', 'blend');
+        defProperty(drawGroup, layer, 'marker-line-color', 'outline:color');
+        defProperty(drawGroup, layer, 'marker-line-width', 'outline:width');
 
-        delete yaml.draw.points._hidden;
+        delete drawGroup._hidden;
     }
 }
 
-function processLines(yaml, layer) {
+function processLines(yaml, layer, drawGroupName) {
     if (layer.shader.symbolizers.indexOf('line') >= 0) {
         yaml.filter = getFilterFn(layer, 'line');
 
-        yaml.draw.lines = { _hidden: {} };
+        yaml.draw[drawGroupName] = { _hidden: {} };
+        const drawGroup = yaml.draw[drawGroupName];
         //for each yaml property
         //opacity *must* be processed first
-        defProperty(yaml.draw.lines, layer, 'line-opacity', 'opacity:general');
+        defProperty(drawGroup, layer, 'line-opacity', 'opacity:general');
 
-        defProperty(yaml.draw.lines, layer, 'line-color', 'color');
-        defProperty(yaml.draw.lines, layer, 'line-width', 'width');
-        defProperty(yaml.draw.lines, layer, 'line-join', 'join');
-        defProperty(yaml.draw.lines, layer, 'line-cap', 'cap');
-        defProperty(yaml.draw.lines, layer, 'line-comp-op', 'blend');
-        //line-dasharray???
-        delete yaml.draw.lines._hidden;
+        defProperty(drawGroup, layer, 'line-color', 'color');
+        defProperty(drawGroup, layer, 'line-width', 'width');
+        defProperty(drawGroup, layer, 'line-join', 'join');
+        defProperty(drawGroup, layer, 'line-cap', 'cap');
+        defProperty(drawGroup, layer, 'line-comp-op', 'blend');
+        //TODO line-dasharray???
+        delete drawGroup._hidden;
     }
 }
 
-function processPolys(yaml, layer) {
+function processPolys(yaml, layer, drawGroupName) {
     if (layer.shader.symbolizers.indexOf('polygon') >= 0) {
         yaml.filter = getFilterFn(layer, 'polygon');
 
-        yaml.draw.polygons = { _hidden: {} };
+        yaml.draw[drawGroupName] = { _hidden: {} };
+        const drawGroup = yaml.draw[drawGroupName];
         //for each yaml property
         //opacity *must* be processed first
-        defProperty(yaml.draw.polygons, layer, 'polygon-opacity', 'opacity:general');
+        defProperty(drawGroup, layer, 'polygon-opacity', 'opacity:general');
 
-        defProperty(yaml.draw.polygons, layer, 'polygon-fill', 'color');
-        defProperty(yaml.draw.polygons, layer, 'polygon-comp-op', 'blend');
+        defProperty(drawGroup, layer, 'polygon-fill', 'color');
+        defProperty(drawGroup, layer, 'polygon-comp-op', 'blend');
 
-        delete yaml.draw.polygons._hidden;
+        delete drawGroup._hidden;
     }
 }
 
-function layerToYAML(layer, layerOrder = 0) {
+function processStyle(yaml, drawGroupName, styleName, layerOrder) {
+    if (yaml.draw[drawGroupName]) {
+        yaml.styles[styleName] = {
+            blend: yaml.draw[drawGroupName].blend,
+            blend_order: layerOrder
+        };
+        delete yaml.draw[drawGroupName].blend;
+    }
+}
+
+function layerToYAML(layer, layerOrder) {
     var yaml = {
         draw: {},
         styles: {},
         textures: {}
     };
     //TODO: what to do if multiple symbolizers are active for the same layer??
-    //console.log('\nlayerToYAML:\n', JSON.stringify(layer, null, 4));
-    processPoints(yaml, layer);
-    processLines(yaml, layer);
-    processPolys(yaml, layer);
+    const drawGroupName = "drawGroup" + layerOrder;
+    const styleName = "style" + layerOrder;
+    processPoints(yaml, layer, drawGroupName);
+    processLines(yaml, layer, drawGroupName);
+    processPolys(yaml, layer, drawGroupName);
+
+    processStyle(yaml, drawGroupName, styleName, layerOrder);
     return yaml;
 }
 module.exports.layerToYAML = layerToYAML;
+module.exports.carto2Draw = layerToYAML;
 
 
 /*
+//Usage example
 const Carto = require('carto');
 const CartoCSSRenderer = new Carto.RendererJS({
     reference: tangramReference,
     strict: true
 });
-const css=`#layer {
+const css = `#layer {
     polygon-fill: #374c70;
     polygon-opacity: 0.5;
   }
@@ -243,8 +261,11 @@ const css=`#layer {
     line-color: #FFF;
     line-opacity: 0.5;
   }`;
-  const layers=CartoCSSRenderer.render(css).getLayers();
-  console.log(layers[0]);
-  console.log(layers[1]);
+const layers = CartoCSSRenderer.render(css).getLayers();
+console.log(layers[0]);
+console.log(layers[1]);
 
+console.log('YAML');
+console.log('\nlayerToYAML:\n', JSON.stringify(layerToYAML(layers[0], 0), null, 4));
+console.log('\nlayerToYAML:\n', JSON.stringify(layerToYAML(layers[1], 1), null, 4));
 */
