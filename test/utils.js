@@ -3,6 +3,9 @@ const tangramReference = require('tangram-reference').load();
 function getReferenceDefaultMarkerValue(propertyName) {
     return tangramReference.symbolizers.markers[propertyName]['default-value'];
 }
+function getReferenceDefaultLineValue(propertyName) {
+    return tangramReference.symbolizers.line[propertyName]['default-value'];
+}
 function getReferenceDefaultPolygonValue(propertyName) {
     return tangramReference.symbolizers.polygon[propertyName]['default-value'];
 }
@@ -22,6 +25,7 @@ function evalIfNeeded(yamlProperty, feature) {
 
 module.exports = {
     getReferenceDefaultPolygonValue,
+    getReferenceDefaultLineValue,
     getReferenceDefaultMarkerValue,
     evalFunctionString,
     evalIfNeeded,

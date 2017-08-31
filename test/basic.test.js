@@ -10,7 +10,7 @@ const color = require('../src/color.js');
 
 const tangram_carto = require('../src/index.js');
 const scenarios = require('./scenarios.js');
-const { evalIfNeeded, getReferenceDefaultPolygonValue } = require('./utils.js');
+const { evalIfNeeded, getReferenceDefaultLineValue, getReferenceDefaultPolygonValue } = require('./utils.js');
 
 describe('Markers', function () {
     scenarios.forEach(function (scenario) {
@@ -77,4 +77,56 @@ it('polygon all defined', function () {
 
     assert.strictEqual(evalIfNeeded(output.draw.polygons.blend),
         'overlay');
+});
+
+
+it('line default', function () {
+    const ccss = `
+    #layer {
+      line-opacity: 1;
+    }
+    `;
+    const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0]);
+    assert.strictEqual(evalIfNeeded(output.draw.lines.color),
+        color.normalize(getReferenceDefaultLineValue('stroke')));
+
+    assert.strictEqual(evalIfNeeded(output.draw.lines.width),
+        getReferenceDefaultLineValue('stroke-width'));
+
+    assert.strictEqual(evalIfNeeded(output.draw.lines.join),
+        getReferenceDefaultLineValue('stroke-linejoin'));
+
+    assert.strictEqual(evalIfNeeded(output.draw.lines.cap),
+        getReferenceDefaultLineValue('stroke-linecap'));
+
+    assert.strictEqual(evalIfNeeded(output.draw.lines.blend),
+        'overlay');
+});
+it('line all defined', function () {
+    const ccss = `
+    #layer {
+        line-color: red;
+        line-width: 0.1;
+        line-opacity: 0.2;
+        line-join: round;
+        line-cap: square;
+        line-comp-op: plus;
+    }
+    `;
+    const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0]);
+
+    assert.strictEqual(evalIfNeeded(output.draw.lines.color),
+        'rgba(255,0,0,0.2)');
+
+    assert.strictEqual(evalIfNeeded(output.draw.lines.width),
+        0.1);
+
+    assert.strictEqual(evalIfNeeded(output.draw.lines.join),
+        'round');
+
+    assert.strictEqual(evalIfNeeded(output.draw.lines.cap),
+        'square');
+
+    assert.strictEqual(evalIfNeeded(output.draw.lines.blend),
+        'add');
 });

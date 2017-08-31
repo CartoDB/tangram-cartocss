@@ -107,6 +107,7 @@ function translateValue(yamlDrawGroup, ccssProperty, ccssValue) {
     if (referenceCSS[ccssProperty].type === 'color') {
         return getOverridedColorFromLiteral(yamlDrawGroup, ccssValue, ccssProperty.indexOf('fill') >= 0);
     }
+    //TODO tangram probably expects width and size in a different unit
     return ccssValue;
 }
 
@@ -176,6 +177,25 @@ function processPoints(yaml, layer) {
     }
 }
 
+function processLines(yaml, layer) {
+    if (layer.shader.symbolizers.indexOf('line') >= 0) {
+        yaml.filter = getFilterFn(layer, 'line');
+
+        yaml.draw.lines = { _hidden: {} };
+        //for each yaml property
+        //opacity *must* be processed first
+        defProperty(yaml.draw.lines, layer, 'line-opacity', 'opacity:general');
+
+        defProperty(yaml.draw.lines, layer, 'line-color', 'color');
+        defProperty(yaml.draw.lines, layer, 'line-width', 'width');
+        defProperty(yaml.draw.lines, layer, 'line-join', 'join');
+        defProperty(yaml.draw.lines, layer, 'line-cap', 'cap');
+        defProperty(yaml.draw.lines, layer, 'line-comp-op', 'blend');
+        //line-dasharray???
+        delete yaml.draw.lines._hidden;
+    }
+}
+
 function processPolys(yaml, layer) {
     if (layer.shader.symbolizers.indexOf('polygon') >= 0) {
         yaml.filter = getFilterFn(layer, 'polygon');
@@ -192,7 +212,6 @@ function processPolys(yaml, layer) {
     }
 }
 
-
 function layerToYAML(layer, layerOrder = 0) {
     var yaml = {
         draw: {},
@@ -202,6 +221,7 @@ function layerToYAML(layer, layerOrder = 0) {
     //TODO: what to do if multiple symbolizers are active for the same layer??
     //console.log('\nlayerToYAML:\n', JSON.stringify(layer, null, 4));
     processPoints(yaml, layer);
+    processLines(yaml, layer);
     processPolys(yaml, layer);
     return yaml;
 }
