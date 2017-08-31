@@ -7,7 +7,7 @@ const CartoCSSRenderer = new Carto.RendererJS({
     strict: true
 });
 
-const tangram_carto = require('../main.js');
+const tangram_carto = require('../src/index.js');
 
 function getReferenceDefaultMarkerValue(propertyName) {
     return tangramReference.symbolizers.markers[propertyName]['default-value'];
