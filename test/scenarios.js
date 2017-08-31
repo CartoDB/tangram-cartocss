@@ -17,7 +17,6 @@ module.exports = [
             outlineSize: getReferenceDefaultMarkerValue('stroke-width')
         }
     },
-
     {
         name: 'color literal, opacity literal',
         ccss: `
@@ -36,8 +35,6 @@ module.exports = [
             outlineSize: getReferenceDefaultMarkerValue('stroke-width')
         }
     },
-
-
     {
         name: 'color literal, opacity callback',
         ccss: `
@@ -60,7 +57,6 @@ module.exports = [
             outlineSize: getReferenceDefaultMarkerValue('stroke-width')
         }
     },
-
     {
         name: 'color literal, opacity callback',
         ccss: `
@@ -83,8 +79,6 @@ module.exports = [
             outlineSize: getReferenceDefaultMarkerValue('stroke-width')
         }
     },
-
-
     {
         name: 'color callback, opacity literal',
         ccss: `
@@ -129,8 +123,6 @@ module.exports = [
             outlineSize: getReferenceDefaultMarkerValue('stroke-width')
         }
     },
-
-
     {
         name: 'color callback, opacity callback',
         ccss: `
@@ -156,8 +148,6 @@ module.exports = [
             outlineSize: getReferenceDefaultMarkerValue('stroke-width')
         }
     },
-
-
     {
         name: 'marker-line-opacity',
         ccss: `

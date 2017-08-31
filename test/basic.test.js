@@ -124,7 +124,7 @@ it('line all defined', function () {
     }
     `;
     const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
-    console.log(output)
+
     assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.color),
         'rgba(255,0,0,0.2)');
 
