@@ -2,7 +2,7 @@
 //rgba() format use the following ranges: [0-255] for RGB and [0-1] for the alpha channel
 
 function marshall(color) {
-    return 'rgba(' + color.r + ',' + color.g + ',' + color.b + ',' + color.a + ')';
+    return 'rgba(' + Math.round(color.r) + ',' + Math.round(color.g) + ',' + Math.round(color.b) + ',' + color.a + ')';
 }
 module.exports.marshall = marshall;
 
@@ -21,6 +21,7 @@ function unmarshall(color, reference = null) {
         result.r = parseInt(rgb[0]);
         result.g = parseInt(rgb[1]);
         result.b = parseInt(rgb[2]);
+        result.a = 1;
     } else if (color.startsWith('rgba(')) {
         var rgba = color.slice(5,-1).split(',');
         result.r = parseInt(rgba[0]);

@@ -219,10 +219,24 @@ module.exports = [
             outlineColor: 'rgba(0,0,0,0.7)',
             outlineSize: getReferenceDefaultMarkerValue('stroke-width')
         }
+    },
+    {
+        name: 'additive blending',
+        ccss: `
+          #layer{
+            marker-comp-op: plus;
+        }
+          `,
+        feature: { a: 3 },
+        expected: {
+            color: getReferenceDefaultMarkerValue('fill'),
+            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            size: getReferenceDefaultMarkerValue('width'),
+            blend: 'add',
+            outlineColor: getReferenceDefaultMarkerValue('stroke'),
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+        }
     }
-    //TODO Test plus (blending)
+    //TODO Test complex case
 
-    //TODO Test unsupported
-
-    //TODO Test complex
 ];

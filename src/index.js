@@ -21,6 +21,7 @@ function wrapFn(functionBody) {
 function getReferenceDefault(property) {
     return referenceCSS[property]['default-value'];
 }
+
 function getLiteralFromShaderValue(shaderValue) {
     // jshint ignore:start
     // required within the eval context
@@ -71,7 +72,7 @@ function getOverrideCode(yamlDrawGroup, isFill) {
     const opacity = getOpacityOverride(yamlDrawGroup, isFill);
     if (opacity) {
         if (isNumeric(opacity)) {
-            return 'var c=' + color.unmarshall.toString() + '(_value);c.a=' + opacity + ';_value=' + color.marshall.toString() + '(c);';
+            return `var c=${color.unmarshall.toString()}(_value);c.a=${opacity};_value=${color.marshall.toString()}(c);`;
         } else {
             return `var opacity=${opacity}(); var c=${color.unmarshall.toString()}(_value);c.a=opacity;_value=${color.marshall.toString()}(c);`;
         }
@@ -82,7 +83,7 @@ function getOverrideCode(yamlDrawGroup, isFill) {
 
 //Returns a function string that sets the value to the default one and then executes the shader value code
 function getFunctionFromDefaultAndShaderValue(yamlDrawGroup, ccssProperty, defaultValue, shaderValue) {
-    var fn = 'var _value=\'' + defaultValue + '\';';
+    var fn = `var _value='${defaultValue}';`;
     shaderValue.js.forEach(function (code) {
         fn += code;
     });
@@ -109,6 +110,7 @@ function translateValue(yamlDrawGroup, ccssProperty, ccssValue) {
     if (referenceCSS[ccssProperty].type === 'color') {
         return getOverridedColorFromLiteral(yamlDrawGroup, ccssValue, ccssProperty.indexOf('fill') >= 0);
     }
+    //TODO tangram probably expects width and size in a different unit
     return ccssValue;
 }
 
@@ -156,15 +158,8 @@ function getFilterFn(layer, symbolizer) {
     return wrapFn(fn);
 }
 
-function layerToYAML(layer, layerOrder = 0) {
-    var yaml = {
-        draw: {},
-        styles: {},
-        textures: {}
-    };
-    //console.log('\nlayerToYAML:\n', JSON.stringify(layer, null, 4));
-    {//TODO: for each symbolizer
-        //Add draw group
+function processPoints(yaml, layer) {
+    if (layer.shader.symbolizers.indexOf('markers') >= 0) {
         yaml.filter = getFilterFn(layer, 'markers');
 
         yaml.draw.points = { _hidden: {} };
@@ -183,88 +178,76 @@ function layerToYAML(layer, layerOrder = 0) {
 
         delete yaml.draw.points._hidden;
     }
+}
+
+function processLines(yaml, layer) {
+    if (layer.shader.symbolizers.indexOf('line') >= 0) {
+        yaml.filter = getFilterFn(layer, 'line');
+
+        yaml.draw.lines = { _hidden: {} };
+        //for each yaml property
+        //opacity *must* be processed first
+        defProperty(yaml.draw.lines, layer, 'line-opacity', 'opacity:general');
+
+        defProperty(yaml.draw.lines, layer, 'line-color', 'color');
+        defProperty(yaml.draw.lines, layer, 'line-width', 'width');
+        defProperty(yaml.draw.lines, layer, 'line-join', 'join');
+        defProperty(yaml.draw.lines, layer, 'line-cap', 'cap');
+        defProperty(yaml.draw.lines, layer, 'line-comp-op', 'blend');
+        //line-dasharray???
+        delete yaml.draw.lines._hidden;
+    }
+}
+
+function processPolys(yaml, layer) {
+    if (layer.shader.symbolizers.indexOf('polygon') >= 0) {
+        yaml.filter = getFilterFn(layer, 'polygon');
+
+        yaml.draw.polygons = { _hidden: {} };
+        //for each yaml property
+        //opacity *must* be processed first
+        defProperty(yaml.draw.polygons, layer, 'polygon-opacity', 'opacity:general');
+
+        defProperty(yaml.draw.polygons, layer, 'polygon-fill', 'color');
+        defProperty(yaml.draw.polygons, layer, 'polygon-comp-op', 'blend');
+
+        delete yaml.draw.polygons._hidden;
+    }
+}
+
+function layerToYAML(layer, layerOrder = 0) {
+    var yaml = {
+        draw: {},
+        styles: {},
+        textures: {}
+    };
+    //TODO: what to do if multiple symbolizers are active for the same layer??
+    //console.log('\nlayerToYAML:\n', JSON.stringify(layer, null, 4));
+    processPoints(yaml, layer);
+    processLines(yaml, layer);
+    processPolys(yaml, layer);
     return yaml;
 }
 module.exports.layerToYAML = layerToYAML;
 
+
 /*
-
-const exampleCCSS = '#layer{}';
-`
-#layer {
-  marker-fill: #ffa000;
-  marker-width: 30px;
-  marker-fill-opacity: 0.5;
-  [j>4]{
-      marker-fill-opacity: 0.1;
-  }
-  [j>2]{
-    marker-fill: blue;
-  }
-}
-`;
-
-`
-#layer {
-  marker-fill: #ffa000;
-  marker-width: 30px;
-  marker-fill-opacity: 0.5;
-  [j>2]{
-    marker-fill: blue;
-  }
-}
-`;
-
-`
-#layer {
-  marker-fill: #ffa000;
-  marker-width: 30px;
-  marker-line-opacity: 0.5;
-  marker-line-width: [j];
-  marker-line-color: red;
-}`;
-
-
-`
-#layer {
-  marker-fill: #ffa000;
-  marker-width: 30px;
-  marker-line-opacity: 0.5;
-  marker-line-width: 5;
-  marker-line-color: red;
-  [j>2]{
-      marker-line-opacity: 1;
-  }
-}`;
-
-`
-#layer {
-  marker-fill: #ffa000;
-  marker-width: 30px;
-  marker-opacity: 0.5;
-}`;
-
-`
-#layer {
-  marker-fill: #ffa000;
-  marker-width: 30px;
-  marker-comp-op: src-over;
-  marker-width: 50px;
-  marker-line-color: rgba(0,1,1, 0.5);
-  [height<20] {
-    marker-fill: #bb55ff;
-  }
-  [height>20] {
-    marker-fill: #f50;
-  }
-  marker-fill: green;
-}`;
 const Carto = require('carto');
 const CartoCSSRenderer = new Carto.RendererJS({
     reference: tangramReference,
     strict: true
 });
-
-console.log('\nlayerToYAML:\n', JSON.stringify(layerToYAML(CartoCSSRenderer.render(exampleCCSS).getLayers()[0]), null, 4));
+const css=`#layer {
+    polygon-fill: #374c70;
+    polygon-opacity: 0.5;
+  }
+  #layer::outline {
+    line-width: 3.5;
+    line-color: #FFF;
+    line-opacity: 0.5;
+  }`;
+  const layers=CartoCSSRenderer.render(css).getLayers();
+  console.log(layers[0]);
+  console.log(layers[1]);
 
 */
