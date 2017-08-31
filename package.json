@@ -16,7 +16,7 @@
     "mocha": "^3.5.0"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "mocha && npm run lint",
     "test:watch": "mocha -w",
     "lint": "$(npm bin)/jshint src/ test/"
   },
