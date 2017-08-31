@@ -29,7 +29,7 @@ describe('Markers', function () {
                     assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.size, scenario.feature), expected.size);
                 });
                 it('should have blend mode: src-over, called overlay in Tangram', function () {
-                    assert.strictEqual(evalIfNeeded(output.styles.style0.blend, scenario.feature), expected.blend);
+                    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend, scenario.feature), expected.blend);
                 });
                 //TODO test blend_order
                 describe('.outline', function () {
@@ -60,10 +60,10 @@ it('polygon default', function () {
     assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.color),
         color.normalize(getReferenceDefaultPolygonValue('fill')));
 
-    assert.strictEqual(evalIfNeeded(output.styles.style0.blend),
+    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend),
         'overlay');
 
-    assert.strictEqual(evalIfNeeded(output.styles.style0.blend_order),
+    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend_order),
         0);
 });
 it('polygon all defined', function () {
@@ -79,10 +79,10 @@ it('polygon all defined', function () {
     assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.color),
         'rgba(255,0,0,0.1)');
 
-    assert.strictEqual(evalIfNeeded(output.styles.style0.blend),
+    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend),
         'overlay');
 
-    assert.strictEqual(evalIfNeeded(output.styles.style0.blend_order),
+    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend_order),
         0);
 });
 
@@ -106,10 +106,10 @@ it('line default', function () {
     assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.cap),
         getReferenceDefaultLineValue('stroke-linecap'));
 
-    assert.strictEqual(evalIfNeeded(output.styles.style0.blend),
+    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend),
         'overlay');
 
-    assert.strictEqual(evalIfNeeded(output.styles.style0.blend_order),
+    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend_order),
         0);
 });
 it('line all defined', function () {
@@ -137,10 +137,10 @@ it('line all defined', function () {
     assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.cap),
         'square');
 
-    assert.strictEqual(evalIfNeeded(output.styles.style0.blend),
+    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend),
         'add');
 
-    assert.strictEqual(evalIfNeeded(output.styles.style0.blend_order),
+    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend_order),
         0);
 });
 
