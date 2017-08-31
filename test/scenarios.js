@@ -248,4 +248,5 @@ module.exports = [
         }
     }
     //TODO Test complex case
+
 ];

@@ -3,6 +3,9 @@ const tangramReference = require('tangram-reference').load();
 function getReferenceDefaultMarkerValue(propertyName) {
     return tangramReference.symbolizers.markers[propertyName]['default-value'];
 }
+function getReferenceDefaultPolygonValue(propertyName) {
+    return tangramReference.symbolizers.polygon[propertyName]['default-value'];
+}
 function evalFunctionString(functionString, feature) {
     const $zoom = 3;
     const data = feature;
@@ -18,6 +21,7 @@ function evalIfNeeded(yamlProperty, feature) {
 }
 
 module.exports = {
+    getReferenceDefaultPolygonValue,
     getReferenceDefaultMarkerValue,
     evalFunctionString,
     evalIfNeeded,

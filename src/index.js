@@ -21,6 +21,7 @@ function wrapFn(functionBody) {
 function getReferenceDefault(property) {
     return referenceCSS[property]['default-value'];
 }
+
 function getLiteralFromShaderValue(shaderValue) {
     const ctx = { zoom: 10 };
     var _value = null;
@@ -175,16 +176,55 @@ function processPoints(yaml, layer) {
     }
 }
 
+function processPolys(yaml, layer) {
+    if (layer.shader.symbolizers.indexOf('polygon') >= 0) {
+        yaml.filter = getFilterFn(layer, 'polygon');
+
+        yaml.draw.polygons = { _hidden: {} };
+        //for each yaml property
+        //opacity *must* be processed first
+        defProperty(yaml.draw.polygons, layer, 'polygon-opacity', 'opacity:general');
+
+        defProperty(yaml.draw.polygons, layer, 'polygon-fill', 'color');
+        defProperty(yaml.draw.polygons, layer, 'polygon-comp-op', 'blend');
+
+        delete yaml.draw.polygons._hidden;
+    }
+}
+
+
 function layerToYAML(layer, layerOrder = 0) {
     var yaml = {
         draw: {},
         styles: {},
         textures: {}
     };
+    //TODO: what to do if multiple symbolizers are active for the same layer??
     //console.log('\nlayerToYAML:\n', JSON.stringify(layer, null, 4));
-    //TODO: for each symbolizer
     processPoints(yaml, layer);
-
+    processPolys(yaml, layer);
     return yaml;
 }
 module.exports.layerToYAML = layerToYAML;
+
+
+/*
+const Carto = require('carto');
+const CartoCSSRenderer = new Carto.RendererJS({
+    reference: tangramReference,
+    strict: true
+});
+const css=`#layer {
+    polygon-fill: #374c70;
+    polygon-opacity: 0.5;
+  }
+  #layer::outline {
+    line-width: 3.5;
+    line-color: #FFF;
+    line-opacity: 0.5;
+  }`;
+  const layers=CartoCSSRenderer.render(css).getLayers();
+  console.log(layers[0]);
+  console.log(layers[1]);
+
+*/
