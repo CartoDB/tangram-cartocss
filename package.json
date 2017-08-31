@@ -17,7 +17,7 @@
   },
   "scripts": {
     "test": "mocha && npm run lint",
-    "test:watch": "mocha -w",
+    "test:watch": "mocha -w -R dot",
     "lint": "$(npm bin)/jshint src/ test/"
   },
   "keywords": [
