@@ -1,46 +1,46 @@
 const { getReferenceDefaultMarkerValue } = require('./utils.js');
 
 module.exports = [
-  {
-      name: 'all default',
-      ccss: `
+    {
+        name: 'all default',
+        ccss: `
       #layer{
           marker-type: ellipse;
       }
       `,
-      expected: {
-          color: getReferenceDefaultMarkerValue('fill'),
-          collide: getReferenceDefaultMarkerValue('allow-overlap'),
-          size: getReferenceDefaultMarkerValue('width'),
-          blend: 'overlay',
-          outlineColor: getReferenceDefaultMarkerValue('stroke'),
-          outlineSize: getReferenceDefaultMarkerValue('stroke-width')
-      }
-  },
+        expected: {
+            color: getReferenceDefaultMarkerValue('fill'),
+            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            size: getReferenceDefaultMarkerValue('width'),
+            blend: 'overlay',
+            outlineColor: getReferenceDefaultMarkerValue('stroke'),
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+        }
+    },
 
-  {
-      name: 'color literal, opacity literal',
-      ccss: `
+    {
+        name: 'color literal, opacity literal',
+        ccss: `
       #layer{
           marker-type: ellipse;
           marker-opacity: 0.5;
           marker-fill: green;
       }
       `,
-      expected: {
-          color: 'rgba(0,128,0,0.5)',
-          collide: getReferenceDefaultMarkerValue('allow-overlap'),
-          size: getReferenceDefaultMarkerValue('width'),
-          blend: 'overlay',
-          outlineColor: 'rgba(0,0,0,0.5)',
-          outlineSize: getReferenceDefaultMarkerValue('stroke-width')
-      }
-  }
+        expected: {
+            color: 'rgba(0,128,0,0.5)',
+            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            size: getReferenceDefaultMarkerValue('width'),
+            blend: 'overlay',
+            outlineColor: 'rgba(0,0,0,0.5)',
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+        }
+    }
 
-  ,
-  {
-      name: 'color literal, opacity callback',
-      ccss: `
+    ,
+    {
+        name: 'color literal, opacity callback',
+        ccss: `
           #layer{
               marker-type: ellipse;
               marker-opacity: 0.5;
@@ -50,20 +50,20 @@ module.exports = [
               }
           }
           `,
-      feature: { a: 0 },
-      expected: {
-          color: 'rgba(0,128,0,0.5)',
-          collide: getReferenceDefaultMarkerValue('allow-overlap'),
-          size: getReferenceDefaultMarkerValue('width'),
-          blend: 'overlay',
-          outlineColor: 'rgba(0,0,0,0.5)',
-          outlineSize: getReferenceDefaultMarkerValue('stroke-width')
-      }
-  }
-  ,
-  {
-      name: 'color literal, opacity callback',
-      ccss: `
+        feature: { a: 0 },
+        expected: {
+            color: 'rgba(0,128,0,0.5)',
+            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            size: getReferenceDefaultMarkerValue('width'),
+            blend: 'overlay',
+            outlineColor: 'rgba(0,0,0,0.5)',
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+        }
+    }
+    ,
+    {
+        name: 'color literal, opacity callback',
+        ccss: `
           #layer{
               marker-type: ellipse;
               marker-opacity: 0.5;
@@ -73,21 +73,21 @@ module.exports = [
               }
           }
           `,
-      feature: { a: 5 },
-      expected: {
-          color: 'rgba(0,128,0,0.1)',
-          collide: getReferenceDefaultMarkerValue('allow-overlap'),
-          size: getReferenceDefaultMarkerValue('width'),
-          blend: 'overlay',
-          outlineColor: 'rgba(0,0,0,0.1)',
-          outlineSize: getReferenceDefaultMarkerValue('stroke-width')
-      }
-  }
+        feature: { a: 5 },
+        expected: {
+            color: 'rgba(0,128,0,0.1)',
+            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            size: getReferenceDefaultMarkerValue('width'),
+            blend: 'overlay',
+            outlineColor: 'rgba(0,0,0,0.1)',
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+        }
+    }
 
-  ,
-  {
-      name: 'color callback, opacity literal',
-      ccss: `
+    ,
+    {
+        name: 'color callback, opacity literal',
+        ccss: `
           #layer{
               marker-type: ellipse;
               marker-opacity: 0.5;
@@ -97,19 +97,19 @@ module.exports = [
               }
           }
           `,
-      feature: { a: 0 },
-      expected: {
-          color: 'rgba(255,255,255,0.5)',
-          collide: getReferenceDefaultMarkerValue('allow-overlap'),
-          size: getReferenceDefaultMarkerValue('width'),
-          blend: 'overlay',
-          outlineColor: 'rgba(0,0,0,0.5)',
-          outlineSize: getReferenceDefaultMarkerValue('stroke-width')
-      }
-  },
-  {
-      name: 'color callback, opacity literal',
-      ccss: `
+        feature: { a: 0 },
+        expected: {
+            color: 'rgba(255,255,255,0.5)',
+            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            size: getReferenceDefaultMarkerValue('width'),
+            blend: 'overlay',
+            outlineColor: 'rgba(0,0,0,0.5)',
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+        }
+    },
+    {
+        name: 'color callback, opacity literal',
+        ccss: `
           #layer{
               marker-type: ellipse;
               marker-opacity: 0.5;
@@ -119,21 +119,21 @@ module.exports = [
               }
           }
           `,
-      feature: { a: 5 },
-      expected: {
-          color: 'rgba(0,0,0,0.5)',
-          collide: getReferenceDefaultMarkerValue('allow-overlap'),
-          size: getReferenceDefaultMarkerValue('width'),
-          blend: 'overlay',
-          outlineColor: 'rgba(0,0,0,0.5)',
-          outlineSize: getReferenceDefaultMarkerValue('stroke-width')
-      }
-  }
+        feature: { a: 5 },
+        expected: {
+            color: 'rgba(0,0,0,0.5)',
+            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            size: getReferenceDefaultMarkerValue('width'),
+            blend: 'overlay',
+            outlineColor: 'rgba(0,0,0,0.5)',
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+        }
+    }
 
-  ,
-  {
-      name: 'color callback, opacity callback',
-      ccss: `
+    ,
+    {
+        name: 'color callback, opacity callback',
+        ccss: `
           #layer{
               marker-type: ellipse;
               marker-opacity: 0.5;
@@ -146,22 +146,94 @@ module.exports = [
               }
           }
           `,
-      feature: { a: 0, b:0 },
-      expected: {
-          color: 'rgba(255,255,255,0.5)',
-          collide: getReferenceDefaultMarkerValue('allow-overlap'),
-          size: getReferenceDefaultMarkerValue('width'),
-          blend: 'overlay',
-          outlineColor: 'rgba(0,0,0,0.5)',
-          outlineSize: getReferenceDefaultMarkerValue('stroke-width')
-      }
-  }
+        feature: { a: 0, b: 0 },
+        expected: {
+            color: 'rgba(255,255,255,0.5)',
+            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            size: getReferenceDefaultMarkerValue('width'),
+            blend: 'overlay',
+            outlineColor: 'rgba(0,0,0,0.5)',
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+        }
+    }
 
-  //TODO Test opacity overrides opacity-outline & opacity-fill
+    ,
+    {
+        name: 'marker-line-opacity',
+        ccss: `
+          #layer{
+              marker-line-opacity: 0.2;
+          }
+          `,
+        expected: {
+            color: 'rgba(0,0,255,1)',
+            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            size: getReferenceDefaultMarkerValue('width'),
+            blend: 'overlay',
+            outlineColor: 'rgba(0,0,0,0.2)',
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+        }
+    }
+    ,
+    {
+        name: 'marker-fill-opacity',
+        ccss: `
+          #layer{
+              marker-fill-opacity: 0.2;
+          }
+          `,
+        expected: {
+            color: 'rgba(0,0,255,0.2)',
+            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            size: getReferenceDefaultMarkerValue('width'),
+            blend: 'overlay',
+            outlineColor: 'rgba(0,0,0,1)',
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+        }
+    },
+    {
+        name: 'opacity overrides opacity-outline & opacity-fill',
+        ccss: `
+          #layer{
+            marker-fill-opacity: 0.1;
+            marker-line-opacity: 0.2;
+            marker-opacity: 0.5;
+        }
+          `,
+        expected: {
+            color: 'rgba(0,0,255,0.5)',
+            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            size: getReferenceDefaultMarkerValue('width'),
+            blend: 'overlay',
+            outlineColor: 'rgba(0,0,0,0.5)',
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+        }
+    },
+    {
+        name: 'opacity overrides opacity-outline & opacity-fill with callback',
+        ccss: `
+          #layer{
+            marker-fill-opacity: 0.1;
+            marker-line-opacity: 0.2;
+            marker-opacity: 0.5;
+            [a>2]{
+                marker-opacity: 0.7;
+            }
+        }
+          `,
+        feature: { a: 3 },
+        expected: {
+            color: 'rgba(0,0,255,0.7)',
+            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            size: getReferenceDefaultMarkerValue('width'),
+            blend: 'overlay',
+            outlineColor: 'rgba(0,0,0,0.7)',
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+        }
+    }
+    //TODO Test plus (blending)
 
-  //TODO Test plus (blending)
+    //TODO Test unsupported
 
-  //TODO Test unsupported
-
-  //TODO Test complex
+    //TODO Test complex
 ];

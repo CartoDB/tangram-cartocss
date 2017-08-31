@@ -6,6 +6,7 @@ const CartoCSSRenderer = new Carto.RendererJS({
     reference: tangramReference,
     strict: true
 });
+const color = require('../src/color.js');
 
 const tangram_carto = require('../src/index.js');
 const scenarios = require('./scenarios.js');
@@ -19,7 +20,7 @@ describe('Markers', function () {
             //console.log(JSON.stringify(output, null, 4));
             describe('.draw', function () {
                 it('should have color', function () {
-                    assert.strictEqual(evalIfNeeded(output.draw.points.color, scenario.feature), expected.color);
+                    assert.strictEqual(evalIfNeeded(output.draw.points.color, scenario.feature), color.normalize(expected.color, tangramReference));
                 });
                 it('should have collide', function () {
                     assert.strictEqual(evalIfNeeded(output.draw.points.collide, scenario.feature), expected.collide);
@@ -32,7 +33,7 @@ describe('Markers', function () {
                 });
                 describe('.outline', function () {
                     it('should have color', function () {
-                        assert.strictEqual(evalIfNeeded(output.draw.points.outline.color, scenario.feature), expected.outlineColor);
+                        assert.strictEqual(evalIfNeeded(output.draw.points.outline.color, scenario.feature), color.normalize(expected.outlineColor, tangramReference));
                     });
                     it('should have size', function () {
                         assert.strictEqual(evalIfNeeded(output.draw.points.outline.width, scenario.feature), expected.outlineSize);
