@@ -146,16 +146,13 @@ function defProperty(yamlDrawGroup, layer, ccssName, tangramName) {
 //Returns a function string that dynamically filters symbolizer based on conditional properties
 function getFilterFn(layer, symbolizer) {
     //TODO: optimize, not need to set a callback when at least one property is not filtered (i.e. it always activates the symbolizer)
-    var fn = 'var _value = null;';
-    for (var property in layer.shader) {
-        if (layer.shader[property].symbolizer === symbolizer) {
-            layer.shader[property].js.forEach(function (code) {
-                fn += code;
-            });
-        }
-    }
-    fn += 'return _value!==null';
-    return wrapFn(fn);
+    const fn = Object.keys(layer.shader)
+        .filter(property => layer.shader[property].symbolizer === symbolizer)
+        .map((property) => layer.shader[property].js)
+        .reduce((all, arr) => all.concat(arr), [])
+        .join('');
+
+    return wrapFn(`var _value = null; ${fn} return _value !== null;`);
 }
 
 function processPoints(yaml, layer) {
