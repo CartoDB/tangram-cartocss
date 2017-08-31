@@ -43,8 +43,7 @@ function getOverridedColorFromLiteral(yamlDrawGroup, colorLiteral, isFill) {
             return color.marshall(c);
         } else {
             const c = color.unmarshall(colorLiteral, tangramReference);
-            return wrapFn('return \'rgba(' + c.r + ',' + c.g + ',' + c.b + ',\'+' + opacity + '()+\')\';');
-            return wrapFn(`return \'rgba(${c.r},${c.g},${c.b},${opacity}());`);
+            return wrapFn(`return \'rgba(${c.r},${c.g},${c.b},'+${opacity}()+')';`);
         }
     } else {
         return color.marshall(c);
@@ -55,7 +54,7 @@ function getOverrideCode(yamlDrawGroup, isFill) {
     const opacity = getOpacityOverride(yamlDrawGroup, isFill);
     if (opacity) {
         if (isNumeric(opacity)) {
-            return 'var c=' + color.unmarshall.toString() + '(_value);c.a=' + opacity + ';_value=' + color.marshall.toString() + '(c);';
+            return `var c=${color.unmarshall.toString()}(_value);c.a=${opacity};_value=${color.marshall.toString()}(c);`;
         } else {
             return `var opacity=${opacity}(); var c=${color.unmarshall.toString()}(_value);c.a=opacity;_value=${color.marshall.toString()}(c);`;
         }
@@ -66,7 +65,7 @@ function getOverrideCode(yamlDrawGroup, isFill) {
 
 //Returns a function string that sets the value to the default one and then executes the shader value code
 function getFunctionFromDefaultAndShaderValue(yamlDrawGroup, ccssProperty, defaultValue, shaderValue) {
-    var fn = 'var _value=\'' + defaultValue + '\';';
+    var fn = `var _value='${defaultValue}';`;
     shaderValue.js.forEach(function (code) {
         fn += code;
     });
