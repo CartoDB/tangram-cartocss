@@ -1,4 +1,4 @@
-# Tangram-cartocss [![Build Status](https://travis-ci.org/CartoDB/tangram-carto.svg?branch=master)](https://travis-ci.org/CartoDB/tangram-carto)
+# Tangram-cartocss [![Build Status](https://travis-ci.org/CartoDB/tangram-cartocss.svg?branch=master)](https://travis-ci.org/CartoDB/tangram-cartocss)
 
 ![Conditional Style](/demos/images/conditionals.png)
 ## Installation & usage
