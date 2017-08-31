@@ -2,6 +2,14 @@ cache: false
 language: node_js
 node_js:
   - "7.4.0"
+
+jobs:
+  include:
+    - stage: Tests
+      script: npm test
+    - stage: Lint
+      script: npm run lint
+
 notifications:
   email:
     on_success: never
