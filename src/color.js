@@ -17,26 +17,31 @@ function unmarshall(color, reference = null) {
         result.b = hexToInt(color.substr(5, 2));
         result.a = 1;
     } else if (color.startsWith('rgb(')) {
-        var rgb = c.match(/\d+/g);
+        var rgb = color.match(/\d+/g);
         result.r = parseInt(rgb[0]);
         result.g = parseInt(rgb[1]);
         result.b = parseInt(rgb[2]);
     } else if (color.startsWith('rgba(')) {
-        var rgba = c.match(/\d+/g);
-        result.r = parseInt(rgb[0]);
-        result.g = parseInt(rgb[1]);
-        result.b = parseInt(rgb[2]);
-        result.a = parseInt(rgb[3]);
+        var rgba = color.slice(5,-1).split(',');
+        result.r = parseInt(rgba[0]);
+        result.g = parseInt(rgba[1]);
+        result.b = parseInt(rgba[2]);
+        result.a = parseFloat(rgba[3]);
     } else if (reference && reference.colors[color]) {
         var rgbArray = reference.colors[color];
         result.r = rgbArray[0];
-        result.g = rgbArray[0];
-        result.b = rgbArray[0];
+        result.g = rgbArray[1];
+        result.b = rgbArray[2];
         result.a = 1;
     } else {
         throw new Error('color format not recognized, color: ' + color);
     }
     return result;
 }
-
 module.exports.unmarshall = unmarshall;
+
+function normalize(color, reference) {
+    return marshall(unmarshall(color, reference));
+}
+
+module.exports.normalize = normalize;

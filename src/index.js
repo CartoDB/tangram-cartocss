@@ -36,24 +36,24 @@ function isNumeric(n) {
 function getOverridedColorFromLiteral(yamlDrawGroup, colorLiteral, isFill) {
     //override opacity as needed. if opacity is callback => output callback, else => override now
     const opacity = getOpacityOverride(yamlDrawGroup, isFill);
+    const c = color.unmarshall(colorLiteral, tangramReference);
     if (opacity) {
         if (isNumeric(opacity)) {
-            const c = color.unmarshall(colorLiteral, tangramReference);
             c.a = opacity;
             return color.marshall(c);
         } else {
             const c = color.unmarshall(colorLiteral, tangramReference);
             return wrapFn('return \'rgba(' + c.r + ',' + c.g + ',' + c.b + ',\'+' + opacity + '()+\')\';');
-            return wrapFn(`return \'rgba(${c.r},${c.g},${c.b},${opacity}());`);            
+            return wrapFn(`return \'rgba(${c.r},${c.g},${c.b},${opacity}());`);
         }
     } else {
-        return colorLiteral;
+        return color.marshall(c);
     }
 }
 
 function getOverrideCode(yamlDrawGroup, isFill) {
     const opacity = getOpacityOverride(yamlDrawGroup, isFill);
-    if (opacity) {        
+    if (opacity) {
         if (isNumeric(opacity)) {
             return 'var c=' + color.unmarshall.toString() + '(_value);c.a=' + opacity + ';_value=' + color.marshall.toString() + '(c);';
         } else {
@@ -197,7 +197,7 @@ const exampleCCSS = '#layer{}';
       marker-fill-opacity: 0.1;
   }
   [j>2]{
-    marker-fill: blue; 
+    marker-fill: blue;
   }
 }
 `;
@@ -208,7 +208,7 @@ const exampleCCSS = '#layer{}';
   marker-width: 30px;
   marker-fill-opacity: 0.5;
   [j>2]{
-    marker-fill: blue; 
+    marker-fill: blue;
   }
 }
 `;
@@ -231,7 +231,7 @@ const exampleCCSS = '#layer{}';
   marker-line-width: 5;
   marker-line-color: red;
   [j>2]{
-      marker-line-opacity: 1; 
+      marker-line-opacity: 1;
   }
 }`;
 
