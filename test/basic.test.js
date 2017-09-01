@@ -12,39 +12,25 @@ const tangram_carto = require('../src/index.js');
 const scenarios = require('./scenarios.js');
 const { evalIfNeeded, getReferenceDefaultLineValue, getReferenceDefaultPolygonValue } = require('./utils.js');
 
-//TODO test blend_order
-//TODO test base
-//TODO test dash
-//TODO test $metersperpixel
-//TODO test multiple symbolizers error
-
 describe('Markers', function () {
     scenarios.forEach(function (scenario) {
         describe(scenario.name, function () {
             const expected = scenario.expected;
             const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(scenario.ccss).getLayers()[0], 0);
             //console.log(JSON.stringify(output, null, 4));
-            describe('.draw', function () {
-                it('should have color', function () {
-                    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.color, scenario.feature), color.normalize(expected.color, tangramReference));
-                });
-                it('should have collide', function () {
-                    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.collide, scenario.feature), expected.collide);
-                });
-                it('should have size', function () {
-                    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.size, scenario.feature), expected.size + 'px');
-                });
-                it('should have blend mode: src-over, called overlay in Tangram', function () {
-                    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend, scenario.feature), expected.blend);
-                });
-                describe('.outline', function () {
-                    it('should have color', function () {
-                        assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.outline.color, scenario.feature), color.normalize(expected.outlineColor, tangramReference));
-                    });
-                    it('should have size', function () {
-                        assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.outline.width, scenario.feature), expected.outlineSize + 'px');
-                    });
-                });
+            it('.draw', function () {
+                assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.color, scenario.feature), color.normalize(expected.color, tangramReference));
+                assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.size, scenario.feature), expected.size + 'px');
+                assert.strictEqual(output.draw.drawGroup0.collide, expected.collide);
+            });
+            it('.draw.drawGroup0.outline', function () {
+                assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.outline.color, scenario.feature), color.normalize(expected.outlineColor, tangramReference));
+                assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.outline.width, scenario.feature), expected.outlineSize + 'px');
+            });
+            it('.styles', function () {
+                assert.strictEqual(output.styles.drawGroup0.blend, expected.blend);
+                assert.strictEqual(output.styles.drawGroup0.blend_order, 0);
+                assert.strictEqual(output.styles.drawGroup0.base, 'points');
             });
         });
     });
@@ -65,11 +51,11 @@ it('polygon default', function () {
     assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.color),
         color.normalize(getReferenceDefaultPolygonValue('fill')));
 
-    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend),
-        'overlay');
+    assert.strictEqual(output.styles.drawGroup0.blend, 'overlay');
 
-    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend_order),
-        0);
+    assert.strictEqual(output.styles.drawGroup0.blend_order, 0);
+
+    assert.strictEqual(output.styles.drawGroup0.base, 'polygons');
 });
 it('polygon all defined', function () {
     const ccss = `
@@ -81,14 +67,10 @@ it('polygon all defined', function () {
     `;
     const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
 
-    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.color),
-        'rgba(255,0,0,0.1)');
-
-    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend),
-        'overlay');
-
-    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend_order),
-        0);
+    assert.strictEqual(output.draw.drawGroup0.color, 'rgba(255,0,0,0.1)');
+    assert.strictEqual(output.styles.drawGroup0.blend, 'overlay');
+    assert.strictEqual(output.styles.drawGroup0.blend_order, 0);
+    assert.strictEqual(output.styles.drawGroup0.base, 'polygons');
 });
 
 
@@ -99,23 +81,14 @@ it('line default', function () {
     }
     `;
     const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
-    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.color),
+    assert.strictEqual(output.draw.drawGroup0.color,
         color.normalize(getReferenceDefaultLineValue('stroke')));
-
-    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.width),
-        getReferenceDefaultLineValue('stroke-width') + 'px');
-
-    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.join),
-        getReferenceDefaultLineValue('stroke-linejoin'));
-
-    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.cap),
-        getReferenceDefaultLineValue('stroke-linecap'));
-
-    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend),
-        'overlay');
-
-    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend_order),
-        0);
+    assert.strictEqual(output.draw.drawGroup0.width, getReferenceDefaultLineValue('stroke-width') + 'px');
+    assert.strictEqual(output.draw.drawGroup0.join, getReferenceDefaultLineValue('stroke-linejoin'));
+    assert.strictEqual(output.draw.drawGroup0.cap, getReferenceDefaultLineValue('stroke-linecap'));
+    assert.strictEqual(output.styles.drawGroup0.blend, 'overlay');
+    assert.strictEqual(output.styles.drawGroup0.blend_order, 0);
+    assert.strictEqual(output.styles.drawGroup0.base, 'lines');
 });
 it('line all defined', function () {
     const ccss = `
@@ -129,24 +102,34 @@ it('line all defined', function () {
     }
     `;
     const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
-
-    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.color),
-        'rgba(255,0,0,0.2)');
-
-    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.width),
-        0.1 + 'px');
-
-    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.join),
-        'round');
-
-    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.cap),
-        'square');
-
-    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend),
-        'add');
-
-    assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend_order),
-        0);
+    assert.strictEqual(output.draw.drawGroup0.color, 'rgba(255,0,0,0.2)');
+    assert.strictEqual(output.draw.drawGroup0.width, 0.1 + 'px');
+    assert.strictEqual(output.draw.drawGroup0.join, 'round');
+    assert.strictEqual(output.draw.drawGroup0.cap, 'square');
+    assert.strictEqual(output.styles.drawGroup0.blend, 'add');
+    assert.strictEqual(output.styles.drawGroup0.blend_order, 0);
+    assert.strictEqual(output.styles.drawGroup0.base, 'lines');
 });
 
-//TODO test blend_order with layer>0
+
+it('multiple layers', function () {
+    const ccss = `
+    #layer {
+        line-opacity: 1;
+    }
+    #layer2 {
+        line-opacity: 1;
+      }
+    `;
+    const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[1], 1);
+    assert.strictEqual(output.draw.drawGroup1.color, color.normalize(getReferenceDefaultLineValue('stroke')));
+    assert.strictEqual(output.draw.drawGroup1.width, getReferenceDefaultLineValue('stroke-width') + 'px');
+    assert.strictEqual(output.draw.drawGroup1.join, getReferenceDefaultLineValue('stroke-linejoin'));
+    assert.strictEqual(output.draw.drawGroup1.cap, getReferenceDefaultLineValue('stroke-linecap'));
+    assert.strictEqual(output.styles.drawGroup1.blend, 'overlay');
+    assert.strictEqual(output.styles.drawGroup1.blend_order, 1);
+});
+
+//TODO test dash
+//TODO test $metersperpixel
+//TODO test multiple symbolizers error
