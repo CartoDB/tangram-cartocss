@@ -16,6 +16,7 @@ const { evalIfNeeded, getReferenceDefaultLineValue, getReferenceDefaultPolygonVa
 //TODO test base
 //TODO test dash
 //TODO test $metersperpixel
+//TODO test multiple symbolizers error
 
 describe('Markers', function () {
     scenarios.forEach(function (scenario) {

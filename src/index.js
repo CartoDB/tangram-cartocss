@@ -90,7 +90,7 @@ function getFunctionFromDefaultAndShaderValue(yamlDrawGroup, ccssProperty, defau
     if (referenceCSS[ccssProperty].type === 'color') {
         fn += getColorOverrideCode(yamlDrawGroup, ccssProperty.indexOf('fill') >= 0);
     }
-    if (ccssProperty.indexOf('width')>=0){
+    if (ccssProperty.indexOf('width') >= 0) {
         fn += '_value=_value*$meters_per_pixel;';
     }
     fn += 'return _value;';
@@ -112,8 +112,8 @@ function translateValue(yamlDrawGroup, ccssProperty, ccssValue) {
     if (referenceCSS[ccssProperty].type === 'color') {
         return getColorFromLiteral(yamlDrawGroup, ccssValue, ccssProperty.indexOf('fill') >= 0);
     }
-    if (ccssProperty.indexOf('width')>=0){
-        ccssValue+='px';
+    if (ccssProperty.indexOf('width') >= 0) {
+        ccssValue += 'px';
     }
     return ccssValue;
 }
@@ -223,11 +223,9 @@ function processPolys(yaml, layer, drawGroupName) {
 }
 
 function processStyle(yaml, drawGroupName, layerOrder) {
-    if (yaml.draw[drawGroupName]) {
-        yaml.styles[drawGroupName].blend = yaml.draw[drawGroupName].blend;
-        yaml.styles[drawGroupName].blend_order = layerOrder;
-        delete yaml.draw[drawGroupName].blend;
-    }
+    yaml.styles[drawGroupName].blend = yaml.draw[drawGroupName].blend;
+    yaml.styles[drawGroupName].blend_order = layerOrder;
+    delete yaml.draw[drawGroupName].blend;
 }
 
 function layerToYAML(layer, layerOrder) {
@@ -236,13 +234,16 @@ function layerToYAML(layer, layerOrder) {
         styles: {},
         textures: {}
     };
-    //TODO: what to do if multiple symbolizers are active for the same layer??
-    const drawGroupName = `drawGroup${layerOrder}`;
-    processPoints(yaml, layer, drawGroupName);
-    processLines(yaml, layer, drawGroupName);
-    processPolys(yaml, layer, drawGroupName);
+    if (layer.shader.symbolizers.length > 1) {
+        throw new Error('Multiple symbolizer on one layer is not supported');
+    } else if (layer.shader.symbolizers.length === 1) {
+        const drawGroupName = `drawGroup${layerOrder}`;
+        processPoints(yaml, layer, drawGroupName);
+        processLines(yaml, layer, drawGroupName);
+        processPolys(yaml, layer, drawGroupName);
 
-    processStyle(yaml, drawGroupName, layerOrder);
+        processStyle(yaml, drawGroupName, layerOrder);
+    }
     return yaml;
 }
 module.exports.layerToYAML = layerToYAML;
