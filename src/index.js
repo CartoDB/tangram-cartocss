@@ -49,10 +49,9 @@ function getOpacityOverride(yamlDrawGroup, isFill) {
 }
 
 function isNumeric(n) {
-    return !isNaN(parseFloat(n)) && isFinite(n);
+    return !isNaN(parseFloat(n)) && Number.isFinite(n);
 }
-function getOverridedColorFromLiteral(yamlDrawGroup, colorLiteral, isFill) {
-    //override opacity as needed. if opacity is callback => output callback, else => override now
+function getColorFromLiteral(yamlDrawGroup, colorLiteral, isFill) {
     const opacity = getOpacityOverride(yamlDrawGroup, isFill);
     const c = color.unmarshall(colorLiteral, tangramReference);
     if (opacity) {
@@ -60,15 +59,16 @@ function getOverridedColorFromLiteral(yamlDrawGroup, colorLiteral, isFill) {
             c.a = opacity;
             return color.marshall(c);
         } else {
-            const c = color.unmarshall(colorLiteral, tangramReference);
             return wrapFn(`return 'rgba(${c.r},${c.g},${c.b},'+${opacity}()+')';`);
         }
     } else {
+        //This marshall is needed to normalize the literal, if we just return c and it is one of the reference defined colors
+        //tangram won't understand it
         return color.marshall(c);
     }
 }
 
-function getOverrideCode(yamlDrawGroup, isFill) {
+function getColorOverrideCode(yamlDrawGroup, isFill) {
     const opacity = getOpacityOverride(yamlDrawGroup, isFill);
     if (opacity) {
         if (isNumeric(opacity)) {
@@ -87,9 +87,8 @@ function getFunctionFromDefaultAndShaderValue(yamlDrawGroup, ccssProperty, defau
     shaderValue.js.forEach(function (code) {
         fn += code;
     });
-    //TODO: if color, override opacity as needed. If opacity is not null => (if opacity is fn, append it to code, else, override to literal in code)
     if (referenceCSS[ccssProperty].type === 'color') {
-        fn += getOverrideCode(yamlDrawGroup, ccssProperty.indexOf('fill') >= 0);
+        fn += getColorOverrideCode(yamlDrawGroup, ccssProperty.indexOf('fill') >= 0);
     }
     fn += 'return _value;';
     return wrapFn(fn);
@@ -108,7 +107,7 @@ function translateValue(yamlDrawGroup, ccssProperty, ccssValue) {
         }
     }
     if (referenceCSS[ccssProperty].type === 'color') {
-        return getOverridedColorFromLiteral(yamlDrawGroup, ccssValue, ccssProperty.indexOf('fill') >= 0);
+        return getColorFromLiteral(yamlDrawGroup, ccssValue, ccssProperty.indexOf('fill') >= 0);
     }
     //TODO tangram probably expects width and size in a different unit
     return ccssValue;
@@ -160,6 +159,7 @@ function processPoints(yaml, layer, drawGroupName) {
         yaml.filter = getFilterFn(layer, 'markers');
 
         yaml.draw[drawGroupName] = { _hidden: {} };
+        yaml.styles[drawGroupName] = { base: 'points' };
         const drawGroup = yaml.draw[drawGroupName];
         //for each yaml property
         //opacity *must* be processed first
@@ -183,6 +183,7 @@ function processLines(yaml, layer, drawGroupName) {
         yaml.filter = getFilterFn(layer, 'line');
 
         yaml.draw[drawGroupName] = { _hidden: {} };
+        yaml.styles[drawGroupName] = { base: 'lines' };
         const drawGroup = yaml.draw[drawGroupName];
         //for each yaml property
         //opacity *must* be processed first
@@ -203,6 +204,7 @@ function processPolys(yaml, layer, drawGroupName) {
         yaml.filter = getFilterFn(layer, 'polygon');
 
         yaml.draw[drawGroupName] = { _hidden: {} };
+        yaml.styles[drawGroupName] = { base: 'polygons' };
         const drawGroup = yaml.draw[drawGroupName];
         //for each yaml property
         //opacity *must* be processed first
@@ -215,12 +217,10 @@ function processPolys(yaml, layer, drawGroupName) {
     }
 }
 
-function processStyle(yaml, drawGroupName, styleName, layerOrder) {
+function processStyle(yaml, drawGroupName, layerOrder) {
     if (yaml.draw[drawGroupName]) {
-        yaml.styles[styleName] = {
-            blend: yaml.draw[drawGroupName].blend,
-            blend_order: layerOrder
-        };
+        yaml.styles[drawGroupName].blend = yaml.draw[drawGroupName].blend;
+        yaml.styles[drawGroupName].blend_order = layerOrder;
         delete yaml.draw[drawGroupName].blend;
     }
 }
@@ -233,19 +233,18 @@ function layerToYAML(layer, layerOrder) {
     };
     //TODO: what to do if multiple symbolizers are active for the same layer??
     const drawGroupName = `drawGroup${layerOrder}`;
-    const styleName = `drawGroup${layerOrder}`;
     processPoints(yaml, layer, drawGroupName);
     processLines(yaml, layer, drawGroupName);
     processPolys(yaml, layer, drawGroupName);
 
-    processStyle(yaml, drawGroupName, styleName, layerOrder);
+    processStyle(yaml, drawGroupName, layerOrder);
     return yaml;
 }
 module.exports.layerToYAML = layerToYAML;
 module.exports.carto2Draw = layerToYAML;
 
 
-/*
+
 //Usage example
 const Carto = require('carto');
 const CartoCSSRenderer = new Carto.RendererJS({
@@ -268,4 +267,3 @@ console.log(layers[1]);
 console.log('YAML');
 console.log('\nlayerToYAML:\n', JSON.stringify(layerToYAML(layers[0], 0), null, 4));
 console.log('\nlayerToYAML:\n', JSON.stringify(layerToYAML(layers[1], 1), null, 4));
-*/
