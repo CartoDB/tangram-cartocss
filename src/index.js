@@ -199,7 +199,7 @@ function processLines(yaml, layer, drawGroupName) {
         defProperty(drawGroup, layer, 'line-join', 'join');
         defProperty(drawGroup, layer, 'line-cap', 'cap');
         defProperty(drawGroup, layer, 'line-comp-op', 'blend');
-        //TODO line-dasharray???
+        defProperty(drawGroup, layer, 'line-dasharray', 'dash');
         delete drawGroup._hidden;
     }
 }

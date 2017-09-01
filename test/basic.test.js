@@ -14,6 +14,7 @@ const { evalIfNeeded, getReferenceDefaultLineValue, getReferenceDefaultPolygonVa
 
 //TODO test blend_order
 //TODO test base
+//TODO test dash
 //TODO test $metersperpixel
 
 describe('Markers', function () {
