@@ -138,6 +138,9 @@ function defProperty(yamlDrawGroup, layer, ccssName, tangramName) {
     const shaderValue = layer.shader[ccssName];
     var value;
     if (shaderValue === undefined) {
+        if (ccssName.indexOf('dash')>=0){
+            return;
+        }
         value = translateValue(yamlDrawGroup, ccssName, defaultValue);
     } else if (!shaderValue.filtered && shaderValue.constant) {
         value = translateValue(yamlDrawGroup, ccssName, getLiteralFromShaderValue(shaderValue));
@@ -250,27 +253,22 @@ module.exports.layerToYAML = layerToYAML;
 module.exports.carto2Draw = layerToYAML;
 
 
-
+/*
 //Usage example
-/*const Carto = require('carto');
+const Carto = require('carto');
 const CartoCSSRenderer = new Carto.RendererJS({
     reference: tangramReference,
     strict: true
 });
-const css = `#layer {
-    polygon-fill: #374c70;
-    polygon-opacity: 0.5;
-  }
-  #layer::outline {
-    line-width: 3.5;
-    line-color: #FFF;
-    line-opacity: 0.5;
+const css = `
+  #layer {
+    line-dasharray: 2,3
   }`;
 const layers = CartoCSSRenderer.render(css).getLayers();
 console.log(layers[0]);
 console.log(layers[1]);
 
 console.log('YAML');
-console.log('\nlayerToYAML:\n', JSON.stringify(layerToYAML(layers[0], 0), null, 4));
+//console.log('\nlayerToYAML:\n', JSON.stringify(layerToYAML(layers[0], 0), null, 4));
 console.log('\nlayerToYAML:\n', JSON.stringify(layerToYAML(layers[1], 1), null, 4));
 */

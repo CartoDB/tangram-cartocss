@@ -144,7 +144,22 @@ it('metersperpixel', function () {
     assert.strictEqual(output.styles.drawGroup1.blend_order, 1);
 });
 
-//TODO test dash
+it('dash', function () {
+    const ccss = `
+    #layer {
+        line-dasharray: 2,3;
+    }
+    `;
+    const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 1);
+    assert.strictEqual(output.draw.drawGroup1.color, color.normalize(getReferenceDefaultLineValue('stroke')));
+    assert.strictEqual(output.draw.drawGroup1.width, getReferenceDefaultLineValue('stroke-width') + 'px');
+    assert.strictEqual(output.draw.drawGroup1.join, getReferenceDefaultLineValue('stroke-linejoin'));
+    assert.strictEqual(output.draw.drawGroup1.cap, getReferenceDefaultLineValue('stroke-linecap'));
+    assert.deepEqual(output.draw.drawGroup1.dash, [2, 3]);
+    assert.strictEqual(output.styles.drawGroup1.blend, 'overlay');
+    assert.strictEqual(output.styles.drawGroup1.blend_order, 1);
+});
+
 
 it('multiple symbolizers on one layer should generate an exception', function () {
     const ccss = `
