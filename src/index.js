@@ -90,6 +90,9 @@ function getFunctionFromDefaultAndShaderValue(yamlDrawGroup, ccssProperty, defau
     if (referenceCSS[ccssProperty].type === 'color') {
         fn += getColorOverrideCode(yamlDrawGroup, ccssProperty.indexOf('fill') >= 0);
     }
+    if (ccssProperty.indexOf('width')>=0){
+        fn += '_value=_value*$meters_per_pixel;';
+    }
     fn += 'return _value;';
     return wrapFn(fn);
 }
@@ -109,7 +112,9 @@ function translateValue(yamlDrawGroup, ccssProperty, ccssValue) {
     if (referenceCSS[ccssProperty].type === 'color') {
         return getColorFromLiteral(yamlDrawGroup, ccssValue, ccssProperty.indexOf('fill') >= 0);
     }
-    //TODO tangram probably expects width and size in a different unit
+    if (ccssProperty.indexOf('width')>=0){
+        ccssValue+='px';
+    }
     return ccssValue;
 }
 
@@ -246,7 +251,7 @@ module.exports.carto2Draw = layerToYAML;
 
 
 //Usage example
-const Carto = require('carto');
+/*const Carto = require('carto');
 const CartoCSSRenderer = new Carto.RendererJS({
     reference: tangramReference,
     strict: true
@@ -267,3 +272,4 @@ console.log(layers[1]);
 console.log('YAML');
 console.log('\nlayerToYAML:\n', JSON.stringify(layerToYAML(layers[0], 0), null, 4));
 console.log('\nlayerToYAML:\n', JSON.stringify(layerToYAML(layers[1], 1), null, 4));
+*/

@@ -12,6 +12,10 @@ const tangram_carto = require('../src/index.js');
 const scenarios = require('./scenarios.js');
 const { evalIfNeeded, getReferenceDefaultLineValue, getReferenceDefaultPolygonValue } = require('./utils.js');
 
+//TODO test blend_order
+//TODO test base
+//TODO test $metersperpixel
+
 describe('Markers', function () {
     scenarios.forEach(function (scenario) {
         describe(scenario.name, function () {
@@ -26,18 +30,17 @@ describe('Markers', function () {
                     assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.collide, scenario.feature), expected.collide);
                 });
                 it('should have size', function () {
-                    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.size, scenario.feature), expected.size);
+                    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.size, scenario.feature), expected.size + 'px');
                 });
                 it('should have blend mode: src-over, called overlay in Tangram', function () {
                     assert.strictEqual(evalIfNeeded(output.styles.drawGroup0.blend, scenario.feature), expected.blend);
                 });
-                //TODO test blend_order
                 describe('.outline', function () {
                     it('should have color', function () {
                         assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.outline.color, scenario.feature), color.normalize(expected.outlineColor, tangramReference));
                     });
                     it('should have size', function () {
-                        assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.outline.width, scenario.feature), expected.outlineSize);
+                        assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.outline.width, scenario.feature), expected.outlineSize + 'px');
                     });
                 });
             });
@@ -98,7 +101,7 @@ it('line default', function () {
         color.normalize(getReferenceDefaultLineValue('stroke')));
 
     assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.width),
-        getReferenceDefaultLineValue('stroke-width'));
+        getReferenceDefaultLineValue('stroke-width') + 'px');
 
     assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.join),
         getReferenceDefaultLineValue('stroke-linejoin'));
@@ -129,7 +132,7 @@ it('line all defined', function () {
         'rgba(255,0,0,0.2)');
 
     assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.width),
-        0.1);
+        0.1 + 'px');
 
     assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.join),
         'round');
