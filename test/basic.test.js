@@ -48,13 +48,9 @@ it('polygon default', function () {
     }
     `;
     const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
-    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.color),
-        color.normalize(getReferenceDefaultPolygonValue('fill')));
-
+    assert.strictEqual(output.draw.drawGroup0.color, color.normalize(getReferenceDefaultPolygonValue('fill')));
     assert.strictEqual(output.styles.drawGroup0.blend, 'overlay');
-
     assert.strictEqual(output.styles.drawGroup0.blend_order, 0);
-
     assert.strictEqual(output.styles.drawGroup0.base, 'polygons');
 });
 it('polygon all defined', function () {
@@ -130,6 +126,23 @@ it('multiple layers', function () {
     assert.strictEqual(output.styles.drawGroup1.blend_order, 1);
 });
 
+it('metersperpixel', function () {
+    const ccss = `
+    #layer {
+        line-width: 2;
+        [j>2]{
+            line-width: 3;
+        }
+    }
+    `;
+    const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 1);
+    assert.strictEqual(output.draw.drawGroup1.color, color.normalize(getReferenceDefaultLineValue('stroke')));
+    assert.strictEqual(evalIfNeeded(output.draw.drawGroup1.width, { j: 1}, 5), 10);
+    assert.strictEqual(output.draw.drawGroup1.join, getReferenceDefaultLineValue('stroke-linejoin'));
+    assert.strictEqual(output.draw.drawGroup1.cap, getReferenceDefaultLineValue('stroke-linecap'));
+    assert.strictEqual(output.styles.drawGroup1.blend, 'overlay');
+    assert.strictEqual(output.styles.drawGroup1.blend_order, 1);
+});
+
 //TODO test dash
-//TODO test $metersperpixel
 //TODO test multiple symbolizers error
