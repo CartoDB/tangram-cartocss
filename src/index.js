@@ -37,22 +37,22 @@ function getLiteralFromShaderValue(shaderValue) {
 //Returns the final opacity override selecting between fill-opacity and outline-opacity.
 //Returned value can be a float or a function string to be called at Tangram's runtime if the override is active
 //A falseable value will be returned if the override is not active
-function getOpacityOverride(yamlDrawGroup, isFill) {
+function getOpacityOverride(sceneDrawGroup, isFill) {
     var opacity;
     if (isFill) {
-        opacity = yamlDrawGroup._hidden['opacity:fill'];
+        opacity = sceneDrawGroup._hidden['opacity:fill'];
     } else {
-        opacity = yamlDrawGroup._hidden['opacity:outline'];
+        opacity = sceneDrawGroup._hidden['opacity:outline'];
     }
-    opacity = yamlDrawGroup._hidden['opacity:general'] || opacity;
+    opacity = sceneDrawGroup._hidden['opacity:general'] || opacity;
     return opacity;
 }
 
 function isNumeric(n) {
     return !isNaN(parseFloat(n)) && Number.isFinite(n);
 }
-function getColorFromLiteral(yamlDrawGroup, colorLiteral, isFill) {
-    const opacity = getOpacityOverride(yamlDrawGroup, isFill);
+function getColorFromLiteral(sceneDrawGroup, colorLiteral, isFill) {
+    const opacity = getOpacityOverride(sceneDrawGroup, isFill);
     const c = color.unmarshall(colorLiteral, tangramReference);
     if (opacity) {
         if (isNumeric(opacity)) {
@@ -68,8 +68,8 @@ function getColorFromLiteral(yamlDrawGroup, colorLiteral, isFill) {
     }
 }
 
-function getColorOverrideCode(yamlDrawGroup, isFill) {
-    const opacity = getOpacityOverride(yamlDrawGroup, isFill);
+function getColorOverrideCode(sceneDrawGroup, isFill) {
+    const opacity = getOpacityOverride(sceneDrawGroup, isFill);
     if (opacity) {
         if (isNumeric(opacity)) {
             return `var c=${color.unmarshall.toString()}(_value);c.a=${opacity};_value=${color.marshall.toString()}(c);`;
@@ -82,13 +82,13 @@ function getColorOverrideCode(yamlDrawGroup, isFill) {
 }
 
 //Returns a function string that sets the value to the default one and then executes the shader value code
-function getFunctionFromDefaultAndShaderValue(yamlDrawGroup, ccssProperty, defaultValue, shaderValue) {
+function getFunctionFromDefaultAndShaderValue(sceneDrawGroup, ccssProperty, defaultValue, shaderValue) {
     var fn = `var _value='${defaultValue}';`;
     shaderValue.js.forEach(function (code) {
         fn += code;
     });
     if (referenceCSS[ccssProperty].type === 'color') {
-        fn += getColorOverrideCode(yamlDrawGroup, ccssProperty.indexOf('fill') >= 0);
+        fn += getColorOverrideCode(sceneDrawGroup, ccssProperty.indexOf('fill') >= 0);
     }
     if (ccssProperty.indexOf('width') >= 0) {
         fn += '_value=_value*$meters_per_pixel;';
@@ -98,7 +98,7 @@ function getFunctionFromDefaultAndShaderValue(yamlDrawGroup, ccssProperty, defau
 }
 
 //Translates a ccssValue from the reference standard to the Tangram standard
-function translateValue(yamlDrawGroup, ccssProperty, ccssValue) {
+function translateValue(sceneDrawGroup, ccssProperty, ccssValue) {
     if (ccssProperty.indexOf('comp-op') >= 0) {
         switch (ccssValue) {
             case 'src-over':
@@ -110,7 +110,7 @@ function translateValue(yamlDrawGroup, ccssProperty, ccssValue) {
         }
     }
     if (referenceCSS[ccssProperty].type === 'color') {
-        return getColorFromLiteral(yamlDrawGroup, ccssValue, ccssProperty.indexOf('fill') >= 0);
+        return getColorFromLiteral(sceneDrawGroup, ccssValue, ccssProperty.indexOf('fill') >= 0);
     }
     if (ccssProperty.indexOf('width') >= 0) {
         ccssValue += 'px';
@@ -118,22 +118,22 @@ function translateValue(yamlDrawGroup, ccssProperty, ccssValue) {
     return ccssValue;
 }
 
-//Sets a YAML property, managing special cases (outlines and opacities)
-function setYAMLProperty(yamlDrawGroup, tangramName, value) {
+//Sets a scene property, managing special cases (outlines and opacities)
+function setSceneProperty(sceneDrawGroup, tangramName, value) {
     if (tangramName.startsWith('outline:')) {
-        if (yamlDrawGroup.outline === undefined) {
-            yamlDrawGroup.outline = {};
+        if (sceneDrawGroup.outline === undefined) {
+            sceneDrawGroup.outline = {};
         }
-        yamlDrawGroup.outline[tangramName.slice(tangramName.indexOf(':') + 1)] = value;
+        sceneDrawGroup.outline[tangramName.slice(tangramName.indexOf(':') + 1)] = value;
     } else if (tangramName.startsWith('opacity:')) {
-        yamlDrawGroup._hidden[tangramName] = value;
+        sceneDrawGroup._hidden[tangramName] = value;
     } else {
-        yamlDrawGroup[tangramName] = value;
+        sceneDrawGroup[tangramName] = value;
     }
 }
 
-//Define a YAML draw style property originally contained in layer, named ccssName (in referenceCSS), with the related tangramName
-function defProperty(yamlDrawGroup, layer, ccssName, tangramName) {
+//Define a scene draw style property originally contained in layer, named ccssName (in referenceCSS), with the related tangramName
+function defProperty(sceneDrawGroup, layer, ccssName, tangramName) {
     const defaultValue = getReferenceDefault(ccssName);
     const shaderValue = layer.shader[ccssName];
     var value;
@@ -141,16 +141,16 @@ function defProperty(yamlDrawGroup, layer, ccssName, tangramName) {
         if (ccssName.indexOf('dash') >= 0) {
             return;
         }
-        value = translateValue(yamlDrawGroup, ccssName, defaultValue);
+        value = translateValue(sceneDrawGroup, ccssName, defaultValue);
     } else if (!shaderValue.filtered && shaderValue.constant) {
-        value = translateValue(yamlDrawGroup, ccssName, getLiteralFromShaderValue(shaderValue));
+        value = translateValue(sceneDrawGroup, ccssName, getLiteralFromShaderValue(shaderValue));
     } else {
         if (ccssName.indexOf('comp-op') >= 0) {
             throw new Error('Expression-controlled blending is unsupported');
         }
-        value = getFunctionFromDefaultAndShaderValue(yamlDrawGroup, ccssName, defaultValue, shaderValue);
+        value = getFunctionFromDefaultAndShaderValue(sceneDrawGroup, ccssName, defaultValue, shaderValue);
     }
-    setYAMLProperty(yamlDrawGroup, tangramName, value);
+    setSceneProperty(sceneDrawGroup, tangramName, value);
 }
 
 //Returns a function string that dynamically filters symbolizer based on conditional properties
@@ -165,14 +165,14 @@ function getFilterFn(layer, symbolizer) {
     return wrapFn(`var _value = null; ${fn} return _value !== null;`);
 }
 
-function processPoints(yaml, layer, drawGroupName) {
+function processPoints(scene, layer, drawGroupName) {
     if (layer.shader.symbolizers.indexOf('markers') >= 0) {
-        yaml.filter = getFilterFn(layer, 'markers');
+        scene.filter = getFilterFn(layer, 'markers');
 
-        yaml.draw[drawGroupName] = { _hidden: {} };
-        yaml.styles[drawGroupName] = { base: 'points' };
-        const drawGroup = yaml.draw[drawGroupName];
-        //for each yaml property
+        scene.draw[drawGroupName] = { _hidden: {} };
+        scene.styles[drawGroupName] = { base: 'points' };
+        const drawGroup = scene.draw[drawGroupName];
+        //for each scene property
         //opacity *must* be processed first
         defProperty(drawGroup, layer, 'marker-opacity', 'opacity:general');
         defProperty(drawGroup, layer, 'marker-line-opacity', 'opacity:outline');
@@ -189,14 +189,14 @@ function processPoints(yaml, layer, drawGroupName) {
     }
 }
 
-function processLines(yaml, layer, drawGroupName) {
+function processLines(scene, layer, drawGroupName) {
     if (layer.shader.symbolizers.indexOf('line') >= 0) {
-        yaml.filter = getFilterFn(layer, 'line');
+        scene.filter = getFilterFn(layer, 'line');
 
-        yaml.draw[drawGroupName] = { _hidden: {} };
-        yaml.styles[drawGroupName] = { base: 'lines' };
-        const drawGroup = yaml.draw[drawGroupName];
-        //for each yaml property
+        scene.draw[drawGroupName] = { _hidden: {} };
+        scene.styles[drawGroupName] = { base: 'lines' };
+        const drawGroup = scene.draw[drawGroupName];
+        //for each scene property
         //opacity *must* be processed first
         defProperty(drawGroup, layer, 'line-opacity', 'opacity:general');
 
@@ -210,14 +210,14 @@ function processLines(yaml, layer, drawGroupName) {
     }
 }
 
-function processPolys(yaml, layer, drawGroupName) {
+function processPolys(scene, layer, drawGroupName) {
     if (layer.shader.symbolizers.indexOf('polygon') >= 0) {
-        yaml.filter = getFilterFn(layer, 'polygon');
+        scene.filter = getFilterFn(layer, 'polygon');
 
-        yaml.draw[drawGroupName] = { _hidden: {} };
-        yaml.styles[drawGroupName] = { base: 'polygons' };
-        const drawGroup = yaml.draw[drawGroupName];
-        //for each yaml property
+        scene.draw[drawGroupName] = { _hidden: {} };
+        scene.styles[drawGroupName] = { base: 'polygons' };
+        const drawGroup = scene.draw[drawGroupName];
+        //for each scene property
         //opacity *must* be processed first
         defProperty(drawGroup, layer, 'polygon-opacity', 'opacity:general');
 
@@ -228,14 +228,14 @@ function processPolys(yaml, layer, drawGroupName) {
     }
 }
 
-function processStyle(yaml, drawGroupName, layerOrder) {
-    yaml.styles[drawGroupName].blend = yaml.draw[drawGroupName].blend;
-    yaml.styles[drawGroupName].blend_order = layerOrder;
-    delete yaml.draw[drawGroupName].blend;
+function processStyle(scene, drawGroupName, layerOrder) {
+    scene.styles[drawGroupName].blend = scene.draw[drawGroupName].blend;
+    scene.styles[drawGroupName].blend_order = layerOrder;
+    delete scene.draw[drawGroupName].blend;
 }
 
-function layerToYAML(layer, layerOrder) {
-    var yaml = {
+function layerToScene(layer, layerOrder) {
+    var scene = {
         draw: {},
         styles: {},
         textures: {}
@@ -244,16 +244,16 @@ function layerToYAML(layer, layerOrder) {
         throw new Error('Multiple symbolizer on one layer is not supported');
     } else if (layer.shader.symbolizers.length === 1) {
         const drawGroupName = `drawGroup${layerOrder}`;
-        processPoints(yaml, layer, drawGroupName);
-        processLines(yaml, layer, drawGroupName);
-        processPolys(yaml, layer, drawGroupName);
+        processPoints(scene, layer, drawGroupName);
+        processLines(scene, layer, drawGroupName);
+        processPolys(scene, layer, drawGroupName);
 
-        processStyle(yaml, drawGroupName, layerOrder);
+        processStyle(scene, drawGroupName, layerOrder);
     }
-    return yaml;
+    return scene;
 }
-module.exports.layerToYAML = layerToYAML;
-module.exports.carto2Draw = layerToYAML;
+module.exports.layerToScene = layerToScene;
+module.exports.carto2Draw = layerToScene;
 
 
 /*
@@ -271,7 +271,7 @@ const layers = CartoCSSRenderer.render(css).getLayers();
 console.log(layers[0]);
 console.log(layers[1]);
 
-console.log('YAML');
-//console.log('\nlayerToYAML:\n', JSON.stringify(layerToYAML(layers[0], 0), null, 4));
-console.log('\nlayerToYAML:\n', JSON.stringify(layerToYAML(layers[1], 1), null, 4));
+console.log('scene');
+//console.log('\nlayerToscene:\n', JSON.stringify(layerToscene(layers[0], 0), null, 4));
+console.log('\nlayerToscene:\n', JSON.stringify(layerToscene(layers[1], 1), null, 4));
 */

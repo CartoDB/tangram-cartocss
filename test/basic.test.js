@@ -16,7 +16,7 @@ describe('Markers', function () {
     scenarios.forEach(function (scenario) {
         describe(scenario.name, function () {
             const expected = scenario.expected;
-            const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(scenario.ccss).getLayers()[0], 0);
+            const output = tangram_carto.layerToScene(CartoCSSRenderer.render(scenario.ccss).getLayers()[0], 0);
             //console.log(JSON.stringify(output, null, 4));
             it('.draw', function () {
                 assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.color, scenario.feature), color.normalize(expected.color, tangramReference));
@@ -41,7 +41,7 @@ describe('Markers', function () {
     });
     it('should be empty when symbolizer is not active', function () {
         const ccss = '#layer{}';
-        const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
+        const output = tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
         assert.ok(output.draw.drawGroup0 === undefined);
     });
 });
@@ -52,7 +52,7 @@ it('polygon default', function () {
       polygon-opacity: 1;
     }
     `;
-    const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
+    const output = tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
     assert.strictEqual(output.draw.drawGroup0.color, color.normalize(getReferenceDefaultPolygonValue('fill')));
     assert.strictEqual(output.styles.drawGroup0.blend, 'overlay');
     assert.strictEqual(output.styles.drawGroup0.blend_order, 0);
@@ -66,7 +66,7 @@ it('polygon all defined', function () {
         polygon-comp-op: src-over;
     }
     `;
-    const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
+    const output = tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
 
     assert.strictEqual(output.draw.drawGroup0.color, 'rgba(255,0,0,0.1)');
     assert.strictEqual(output.styles.drawGroup0.blend, 'overlay');
@@ -81,7 +81,7 @@ it('line default', function () {
       line-opacity: 1;
     }
     `;
-    const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
+    const output = tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
     assert.strictEqual(output.draw.drawGroup0.color,
         color.normalize(getReferenceDefaultLineValue('stroke')));
     assert.strictEqual(output.draw.drawGroup0.width, getReferenceDefaultLineValue('stroke-width') + 'px');
@@ -102,7 +102,7 @@ it('line all defined', function () {
         line-comp-op: plus;
     }
     `;
-    const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
+    const output = tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
     assert.strictEqual(output.draw.drawGroup0.color, 'rgba(255,0,0,0.2)');
     assert.strictEqual(output.draw.drawGroup0.width, 0.1 + 'px');
     assert.strictEqual(output.draw.drawGroup0.join, 'round');
@@ -122,7 +122,7 @@ it('multiple layers', function () {
         line-opacity: 1;
       }
     `;
-    const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[1], 1);
+    const output = tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[1], 1);
     assert.strictEqual(output.draw.drawGroup1.color, color.normalize(getReferenceDefaultLineValue('stroke')));
     assert.strictEqual(output.draw.drawGroup1.width, getReferenceDefaultLineValue('stroke-width') + 'px');
     assert.strictEqual(output.draw.drawGroup1.join, getReferenceDefaultLineValue('stroke-linejoin'));
@@ -140,7 +140,7 @@ it('metersperpixel', function () {
         }
     }
     `;
-    const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 1);
+    const output = tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 1);
     assert.strictEqual(output.draw.drawGroup1.color, color.normalize(getReferenceDefaultLineValue('stroke')));
     assert.strictEqual(evalIfNeeded(output.draw.drawGroup1.width, { j: 1 }, 5), 10);
     assert.strictEqual(output.draw.drawGroup1.join, getReferenceDefaultLineValue('stroke-linejoin'));
@@ -155,7 +155,7 @@ it('dash', function () {
         line-dasharray: 2,3;
     }
     `;
-    const output = tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 1);
+    const output = tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 1);
     assert.strictEqual(output.draw.drawGroup1.color, color.normalize(getReferenceDefaultLineValue('stroke')));
     assert.strictEqual(output.draw.drawGroup1.width, getReferenceDefaultLineValue('stroke-width') + 'px');
     assert.strictEqual(output.draw.drawGroup1.join, getReferenceDefaultLineValue('stroke-linejoin'));
@@ -173,7 +173,7 @@ it('multiple symbolizers on one layer should generate an exception', function ()
         marker-fill: red;
     }
     `;
-    assert.throws(() => tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 1));
+    assert.throws(() => tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 1));
 });
 
 it('conditional blending should generate an exception', function () {
@@ -183,5 +183,5 @@ it('conditional blending should generate an exception', function () {
             marker-comp-op: plus;
         }
     }`;
-    assert.throws(() => tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 0));
+    assert.throws(() => tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 0));
 });
