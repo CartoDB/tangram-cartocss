@@ -8,8 +8,8 @@
     "url": "git://github.com/cartodb/tangram-cartocss.git"
   },
   "dependencies": {
-    "carto": "github:cartodb/carto#dasharrayJSsupport",
-    "tangram-reference": "github:cartodb/tangram-reference#inconsistency-fix"
+    "carto": "github:cartodb/carto",
+    "tangram-reference": "github:cartodb/tangram-reference"
   },
   "devDependencies": {
     "jshint": "^2.9.5",
