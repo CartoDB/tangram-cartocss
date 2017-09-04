@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "carto": "github:cartodb/carto",
-    "tangram-reference": "github:cartodb/tangram-reference"
+    "tangram-reference": "^2.0.1"
   },
   "devDependencies": {
     "jshint": "^2.9.5",
