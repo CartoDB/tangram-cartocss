@@ -254,24 +254,3 @@ function layerToScene(layer, layerOrder) {
 }
 module.exports.layerToScene = layerToScene;
 module.exports.carto2Draw = layerToScene;
-
-
-/*
-//Usage example
-const Carto = require('carto');
-const CartoCSSRenderer = new Carto.RendererJS({
-    reference: tangramReference,
-    strict: true
-});
-const css = `
-  #layer {
-    line-dasharray: 2,3
-  }`;
-const layers = CartoCSSRenderer.render(css).getLayers();
-console.log(layers[0]);
-console.log(layers[1]);
-
-console.log('scene');
-//console.log('\nlayerToscene:\n', JSON.stringify(layerToscene(layers[0], 0), null, 4));
-console.log('\nlayerToscene:\n', JSON.stringify(layerToscene(layers[1], 1), null, 4));
-*/
