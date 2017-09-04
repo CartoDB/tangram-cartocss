@@ -16,7 +16,7 @@ const referenceCSS = getReferenceIndexedByCSS(tangramReference);
 
 
 function wrapFn(functionBody) {
-    return 'function (){var data=feature; var ctx={zoom: $zoom};' + functionBody + '}';
+    return `function (){var data=feature; var ctx={zoom: $zoom};${functionBody}}`;
 }
 function getReferenceDefault(property) {
     return referenceCSS[property]['default-value'];
