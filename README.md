@@ -19,38 +19,21 @@ import CCSS from 'tangram-cartocss';
 #### `.carto2Draw`
 
 ```javascript
-/**
- * Transform a cartocss string into a Tangram draw layer config object.
- * @param  {String} cartocss   string with cartocsm
- * @return {Object}            return a draw object with the style functions
- */
-var cartocss = '#layer { polygon-fill: '#DF038A';}';
-
-var draw = CCSS.carto2draw(cartocss);
-
-draw == {
-  polygons: {
-    color: 'function () { var toRet = null;  toRet = "#DF038A";  return toRet;}'
-  }
-};
-```
-
-## How to try with tangram
-
-```javascript
-var cartocss = `
-  #layer {
-   marker-fill: red;
-   marker-width: 10;
-  }
-  `;
-scene_layer = Tangram.leafletLayer({
-  scene: 'demos/scene.yaml',
-  logLevel: 'debug'
-}).addTo(map);
-
-map.setView( [ 40.7, -74.009 ], 14 );
-  scene_layer.scene.config.layers.buildings.draw = CCSS.carto2Draw(cartocss);
-  scene_layer.scene.updateConfig();
+const Carto = require('carto');
+const CartoCSSRenderer = new Carto.RendererJS({
+    reference: tangramReference,
+    strict: true
 });
+const css = `
+  #layer {
+    line-dasharray: 2,3
+  }`;
+const layers = CartoCSSRenderer.render(css).getLayers();
+console.log('\nlayerToYAML:\n', JSON.stringify(layerToYAML(layers[1], 1), null, 4));
 ```
+
+## Limitations
+
+Currently, this doesn't support texts, although Tangram supports it.
+
+There are other limitations, but they are imposed by Tangram and tangram-reference.
