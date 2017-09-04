@@ -1,4 +1,6 @@
 const { getReferenceDefaultMarkerValue } = require('./utils.js');
+const color = require('../src/color.js');
+const tangramReference = require('tangram-reference').load();
 
 module.exports = [
     {
@@ -236,7 +238,46 @@ module.exports = [
             outlineColor: getReferenceDefaultMarkerValue('stroke'),
             outlineSize: getReferenceDefaultMarkerValue('stroke-width')
         }
+    },
+
+
+
+    {
+        name: 'filtering, pass point',
+        ccss: `
+          #layer{
+            [a>2]{
+                marker-type: ellipse;
+            }
+        }
+          `,
+        feature: { a: 3 },
+        expected: {
+            color: getReferenceDefaultMarkerValue('fill'),
+            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            size: getReferenceDefaultMarkerValue('width'),
+            blend: 'overlay',
+            outlineColor: getReferenceDefaultMarkerValue('stroke'),
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+        }
+    },{
+        name: 'filtering, reject point',
+        ccss: `
+          #layer{
+            [a>2]{
+                marker-type: ellipse;
+            }
+        }
+          `,
+        feature: { a: 0 },
+        expected: {
+            color: getReferenceDefaultMarkerValue('fill'),
+            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            size: getReferenceDefaultMarkerValue('width'),
+            blend: 'overlay',
+            outlineColor: getReferenceDefaultMarkerValue('stroke'),
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+        }
     }
     //TODO Test complex case
-
 ];

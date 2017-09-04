@@ -32,6 +32,11 @@ describe('Markers', function () {
                 assert.strictEqual(output.styles.drawGroup0.blend_order, 0);
                 assert.strictEqual(output.styles.drawGroup0.base, 'points');
             });
+            if (expected.filter !== undefined) {
+                it('.filter', function () {
+                    assert.strictEqual(evalIfNeeded(output.filter, scenario.feature), expected.filter);
+                });
+            }
         });
     });
     it('should be empty when symbolizer is not active', function () {
@@ -170,3 +175,13 @@ it('multiple symbolizers on one layer should generate an exception', function ()
     `;
     assert.throws(() => tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 1));
 });
+
+it('conditional blending should generate an exception', function () {
+    const ccss = `
+    #layer{
+        [a>2]{
+            marker-comp-op: plus;
+        }
+    }`;
+    assert.throws(() => tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 0));
+})

@@ -138,13 +138,16 @@ function defProperty(yamlDrawGroup, layer, ccssName, tangramName) {
     const shaderValue = layer.shader[ccssName];
     var value;
     if (shaderValue === undefined) {
-        if (ccssName.indexOf('dash')>=0){
+        if (ccssName.indexOf('dash') >= 0) {
             return;
         }
         value = translateValue(yamlDrawGroup, ccssName, defaultValue);
     } else if (!shaderValue.filtered && shaderValue.constant) {
         value = translateValue(yamlDrawGroup, ccssName, getLiteralFromShaderValue(shaderValue));
     } else {
+        if (ccssName.indexOf('comp-op') >= 0) {
+            throw new Error('Expression-controlled blending is unsupported');
+        }
         value = getFunctionFromDefaultAndShaderValue(yamlDrawGroup, ccssName, defaultValue, shaderValue);
     }
     setYAMLProperty(yamlDrawGroup, tangramName, value);
