@@ -32,3 +32,8 @@ const layers = CartoCSSRenderer.render(css).getLayers();
 console.log('\nlayerToYAML:\n', JSON.stringify(layerToYAML(layers[1], 1), null, 4));
 ```
 
+## Limitations
+
+Currently, this doesn't support texts, although Tangram supports it.
+
+There are other limitations, but they are imposed by Tangram and tangram-reference.
