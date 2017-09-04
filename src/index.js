@@ -1,5 +1,11 @@
+const carto = require('carto');
 const tangramReference = require('tangram-reference').load();
 const color = require('./color.js');
+
+const cartoRenderer = new carto.RendererJS({
+    reference: tangramReference,
+    strict: true
+});
 
 //getReferenceIndexedByCSS returns a reference based on ref indexed by the CSS property name instead of the reference original property name
 //it does a shallow copy of each property, therefore, it's possible to change the returned reference by changing the original one, don't do it
@@ -253,4 +259,29 @@ function layerToScene(layer, layerOrder) {
     return scene;
 }
 module.exports.layerToScene = layerToScene;
-module.exports.carto2Draw = layerToScene;
+
+function cartoCssToDrawGroups(cartoCss) {
+    const drawLayers = cartoRenderer.render(cartoCss).getLayers();
+
+    return drawLayers.map((l, i) => {
+        return layerToScene(l, i);
+    });
+}
+module.exports.cartoCssToDrawGroups = cartoCssToDrawGroups;
+
+/**
+ * Returns an object representing whether the CartoCSS is supported or not. If it's not supported
+ * it will have a reason property reflecting the cause.
+ *
+ * @returns {Object} {supported: {Boolean}[, reason: {String}]}
+ */
+module.exports.getSupportResult = function getSupportResult(cartoCss) {
+    var result = { supported: true };
+    try {
+        cartoCssToDrawGroups(cartoCss);
+    } catch (e) {
+        result.supported = false;
+        result.reason = e.message || 'unknown';
+    }
+    return result;
+};
