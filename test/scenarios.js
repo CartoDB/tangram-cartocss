@@ -1,6 +1,4 @@
 const { getReferenceDefaultMarkerValue } = require('./utils.js');
-const color = require('../src/color.js');
-const tangramReference = require('tangram-reference').load();
 
 module.exports = [
     {

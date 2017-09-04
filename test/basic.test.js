@@ -184,4 +184,4 @@ it('conditional blending should generate an exception', function () {
         }
     }`;
     assert.throws(() => tangram_carto.layerToYAML(CartoCSSRenderer.render(ccss).getLayers()[0], 0));
-})
+});
