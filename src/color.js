@@ -2,7 +2,7 @@
 //rgba() format use the following ranges: [0-255] for RGB and [0-1] for the alpha channel
 
 function marshall(color) {
-    return 'rgba(' + Math.round(color.r) + ',' + Math.round(color.g) + ',' + Math.round(color.b) + ',' + color.a + ')';
+    return `rgba(${Math.round(color.r)},${Math.round(color.g)},${Math.round(color.b)},${color.a})`;
 }
 module.exports.marshall = marshall;
 
