@@ -185,3 +185,14 @@ it('conditional blending should generate an exception', function () {
     }`;
     assert.throws(() => tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 0));
 });
+
+it('dynamic marker-allow-overlap should generate an exception', function () {
+    const ccss = `
+    #layer{
+        marker-allow-overlap: false;
+        [a>2]{
+            marker-allow-overlap: true;
+        }
+    }`;
+    assert.throws(() => tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 0));
+});
