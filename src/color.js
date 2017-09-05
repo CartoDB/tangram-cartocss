@@ -35,7 +35,7 @@ function unmarshall(color, reference = null) {
         result.b = rgbArray[2];
         result.a = 1;
     } else {
-        throw new Error('color format not recognized, color: ' + color);
+        throw new Error(`color format not recognized, color: ${color}`);
     }
     return result;
 }
