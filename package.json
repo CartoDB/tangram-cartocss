@@ -2,7 +2,7 @@
   "name": "tangram-cartocss",
   "version": "0.8.1",
   "description": "Transform cartocss into a draw tangram object.",
-  "main": "src/index.js",
+  "main": "dist/tangram-cartocss.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/cartodb/tangram-cartocss.git"
@@ -12,10 +12,16 @@
     "tangram-reference": "^2.0.0"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
     "jshint": "^2.9.5",
-    "mocha": "^3.5.0"
+    "mocha": "^3.5.0",
+    "webpack": "^3.5.5"
   },
   "scripts": {
+    "build": "webpack",
+    "prepublish": "npm run build",
     "test": "mocha && npm run lint",
     "test:watch": "mocha -w",
     "lint": "$(npm bin)/jshint src/ test/"
