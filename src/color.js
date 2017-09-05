@@ -6,7 +6,7 @@ function marshall(color) {
 }
 module.exports.marshall = marshall;
 
-function unmarshall(color, reference = null) {
+function unmarshall(color, reference) {
     function hexToInt(hex) {
         return parseInt('0x' + hex);
     }
