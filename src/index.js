@@ -151,8 +151,8 @@ function defProperty(sceneDrawGroup, layer, ccssName, tangramName) {
     } else if (!shaderValue.filtered && shaderValue.constant) {
         value = translateValue(sceneDrawGroup, ccssName, getLiteralFromShaderValue(shaderValue));
     } else {
-        if (ccssName.indexOf('comp-op') >= 0) {
-            throw new Error('Expression-controlled blending is unsupported');
+        if (!referenceCSS[ccssName].expression) {
+            throw new Error(`Expression-controlled ${ccssName} is unsupported`);
         }
         value = getFunctionFromDefaultAndShaderValue(sceneDrawGroup, ccssName, defaultValue, shaderValue);
     }
