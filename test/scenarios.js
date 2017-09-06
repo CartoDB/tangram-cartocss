@@ -10,7 +10,7 @@ module.exports = [
       `,
         expected: {
             color: getReferenceDefaultMarkerValue('fill'),
-            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            collide: !getReferenceDefaultMarkerValue('allow-overlap'),
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'overlay',
             outlineColor: getReferenceDefaultMarkerValue('stroke'),
@@ -28,7 +28,7 @@ module.exports = [
       `,
         expected: {
             color: 'rgba(0,128,0,0.5)',
-            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            collide: !getReferenceDefaultMarkerValue('allow-overlap'),
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'overlay',
             outlineColor: 'rgba(0,0,0,0.5)',
@@ -50,7 +50,7 @@ module.exports = [
         feature: { a: 0 },
         expected: {
             color: 'rgba(0,128,0,0.5)',
-            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            collide: !getReferenceDefaultMarkerValue('allow-overlap'),
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'overlay',
             outlineColor: 'rgba(0,0,0,0.5)',
@@ -72,7 +72,7 @@ module.exports = [
         feature: { a: 5 },
         expected: {
             color: 'rgba(0,128,0,0.1)',
-            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            collide: !getReferenceDefaultMarkerValue('allow-overlap'),
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'overlay',
             outlineColor: 'rgba(0,0,0,0.1)',
@@ -94,7 +94,7 @@ module.exports = [
         feature: { a: 0 },
         expected: {
             color: 'rgba(255,255,255,0.5)',
-            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            collide: !getReferenceDefaultMarkerValue('allow-overlap'),
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'overlay',
             outlineColor: 'rgba(0,0,0,0.5)',
@@ -116,7 +116,7 @@ module.exports = [
         feature: { a: 5 },
         expected: {
             color: 'rgba(0,0,0,0.5)',
-            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            collide: !getReferenceDefaultMarkerValue('allow-overlap'),
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'overlay',
             outlineColor: 'rgba(0,0,0,0.5)',
@@ -141,7 +141,7 @@ module.exports = [
         feature: { a: 0, b: 0 },
         expected: {
             color: 'rgba(255,255,255,0.5)',
-            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            collide: !getReferenceDefaultMarkerValue('allow-overlap'),
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'overlay',
             outlineColor: 'rgba(0,0,0,0.5)',
@@ -157,7 +157,7 @@ module.exports = [
           `,
         expected: {
             color: 'rgba(0,0,255,1)',
-            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            collide: !getReferenceDefaultMarkerValue('allow-overlap'),
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'overlay',
             outlineColor: 'rgba(0,0,0,0.2)',
@@ -173,7 +173,7 @@ module.exports = [
           `,
         expected: {
             color: 'rgba(0,0,255,0.2)',
-            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            collide: !getReferenceDefaultMarkerValue('allow-overlap'),
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'overlay',
             outlineColor: 'rgba(0,0,0,1)',
@@ -191,7 +191,7 @@ module.exports = [
           `,
         expected: {
             color: 'rgba(0,0,255,0.5)',
-            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            collide: !getReferenceDefaultMarkerValue('allow-overlap'),
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'overlay',
             outlineColor: 'rgba(0,0,0,0.5)',
@@ -213,7 +213,7 @@ module.exports = [
         feature: { a: 3 },
         expected: {
             color: 'rgba(0,0,255,0.7)',
-            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            collide: !getReferenceDefaultMarkerValue('allow-overlap'),
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'overlay',
             outlineColor: 'rgba(0,0,0,0.7)',
@@ -230,7 +230,7 @@ module.exports = [
         feature: { a: 3 },
         expected: {
             color: getReferenceDefaultMarkerValue('fill'),
-            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            collide: !getReferenceDefaultMarkerValue('allow-overlap'),
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'add',
             outlineColor: getReferenceDefaultMarkerValue('stroke'),
@@ -252,7 +252,7 @@ module.exports = [
         feature: { a: 3 },
         expected: {
             color: getReferenceDefaultMarkerValue('fill'),
-            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            collide: !getReferenceDefaultMarkerValue('allow-overlap'),
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'overlay',
             outlineColor: getReferenceDefaultMarkerValue('stroke'),
@@ -270,7 +270,7 @@ module.exports = [
         feature: { a: 0 },
         expected: {
             color: getReferenceDefaultMarkerValue('fill'),
-            collide: getReferenceDefaultMarkerValue('allow-overlap'),
+            collide: !getReferenceDefaultMarkerValue('allow-overlap'),
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'overlay',
             outlineColor: getReferenceDefaultMarkerValue('stroke'),

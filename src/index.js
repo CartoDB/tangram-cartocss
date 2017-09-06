@@ -121,6 +121,9 @@ function translateValue(sceneDrawGroup, ccssProperty, ccssValue) {
     if (ccssProperty.indexOf('width') >= 0) {
         ccssValue += 'px';
     }
+    if (ccssProperty.indexOf('allow-overlap') >= 0) {
+        ccssValue = !ccssValue;
+    }
     return ccssValue;
 }
 
