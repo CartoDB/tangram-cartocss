@@ -25,6 +25,9 @@
     "test:watch": "mocha -w",
     "lint": "$(npm bin)/jshint src/ test/"
   },
+  "browserify": {
+    "transform": [["babelify", { "presets": ["es2015"] }]]
+  },
   "keywords": [
     "maps",
     "graphics",
