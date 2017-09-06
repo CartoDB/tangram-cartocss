@@ -196,3 +196,15 @@ it('dynamic marker-allow-overlap should generate an exception', function () {
     }`;
     assert.throws(() => tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 0));
 });
+
+it('default color must be normalized at code-generation time', function () {
+    const ccss = `
+    #layer {
+        marker-line-opacity: 1;
+        [sov_a3 = 'RUS'] {
+            marker-line-color: #FFF;
+        }
+      }`;
+    const output = tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
+    assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.outline.color, { sov_a3: '' }), color.normalize(getReferenceDefaultLineValue('stroke'), tangramReference));
+});
