@@ -256,7 +256,8 @@ module.exports = [
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'overlay',
             outlineColor: getReferenceDefaultMarkerValue('stroke'),
-            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width'),
+            filter: true
         }
     },{
         name: 'filtering, reject point',
@@ -274,7 +275,8 @@ module.exports = [
             size: getReferenceDefaultMarkerValue('width'),
             blend: 'overlay',
             outlineColor: getReferenceDefaultMarkerValue('stroke'),
-            outlineSize: getReferenceDefaultMarkerValue('stroke-width')
+            outlineSize: getReferenceDefaultMarkerValue('stroke-width'),
+            filter: false
         }
     }
     //TODO Test complex case
