@@ -65,7 +65,7 @@ function getColorFromLiteral(sceneDrawGroup, colorLiteral, isFill) {
             c.a = opacity;
             return color.marshall(c);
         } else {
-            return wrapFn(`return 'rgba(${c.r},${c.g},${c.b},'+${opacity}()+')';`);
+            return wrapFn(`var opacity=${opacity}();return opacity===undefined? 'rgba(${c.r},${c.g},${c.b},${c.a})': 'rgba(${c.r},${c.g},${c.b},'+opacity+')';`);
         }
     } else {
         //This marshall is needed to normalize the literal, if we just return c and it is one of the reference defined colors
