@@ -99,7 +99,7 @@ function getFunctionFromDefaultAndShaderValue(sceneDrawGroup, ccssProperty, defa
     if (referenceCSS[ccssProperty].type === 'color') {
         fn += getColorOverrideCode(sceneDrawGroup, ccssProperty.indexOf('fill') >= 0);
     }
-    if (ccssProperty.indexOf('width') >= 0) {
+    if (ccssProperty === 'line-width') {
         fn += '_value=_value*$meters_per_pixel;';
     }
     fn += 'return _value;';
