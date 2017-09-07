@@ -90,7 +90,7 @@ function getColorOverrideCode(sceneDrawGroup, isFill) {
 //Returns a function string that sets the value to the default one and then executes the shader value code
 function getFunctionFromDefaultAndShaderValue(sceneDrawGroup, ccssProperty, defaultValue, shaderValue) {
     if (referenceCSS[ccssProperty].type === 'color') {
-        defaultValue = color.normalize(defaultValue, tangramReference);
+        defaultValue = `'${color.normalize(defaultValue, tangramReference)}'`;
     }
     var fn = `var _value=${defaultValue};`;
     shaderValue.js.forEach(function (code) {
