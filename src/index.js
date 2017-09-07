@@ -80,7 +80,7 @@ function getColorOverrideCode(sceneDrawGroup, isFill) {
         if (isNumeric(opacity)) {
             return `var c=${color.unmarshall.toString()}(_value);c.a=${opacity};_value=${color.marshall.toString()}(c);`;
         } else {
-            return `var opacity=${opacity}(); var c=${color.unmarshall.toString()}(_value);c.a=opacity;_value=${color.marshall.toString()}(c);`;
+            return `var opacity=${opacity}(); var c=${color.unmarshall.toString()}(_value);c.a=opacity===undefined?c.a:opacity;_value=${color.marshall.toString()}(c);`;
         }
     } else {
         return '';
