@@ -158,7 +158,14 @@ function defProperty(sceneDrawGroup, layer, ccssName, tangramName) {
 
 //Returns a function string that dynamically filters symbolizer based on conditional properties
 function getFilterFn(layer, symbolizer) {
-    //TODO: optimize, not need to set a callback when at least one property is not filtered (i.e. it always activates the symbolizer)
+    //No need to set a callback when at least one property is not filtered (i.e. it always activates the symbolizer)
+    const alwaysActive = Object.keys(layer.shader)
+    .filter(property => layer.shader[property].symbolizer === symbolizer)
+    .map((property) => !layer.shader[property].filtered)
+    .reduce((a, b) => a || b, false);
+    if (alwaysActive){
+        return undefined;
+    }
     const fn = Object.keys(layer.shader)
         .filter(property => layer.shader[property].symbolizer === symbolizer)
         .map((property) => layer.shader[property].js)
