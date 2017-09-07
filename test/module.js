@@ -9,7 +9,7 @@ const CartoCSSRenderer = new Carto.RendererJS({
 const color = require('../src/color.js');
 
 const tangram_carto = require('../src/index.js');
-const scenarios = require('./scenarios.js');
+const scenarios = require('./module_marker_scenarios.js');
 const { evalIfNeeded, getReferenceDefaultLineValue, getReferenceDefaultPolygonValue } = require('./utils.js');
 
 describe('Markers', function () {
