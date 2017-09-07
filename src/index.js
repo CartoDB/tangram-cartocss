@@ -92,7 +92,7 @@ function getFunctionFromDefaultAndShaderValue(sceneDrawGroup, ccssProperty, defa
     if (referenceCSS[ccssProperty].type === 'color') {
         defaultValue = color.normalize(defaultValue, tangramReference);
     }
-    var fn = `var _value='${defaultValue}';`;
+    var fn = `var _value=${defaultValue};`;
     shaderValue.js.forEach(function (code) {
         fn += code;
     });
