@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "carto": "github:cartodb/carto#master",
-    "tangram-reference": "github:cartodb/tangram-reference#dot-properties"
+    "tangram-reference": "~2.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
