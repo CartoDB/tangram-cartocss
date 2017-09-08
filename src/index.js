@@ -31,6 +31,25 @@ function processPoints(scene, layer, drawGroupName) {
     }
 }
 
+function processDots(scene, layer, drawGroupName) {
+    if (layer.shader.symbolizers.indexOf('dot') >= 0) {
+        scene.filter = translate.getFilterFn(layer, 'dot');
+
+        scene.draw[drawGroupName] = { _hidden: {} };
+        scene.styles[drawGroupName] = { base: 'points' };
+        const drawGroup = scene.draw[drawGroupName];
+        //for each scene property
+        //opacity *must* be processed first
+        translate.defProperty(drawGroup, layer, 'dot-opacity', 'opacity:general');
+
+        translate.defProperty(drawGroup, layer, 'dot-fill', 'color');
+        translate.defProperty(drawGroup, layer, 'dot-width', 'size');
+        translate.defProperty(drawGroup, layer, 'dot-comp-op', 'blend');
+
+        delete drawGroup._hidden;
+    }
+}
+
 function processLines(scene, layer, drawGroupName) {
     if (layer.shader.symbolizers.indexOf('line') >= 0) {
         scene.filter = translate.getFilterFn(layer, 'line');
@@ -87,6 +106,7 @@ function layerToScene(layer, layerOrder) {
     } else if (layer.shader.symbolizers.length === 1) {
         const drawGroupName = `drawGroup${layerOrder}`;
         processPoints(scene, layer, drawGroupName);
+        processDots(scene, layer, drawGroupName);
         processLines(scene, layer, drawGroupName);
         processPolys(scene, layer, drawGroupName);
 

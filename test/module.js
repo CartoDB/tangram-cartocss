@@ -208,3 +208,37 @@ it('default color must be normalized at code-generation time', function () {
     const output = tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
     assert.strictEqual(evalIfNeeded(output.draw.drawGroup0.outline.color, { sov_a3: '' }), color.normalize(getReferenceDefaultLineValue('stroke'), tangramReference));
 });
+
+describe('dot', function() {
+    it('happy case', function () {
+        const ccss = `
+        #layer {
+            dot-fill: red;
+            dot-width: 10;
+        }`;
+        const output = tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
+        assert.strictEqual(output.draw.drawGroup0.color, color.normalize('red', tangramReference));
+        assert.strictEqual(output.draw.drawGroup0.size, '10px');
+    });
+
+    it('dot width default value', function () {
+        const ccss = `
+        #layer {
+            dot-fill: green;
+        }`;
+        const output = tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
+        assert.strictEqual(output.draw.drawGroup0.color, color.normalize('green', tangramReference));
+        assert.strictEqual(output.draw.drawGroup0.size, '1px');
+    });
+
+
+    it('dot opacity', function () {
+        const ccss = `
+        #layer {
+            dot-fill: blue;
+            dot-opacity: 0.5;
+        }`;
+        const output = tangram_carto.layerToScene(CartoCSSRenderer.render(ccss).getLayers()[0], 0);
+        assert.strictEqual(output.draw.drawGroup0.color, 'rgba(0,0,255,0.5)');
+    });
+});
