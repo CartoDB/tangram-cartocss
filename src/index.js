@@ -109,7 +109,7 @@ function layerToScene(layer, layerOrder) {
         processDots(scene, layer, drawGroupName);
         processLines(scene, layer, drawGroupName);
         processPolys(scene, layer, drawGroupName);
-
+        scene.draw[drawGroupName].order = layerOrder;        
         processStyle(scene, drawGroupName, layerOrder);
     }
     return scene;
