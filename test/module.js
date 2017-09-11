@@ -129,6 +129,7 @@ it('multiple layers', function () {
     assert.strictEqual(output.draw.drawGroup1.cap, getReferenceDefaultLineValue('stroke-linecap'));
     assert.strictEqual(output.styles.drawGroup1.blend, 'overlay');
     assert.strictEqual(output.styles.drawGroup1.blend_order, 1);
+    assert.strictEqual(output.draw.drawGroup1.order, 1);
 });
 
 it('metersperpixel', function () {
