@@ -89,13 +89,13 @@ function processPolys(scene, layer, drawGroupName) {
     }
 }
 
-function processStyle(scene, drawGroupName, layerID) {
+function processStyle(scene, drawGroupName, layerOrder) {
     scene.styles[drawGroupName].blend = scene.draw[drawGroupName].blend;
-    scene.styles[drawGroupName].blend_order = layerID;
+    scene.styles[drawGroupName].blend_order = layerOrder;
     delete scene.draw[drawGroupName].blend;
 }
 
-function layerToScene(layer, layerID) {
+function layerToScene(layer, layerOrder) {
     var scene = {
         draw: {},
         styles: {},
@@ -104,23 +104,26 @@ function layerToScene(layer, layerID) {
     if (layer.shader.symbolizers.length > 1) {
         throw new Error('Multiple symbolizer on one layer is not supported');
     } else if (layer.shader.symbolizers.length === 1) {
-        const drawGroupName = `drawGroup${layerID}`;
+        const drawGroupName = `drawGroup${layerOrder}`;
         processPoints(scene, layer, drawGroupName);
         processDots(scene, layer, drawGroupName);
         processLines(scene, layer, drawGroupName);
         processPolys(scene, layer, drawGroupName);
-        scene.draw[drawGroupName].order = layerID;
-        processStyle(scene, drawGroupName, layerID);
+        scene.draw[drawGroupName].order = layerOrder;
+        processStyle(scene, drawGroupName, layerOrder);
     }
     return scene;
 }
 module.exports.layerToScene = layerToScene;
 
-function cartoCssToDrawGroups(cartoCss, superLayerID = '') {
+function cartoCssToDrawGroups(cartoCss, superLayerOrder = 0) {
     const drawLayers = cartoRenderer.render(cartoCss).getLayers();
 
     return drawLayers.map((l, i) => {
-        return layerToScene(l, superLayerID + '_' + i);
+        //Tangram only supports integer orders, we need to mix the order of the sublayer with the order of
+        //the super layer, to avoid clashing we multiple the super layer order by 1000
+        const order = superLayerOrder * 1000 + i;
+        return layerToScene(l, order);
     });
 }
 module.exports.cartoCssToDrawGroups = cartoCssToDrawGroups;
