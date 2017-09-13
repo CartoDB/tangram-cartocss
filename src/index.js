@@ -116,7 +116,7 @@ function layerToScene(layer, layerOrder) {
 }
 module.exports.layerToScene = layerToScene;
 
-function cartoCssToDrawGroups(cartoCss, superLayerOrder = 0) {
+function cartoCssToDrawGroups(cartoCss, superLayerOrder) {
     const drawLayers = cartoRenderer.render(cartoCss).getLayers();
 
     return drawLayers.map((l, i) => {
