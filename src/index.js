@@ -109,18 +109,21 @@ function layerToScene(layer, layerOrder) {
         processDots(scene, layer, drawGroupName);
         processLines(scene, layer, drawGroupName);
         processPolys(scene, layer, drawGroupName);
-        scene.draw[drawGroupName].order = layerOrder;        
+        scene.draw[drawGroupName].order = layerOrder;
         processStyle(scene, drawGroupName, layerOrder);
     }
     return scene;
 }
 module.exports.layerToScene = layerToScene;
 
-function cartoCssToDrawGroups(cartoCss) {
+function cartoCssToDrawGroups(cartoCss, superLayerOrder) {
     const drawLayers = cartoRenderer.render(cartoCss).getLayers();
 
     return drawLayers.map((l, i) => {
-        return layerToScene(l, i);
+        //Tangram only supports integer orders, we need to mix the order of the sublayer with the order of
+        //the super layer, to avoid clashing we multiple the super layer order by 1000
+        const order = superLayerOrder * 1000 + i;
+        return layerToScene(l, order);
     });
 }
 module.exports.cartoCssToDrawGroups = cartoCssToDrawGroups;
