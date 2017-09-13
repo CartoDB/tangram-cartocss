@@ -89,13 +89,13 @@ function processPolys(scene, layer, drawGroupName) {
     }
 }
 
-function processStyle(scene, drawGroupName, layerOrder) {
+function processStyle(scene, drawGroupName, layerID) {
     scene.styles[drawGroupName].blend = scene.draw[drawGroupName].blend;
-    scene.styles[drawGroupName].blend_order = layerOrder;
+    scene.styles[drawGroupName].blend_order = layerID;
     delete scene.draw[drawGroupName].blend;
 }
 
-function layerToScene(layer, layerOrder) {
+function layerToScene(layer, layerID) {
     var scene = {
         draw: {},
         styles: {},
@@ -104,23 +104,23 @@ function layerToScene(layer, layerOrder) {
     if (layer.shader.symbolizers.length > 1) {
         throw new Error('Multiple symbolizer on one layer is not supported');
     } else if (layer.shader.symbolizers.length === 1) {
-        const drawGroupName = `drawGroup${layerOrder}`;
+        const drawGroupName = `drawGroup${layerID}`;
         processPoints(scene, layer, drawGroupName);
         processDots(scene, layer, drawGroupName);
         processLines(scene, layer, drawGroupName);
         processPolys(scene, layer, drawGroupName);
-        scene.draw[drawGroupName].order = layerOrder;        
-        processStyle(scene, drawGroupName, layerOrder);
+        scene.draw[drawGroupName].order = layerID;
+        processStyle(scene, drawGroupName, layerID);
     }
     return scene;
 }
 module.exports.layerToScene = layerToScene;
 
-function cartoCssToDrawGroups(cartoCss) {
+function cartoCssToDrawGroups(cartoCss, superLayerID = '') {
     const drawLayers = cartoRenderer.render(cartoCss).getLayers();
 
     return drawLayers.map((l, i) => {
-        return layerToScene(l, i);
+        return layerToScene(l, superLayerID + '_' + i);
     });
 }
 module.exports.cartoCssToDrawGroups = cartoCssToDrawGroups;
