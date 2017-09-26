@@ -7,6 +7,11 @@ function marshall(color) {
 module.exports.marshall = marshall;
 
 function unmarshall(color, reference) {
+    if (!String.prototype.startsWith) {
+        String.prototype.startsWith = function(searchString, position){
+          return this.substr(position || 0, searchString.length) === searchString;
+      };
+    }
     function hexToInt(hex) {
         return parseInt('0x' + hex);
     }
