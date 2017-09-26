@@ -124,8 +124,12 @@ function layerToScene(layer, layerOrder) {
 module.exports.layerToScene = layerToScene;
 
 function cartoCssToDrawGroups(cartoCss, superLayerOrder) {
-    const drawLayers = cartoRenderer.render(cartoCss).getLayers();
-
+    var drawLayers;
+    try {
+        drawLayers = cartoRenderer.render(cartoCss).getLayers();
+    } catch (error) {
+        throw new Error(`Unsupported CartoCSS: carto renderer rejected it with ${error.message}`);
+    }
     return drawLayers.map((l, i) => {
         //Tangram only supports integer orders, we need to mix the order of the sublayer with the order of
         //the super layer, to avoid clashing we multiple the super layer order by 1000
