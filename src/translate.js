@@ -149,7 +149,7 @@ function defProperty(sceneDrawGroup, layer, ccssName, tangramName) {
         value = translateValue(sceneDrawGroup, ccssName, getLiteralFromShaderValue(shaderValue));
     } else {
         if (!referenceCSS[ccssName].expression) {
-            throw new Error(`Expression-controlled ${ccssName} is unsupported`);
+            throw new Error(`Unsupported CartoCSS: expression-controlled ${ccssName}`);
         }
         value = getFunctionFromDefaultAndShaderValue(sceneDrawGroup, ccssName, defaultValue, shaderValue);
     }

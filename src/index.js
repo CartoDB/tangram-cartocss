@@ -102,7 +102,7 @@ function layerToScene(layer, layerOrder) {
         textures: {}
     };
     if (layer.shader.symbolizers.length > 1) {
-        throw new Error('Multiple symbolizer on one layer is not supported');
+        throw new Error('Unsupported CartoCSS: multiple symbolizer in one layer');
     } else if (layer.shader.symbolizers.length === 1) {
         const drawGroupName = `drawGroup${layerOrder}`;
         processPoints(scene, layer, drawGroupName);
@@ -140,7 +140,7 @@ module.exports.getSupportResult = function getSupportResult(cartoCss) {
         cartoCssToDrawGroups(cartoCss);
     } catch (e) {
         result.supported = false;
-        result.reason = e.message || 'unknown';
+        result.reason = e.message || 'tangram-cartocss unknown error';
     }
     return result;
 };
