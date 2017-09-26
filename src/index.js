@@ -1,3 +1,10 @@
+//startsWith Polyfill
+if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function(searchString, position){
+      return this.substr(position || 0, searchString.length) === searchString;
+  };
+}
+
 const carto = require('carto');
 const tangramReference = require('tangram-reference').load();
 const translate = require('./translate.js');
