@@ -1,8 +1,11 @@
-//startsWith Polyfill
+//Polyfills
 if (!String.prototype.startsWith) {
     String.prototype.startsWith = function(searchString, position){
       return this.substr(position || 0, searchString.length) === searchString;
   };
+}
+Number.isFinite = Number.isFinite || function(value) {
+    return typeof value === 'number' && isFinite(value);
 }
 
 const carto = require('carto');
