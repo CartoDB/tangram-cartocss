@@ -6,7 +6,7 @@ if (!String.prototype.startsWith) {
 }
 Number.isFinite = Number.isFinite || function(value) {
     return typeof value === 'number' && isFinite(value);
-}
+};
 
 const carto = require('carto');
 const tangramReference = require('tangram-reference').load();
