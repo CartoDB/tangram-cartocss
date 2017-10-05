@@ -1,10 +1,10 @@
 //Polyfills
 if (!String.prototype.startsWith) {
-    String.prototype.startsWith = function(searchString, position){
-      return this.substr(position || 0, searchString.length) === searchString;
-  };
+    String.prototype.startsWith = function (searchString, position) {
+        return this.substr(position || 0, searchString.length) === searchString;
+    };
 }
-Number.isFinite = Number.isFinite || function(value) {
+Number.isFinite = Number.isFinite || function (value) {
     return typeof value === 'number' && isFinite(value);
 };
 
@@ -105,12 +105,27 @@ function processStyle(scene, drawGroupName, layerOrder) {
     delete scene.draw[drawGroupName].blend;
 }
 
+//Work around buggy carto rendererer
+function unescapeCode(code) {
+    //carto renderer still thinks that the JS code is an XML, therefore, we need to unescape it using
+    //XML escaping rules
+    return code.replace('&amp', '&');
+}
+function unescapeShader(shader) {
+    for (var property of Object.keys(shader)) {
+        if (shader[property].js !== undefined) {
+            shader[property].js = shader[property].js.map(code => unescapeCode(code));
+        }
+    }
+}
+
 function layerToScene(layer, layerOrder) {
     var scene = {
         draw: {},
         styles: {},
         textures: {}
     };
+    unescapeShader(layer.shader);
     if (layer.shader.symbolizers.length > 1) {
         throw new Error('Unsupported CartoCSS: multiple symbolizer in one layer');
     } else if (layer.shader.symbolizers.length === 1) {

@@ -239,8 +239,8 @@ describe('dot', function () {
     });
 });
 
-describe('multiple super layers', function(){
-    it('should correctly set the order property', function(){
+describe('multiple super layers', function () {
+    it('should correctly set the order property', function () {
         const ccss = `
         #layer {
             dot-fill: blue;
@@ -249,7 +249,7 @@ describe('multiple super layers', function(){
         assert.strictEqual(output.draw.drawGroup1000.order, 1000);
         assert.strictEqual(output.styles.drawGroup1000.blend_order, 1000);
     });
-    it('should correctly set the order property with multiple sub layers', function(){
+    it('should correctly set the order property with multiple sub layers', function () {
         const ccss = `
         #layer {
             line-opacity: 1;
@@ -263,5 +263,23 @@ describe('multiple super layers', function(){
         assert.strictEqual(output[0].styles.drawGroup1000.blend_order, 1000);
         assert.strictEqual(output[1].draw.drawGroup1001.order, 1001);
         assert.strictEqual(output[1].styles.drawGroup1001.blend_order, 1001);
+    });
+});
+
+describe('unescape XML ampersands', function () {
+    it('should work-around buggy carto renderer escaping', function () {
+        const ccss = `#layer {
+            marker-width: 10;
+            [ koncern = "Stockholms Restauranger & Wärdshus" ] {
+              marker-fill: #43aee4;
+            }
+            marker-fill-opacity: 1;
+            marker-allow-overlap: true;
+            marker-line-width: 1;
+            marker-line-color: #FFF;
+            marker-line-opacity: 1;
+          }`;
+        const output = tangram_carto.cartoCssToDrawGroups(ccss, 0);
+        assert.ok(!output[0].draw.drawGroup0.color.includes('&amp'));
     });
 });
