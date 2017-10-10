@@ -112,11 +112,11 @@ function unescapeCode(code) {
     return code.replace('&amp', '&');
 }
 function unescapeShader(shader) {
-    for (var property of Object.keys(shader)) {
+    Object.keys(shader).forEach(function (property) {
         if (shader[property].js !== undefined) {
             shader[property].js = shader[property].js.map(code => unescapeCode(code));
         }
-    }
+    });
 }
 
 function layerToScene(layer, layerOrder) {
