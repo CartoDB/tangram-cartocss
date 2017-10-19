@@ -1,6 +1,6 @@
 {
   "name": "tangram-cartocss",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "description": "Transform cartocss into a draw tangram object.",
   "main": "src/index.js",
   "repository": {
