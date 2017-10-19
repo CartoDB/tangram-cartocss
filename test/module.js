@@ -265,3 +265,19 @@ describe('multiple super layers', function(){
         assert.strictEqual(output[1].styles.drawGroup1001.blend_order, 1001);
     });
 });
+
+describe('opacity', function(){
+    it('should handle opacity 0 correctly', function(){
+        const ccss = `#layer {
+            polygon-fill: #e3e0ea;
+            polygon-opacity: 0;
+        }
+        #layer::outline {
+            line-width: 1.5;
+            line-color: #000000;
+            line-opacity: 0.5;
+        }`;
+        const output = tangram_carto.cartoCssToDrawGroups(ccss, 0);
+        assert.strictEqual(output[0].draw.drawGroup0.color, 'rgba(227,224,234,0)');
+    });
+});

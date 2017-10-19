@@ -44,14 +44,16 @@ function getOpacityOverride(sceneDrawGroup, isFill) {
     } else {
         opacity = sceneDrawGroup._hidden['opacity:outline'];
     }
-    opacity = sceneDrawGroup._hidden['opacity:general'] || opacity;
+    if (sceneDrawGroup._hidden['opacity:general'] !== undefined) {
+        opacity = sceneDrawGroup._hidden['opacity:general'];
+    }
     return opacity;
 }
 
 function getColorFromLiteral(sceneDrawGroup, colorLiteral, isFill) {
     const opacity = getOpacityOverride(sceneDrawGroup, isFill);
     const c = color.unmarshall(colorLiteral, tangramReference);
-    if (opacity) {
+    if (opacity !== undefined) {
         if (Number.isFinite(opacity)) {
             c.a = opacity;
             return color.marshall(c);
@@ -67,7 +69,7 @@ function getColorFromLiteral(sceneDrawGroup, colorLiteral, isFill) {
 
 function getColorOverrideCode(sceneDrawGroup, isFill) {
     const opacity = getOpacityOverride(sceneDrawGroup, isFill);
-    if (opacity) {
+    if (opacity !== undefined) {
         if (Number.isFinite(opacity)) {
             return `var c=${color.unmarshall.toString()}(_value);c.a=${opacity};_value=${color.marshall.toString()}(c);`;
         } else {
