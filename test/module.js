@@ -282,7 +282,7 @@ describe('opacity', function(){
     });
 });
 
-describe.only('unescape XML ampersands', function () {
+describe('unescape XML ampersands', function () {
     it('should work-around buggy carto renderer escaping', function () {
         const ccss = `#layer {
             marker-width: 10;
