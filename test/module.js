@@ -282,8 +282,8 @@ describe('opacity', function(){
     });
 });
 
-describe('unescape XML ampersands', function () {
-    it('should work-around buggy carto renderer escaping', function () {
+describe('unescape of XML ampersands', function () {
+    it('should work with ampersands on values', function () {
         const ccss = `#layer {
             marker-width: 10;
             [ koncern = "Stockholms Restauranger & Wärdshus" ] {
