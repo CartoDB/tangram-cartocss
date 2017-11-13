@@ -87,6 +87,9 @@ function getFunctionFromDefaultAndShaderValue(sceneDrawGroup, ccssProperty, defa
     }
     var fn = `var _value=${defaultValue};`;
     shaderValue.js.forEach(function (code) {
+        if (code.search(/data\['mapnik::\S+'\]/) >= 0) {
+            throw new Error('mapnik selector present in the CartoCSS');
+        }
         fn += code;
     });
     if (referenceCSS[ccssProperty].type === 'color') {
