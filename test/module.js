@@ -309,4 +309,12 @@ describe('Unsupported CartoCSS', function () {
           }`;
         assert.throws(() => { tangram_carto.cartoCssToDrawGroups(ccss, 0); });
     });
+    it('due to mapnik identifiers should throw an exception', function () {
+        const ccss = `#layer [ "mapnik::geometry_type" = 2]{
+            line-color: #4CC8A3;
+            line-width: 1.5;
+            line-opacity: 1;
+          }`;
+        assert.throws(() => { tangram_carto.cartoCssToDrawGroups(ccss, 0); });
+    });
 });
