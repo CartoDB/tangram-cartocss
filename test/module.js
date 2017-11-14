@@ -239,8 +239,8 @@ describe('dot', function () {
     });
 });
 
-describe('multiple super layers', function(){
-    it('should correctly set the order property', function(){
+describe('multiple super layers', function () {
+    it('should correctly set the order property', function () {
         const ccss = `
         #layer {
             dot-fill: blue;
@@ -249,7 +249,7 @@ describe('multiple super layers', function(){
         assert.strictEqual(output.draw.drawGroup1000.order, 1000);
         assert.strictEqual(output.styles.drawGroup1000.blend_order, 1000);
     });
-    it('should correctly set the order property with multiple sub layers', function(){
+    it('should correctly set the order property with multiple sub layers', function () {
         const ccss = `
         #layer {
             line-opacity: 1;
@@ -266,8 +266,8 @@ describe('multiple super layers', function(){
     });
 });
 
-describe('opacity', function(){
-    it('should handle opacity 0 correctly', function(){
+describe('opacity', function () {
+    it('should handle opacity 0 correctly', function () {
         const ccss = `#layer {
             polygon-fill: #e3e0ea;
             polygon-opacity: 0;
@@ -297,5 +297,24 @@ describe('unescape of XML ampersands', function () {
           }`;
         const output = tangram_carto.cartoCssToDrawGroups(ccss, 0);
         assert.ok(!output[0].draw.drawGroup0.color.includes('&amp'));
+    });
+});
+
+describe('Unsupported CartoCSS', function () {
+    it('due to mapnik identifiers should throw an exception', function () {
+        const ccss = `#layer ['mapnik::geometry_type'=2]{
+            line-color: #4CC8A3;
+            line-width: 1.5;
+            line-opacity: 1;
+          }`;
+        assert.throws(() => { tangram_carto.cartoCssToDrawGroups(ccss, 0); });
+    });
+    it('due to mapnik identifiers should throw an exception', function () {
+        const ccss = `#layer [ "mapnik::geometry_type" = 2]{
+            line-color: #4CC8A3;
+            line-width: 1.5;
+            line-opacity: 1;
+          }`;
+        assert.throws(() => { tangram_carto.cartoCssToDrawGroups(ccss, 0); });
     });
 });
